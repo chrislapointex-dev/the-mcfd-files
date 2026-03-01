@@ -5,7 +5,7 @@ export function useDecisions({ mode, query, filters, page, perPage = 20 }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  const { court, dateFrom, dateTo } = filters
+  const { court, dateFrom, dateTo, source } = filters
 
   useEffect(() => {
     if (mode === 'detail') return
@@ -15,6 +15,7 @@ export function useDecisions({ mode, query, filters, page, perPage = 20 }) {
 
     const params = new URLSearchParams()
     if (mode === 'search' && query) params.set('q', query)
+    if (source) params.set('source', source)
     if (court) params.set('court', court)
     if (dateFrom) params.set('date_from', dateFrom)
     if (dateTo) params.set('date_to', dateTo)
@@ -40,7 +41,7 @@ export function useDecisions({ mode, query, filters, page, perPage = 20 }) {
       })
 
     return () => controller.abort()
-  }, [mode, query, court, dateFrom, dateTo, page, perPage])
+  }, [mode, query, source, court, dateFrom, dateTo, page, perPage])
 
   return { data, loading, error }
 }

@@ -31,6 +31,7 @@ class PaginatedDecisions(BaseModel):
 
 
 class FiltersResponse(BaseModel):
+    sources: list[str]
     courts: list[str]
     year_min: Optional[int]
     year_max: Optional[int]

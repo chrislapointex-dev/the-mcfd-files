@@ -78,9 +78,15 @@ export default function DecisionDetail({ id, onBack }) {
         {/* Classification row */}
         <div className="flex items-center justify-between mb-5 pb-4 border-b border-ink-600">
           <div className="flex items-center gap-3">
-            <span className="text-[10px] font-mono font-bold text-amber-500 border border-amber-500/40 px-2 py-0.5 rounded tracking-widest uppercase">
-              CASE FILE
-            </span>
+            {decision.source === 'rcy' ? (
+              <span className="text-[10px] font-mono font-bold text-teal-400 border border-teal-500/40 px-2 py-0.5 rounded tracking-widest uppercase">
+                RCY REPORT
+              </span>
+            ) : (
+              <span className="text-[10px] font-mono font-bold text-amber-500 border border-amber-500/40 px-2 py-0.5 rounded tracking-widest uppercase">
+                CASE FILE
+              </span>
+            )}
             <span className="text-[10px] font-mono text-slate-600 uppercase tracking-widest">
               {decision.source}
             </span>

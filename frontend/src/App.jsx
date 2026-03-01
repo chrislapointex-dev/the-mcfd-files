@@ -6,7 +6,7 @@ import DecisionDetail from './components/DecisionDetail'
 import Pagination from './components/Pagination'
 import { useDecisions } from './hooks/useDecisions'
 
-const EMPTY_FILTERS = { court: '', dateFrom: '', dateTo: '' }
+const EMPTY_FILTERS = { source: '', court: '', dateFrom: '', dateTo: '' }
 
 export default function App() {
   // Search state
@@ -21,7 +21,7 @@ export default function App() {
   const [page, setPage] = useState(1)
 
   // Filter options from API
-  const [filterOptions, setFilterOptions] = useState({ courts: [], year_min: null, year_max: null })
+  const [filterOptions, setFilterOptions] = useState({ sources: [], courts: [], year_min: null, year_max: null })
 
   const isSearch = submittedQuery.length > 0
   const mode = selectedId !== null ? 'detail' : isSearch ? 'search' : 'browse'
@@ -126,6 +126,7 @@ export default function App() {
             <FilterBar
               filters={filters}
               onChange={handleFilterChange}
+              sources={filterOptions.sources}
               courts={filterOptions.courts}
               yearMin={filterOptions.year_min}
               yearMax={filterOptions.year_max}

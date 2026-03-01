@@ -12,7 +12,9 @@ from ..schemas import DecisionDetail, DecisionSummary, FiltersResponse, Paginate
 router = APIRouter(prefix="/api/decisions", tags=["decisions"])
 
 
-def _apply_filters(stmt, court, date_from, date_to):
+def _apply_filters(stmt, court, date_from, date_to, source=None):
+    if source:
+        stmt = stmt.where(Decision.source == source)
     if court:
         stmt = stmt.where(Decision.court == court)
     if date_from:
@@ -25,6 +27,7 @@ def _apply_filters(stmt, court, date_from, date_to):
 @router.get("", response_model=PaginatedDecisions)
 async def list_decisions(
     court: Optional[str] = None,
+    source: Optional[str] = None,
     date_from: Optional[date] = None,
     date_to: Optional[date] = None,
     page: int = Query(1, ge=1),
@@ -32,7 +35,7 @@ async def list_decisions(
     db: AsyncSession = Depends(get_db),
 ):
     base = select(Decision)
-    base = _apply_filters(base, court, date_from, date_to)
+    base = _apply_filters(base, court, date_from, date_to, source)
 
     count_stmt = select(func.count()).select_from(base.subquery())
     total = (await db.execute(count_stmt)).scalar_one()
@@ -59,6 +62,7 @@ async def list_decisions(
 async def search_decisions(
     q: str = Query(..., min_length=1),
     court: Optional[str] = None,
+    source: Optional[str] = None,
     date_from: Optional[date] = None,
     date_to: Optional[date] = None,
     page: int = Query(1, ge=1),
@@ -86,18 +90,11 @@ async def search_decisions(
         select(Decision, rank, headline)
         .where(tsvector.op("@@")(tsquery))
     )
-    base = _apply_filters(base, court, date_from, date_to)
+    base = _apply_filters(base, court, date_from, date_to, source)
 
-    count_stmt = select(func.count()).select_from(
-        select(Decision).where(tsvector.op("@@")(tsquery)).subquery()
-    )
-    if court:
-        count_stmt = select(func.count()).select_from(
-            select(Decision)
-            .where(tsvector.op("@@")(tsquery))
-            .where(Decision.court == court)
-            .subquery()
-        )
+    count_base = select(Decision).where(tsvector.op("@@")(tsquery))
+    count_base = _apply_filters(count_base, court, date_from, date_to, source)
+    count_stmt = select(func.count()).select_from(count_base.subquery())
 
     total = (await db.execute(count_stmt)).scalar_one()
 
@@ -129,6 +126,11 @@ async def search_decisions(
 
 @router.get("/filters", response_model=FiltersResponse)
 async def get_filters(db: AsyncSession = Depends(get_db)):
+    sources_result = await db.execute(
+        select(Decision.source).distinct().order_by(Decision.source)
+    )
+    sources = [r[0] for r in sources_result.all()]
+
     courts_result = await db.execute(
         select(Decision.court)
         .where(Decision.court.isnot(None))
@@ -146,6 +148,7 @@ async def get_filters(db: AsyncSession = Depends(get_db)):
     year_min, year_max = year_result.one()
 
     return FiltersResponse(
+        sources=sources,
         courts=courts,
         year_min=int(year_min) if year_min else None,
         year_max=int(year_max) if year_max else None,

@@ -4,9 +4,15 @@ const selectCls =
 const inputCls =
   'w-[4.5rem] bg-ink-700 border border-ink-500 text-slate-300 text-xs font-mono px-2 py-1.5 rounded outline-none hover:border-ink-400 focus:border-amber-500/50 transition-colors text-center'
 
+const SOURCE_LABELS = {
+  bccourts: 'COURT DECISIONS',
+  rcy: 'RCY REPORTS',
+}
+
 export default function FilterBar({
   filters,
   onChange,
+  sources,
   courts,
   yearMin,
   yearMax,
@@ -16,7 +22,7 @@ export default function FilterBar({
   loading,
 }) {
   const set = (field, val) => onChange({ ...filters, [field]: val })
-  const hasFilters = filters.court || filters.dateFrom || filters.dateTo
+  const hasFilters = filters.source || filters.court || filters.dateFrom || filters.dateTo
 
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-2 py-4 border-b border-ink-600">
@@ -39,19 +45,35 @@ export default function FilterBar({
         )}
       </div>
 
-      {/* Court filter */}
-      <select
-        value={filters.court}
-        onChange={e => set('court', e.target.value)}
-        className={selectCls}
-      >
-        <option value="">ALL COURTS</option>
-        {courts.map(c => (
-          <option key={c} value={c}>
-            {c === 'BC Court of Appeal' ? 'BC COURT OF APPEAL' : c.toUpperCase()}
-          </option>
-        ))}
-      </select>
+      {/* Source filter */}
+      {sources.length > 1 && (
+        <select
+          value={filters.source}
+          onChange={e => set('source', e.target.value)}
+          className={selectCls}
+        >
+          <option value="">ALL SOURCES</option>
+          {sources.map(s => (
+            <option key={s} value={s}>{SOURCE_LABELS[s] ?? s.toUpperCase()}</option>
+          ))}
+        </select>
+      )}
+
+      {/* Court filter — only show when not filtered to rcy (no courts) */}
+      {filters.source !== 'rcy' && (
+        <select
+          value={filters.court}
+          onChange={e => set('court', e.target.value)}
+          className={selectCls}
+        >
+          <option value="">ALL COURTS</option>
+          {courts.map(c => (
+            <option key={c} value={c}>
+              {c === 'BC Court of Appeal' ? 'BC COURT OF APPEAL' : c.toUpperCase()}
+            </option>
+          ))}
+        </select>
+      )}
 
       {/* Year range */}
       <div className="flex items-center gap-1.5 text-xs font-mono text-slate-600">
@@ -80,7 +102,7 @@ export default function FilterBar({
       {/* Clear filters */}
       {hasFilters && (
         <button
-          onClick={() => onChange({ court: '', dateFrom: '', dateTo: '' })}
+          onClick={() => onChange({ source: '', court: '', dateFrom: '', dateTo: '' })}
           className="text-xs font-mono text-slate-600 hover:text-amber-500 transition-colors"
         >
           CLEAR ×
