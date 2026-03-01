@@ -1,0 +1,91 @@
+const selectCls =
+  'bg-ink-700 border border-ink-500 text-slate-300 text-xs font-mono px-3 py-1.5 rounded outline-none hover:border-ink-400 focus:border-amber-500/50 transition-colors cursor-pointer appearance-none'
+
+const inputCls =
+  'w-[4.5rem] bg-ink-700 border border-ink-500 text-slate-300 text-xs font-mono px-2 py-1.5 rounded outline-none hover:border-ink-400 focus:border-amber-500/50 transition-colors text-center'
+
+export default function FilterBar({
+  filters,
+  onChange,
+  courts,
+  yearMin,
+  yearMax,
+  total,
+  isSearch,
+  query,
+  loading,
+}) {
+  const set = (field, val) => onChange({ ...filters, [field]: val })
+  const hasFilters = filters.court || filters.dateFrom || filters.dateTo
+
+  return (
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 py-4 border-b border-ink-600">
+
+      {/* Results count — left-anchored */}
+      <div className="text-xs font-mono text-slate-500 mr-auto">
+        {loading ? (
+          <span className="text-slate-600 animate-pulse">SCANNING…</span>
+        ) : isSearch ? (
+          <>
+            <span className="text-amber-500">{total.toLocaleString()}</span>
+            {' '}RESULTS
+            {query && <span className="text-slate-600"> · &ldquo;{query}&rdquo;</span>}
+          </>
+        ) : (
+          <>
+            <span className="text-amber-500">{total.toLocaleString()}</span>
+            {' '}DECISIONS ON RECORD
+          </>
+        )}
+      </div>
+
+      {/* Court filter */}
+      <select
+        value={filters.court}
+        onChange={e => set('court', e.target.value)}
+        className={selectCls}
+      >
+        <option value="">ALL COURTS</option>
+        {courts.map(c => (
+          <option key={c} value={c}>
+            {c === 'BC Court of Appeal' ? 'BC COURT OF APPEAL' : c.toUpperCase()}
+          </option>
+        ))}
+      </select>
+
+      {/* Year range */}
+      <div className="flex items-center gap-1.5 text-xs font-mono text-slate-600">
+        <span>YEAR</span>
+        <input
+          type="number"
+          placeholder={yearMin ?? '2001'}
+          min={yearMin}
+          max={yearMax}
+          value={filters.dateFrom ? filters.dateFrom.slice(0, 4) : ''}
+          onChange={e => set('dateFrom', e.target.value ? `${e.target.value}-01-01` : '')}
+          className={inputCls}
+        />
+        <span>–</span>
+        <input
+          type="number"
+          placeholder={yearMax ?? '2026'}
+          min={yearMin}
+          max={yearMax}
+          value={filters.dateTo ? filters.dateTo.slice(0, 4) : ''}
+          onChange={e => set('dateTo', e.target.value ? `${e.target.value}-12-31` : '')}
+          className={inputCls}
+        />
+      </div>
+
+      {/* Clear filters */}
+      {hasFilters && (
+        <button
+          onClick={() => onChange({ court: '', dateFrom: '', dateTo: '' })}
+          className="text-xs font-mono text-slate-600 hover:text-amber-500 transition-colors"
+        >
+          CLEAR ×
+        </button>
+      )}
+    </div>
+  )
+}
