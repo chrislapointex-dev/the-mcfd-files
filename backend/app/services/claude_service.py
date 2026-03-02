@@ -1,0 +1,84 @@
+"""Claude AI service — natural language Q&A over document chunks.
+
+Usage:
+    from app.services.claude_service import ask
+
+    answer = await ask(
+        question="What powers does MCFD have to remove a child?",
+        chunks=[
+            {"id": 1, "citation": "CFCSA s.30", "text": "...", "source": "legislation"},
+            {"id": 2, "citation": "2024 BCSC 101", "text": "...", "source": "bccourts"},
+        ]
+    )
+"""
+
+import os
+import anthropic
+
+_client: anthropic.AsyncAnthropic | None = None
+
+
+def _get_client() -> anthropic.AsyncAnthropic:
+    global _client
+    if _client is None:
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if not api_key:
+            raise RuntimeError("ANTHROPIC_API_KEY environment variable is not set")
+        _client = anthropic.AsyncAnthropic(api_key=api_key)
+    return _client
+
+
+SYSTEM_PROMPT = """\
+You are a legal research assistant for The MCFD Files, a database of BC court decisions, \
+legislation, and reports relating to the Ministry of Children and Family Development (MCFD).
+
+Answer the user's question using ONLY the documents provided. \
+Cite every factual claim with [Source: <citation>] immediately after the claim. \
+If multiple documents support the same claim, include all relevant citations. \
+If the provided documents do not contain enough information to answer the question, \
+say so clearly — do not speculate or use outside knowledge. \
+Be concise and precise. Use plain language.\
+"""
+
+
+def _build_context(chunks: list[dict]) -> str:
+    """Format document chunks into a numbered context block."""
+    parts = []
+    for i, chunk in enumerate(chunks, 1):
+        citation = chunk.get("citation") or chunk.get("id") or f"doc-{i}"
+        source = chunk.get("source", "")
+        text = chunk.get("text") or chunk.get("full_text") or chunk.get("snippet") or ""
+        parts.append(
+            f"[Document {i}]\n"
+            f"Citation: {citation}\n"
+            f"Source type: {source}\n"
+            f"Text:\n{text.strip()}\n"
+        )
+    return "\n---\n".join(parts)
+
+
+async def ask(question: str, chunks: list[dict]) -> str:
+    """Ask Claude a question grounded in the provided document chunks.
+
+    Args:
+        question: The user's natural-language question.
+        chunks:   List of dicts, each with keys: id, citation, text (or full_text/snippet), source.
+
+    Returns:
+        Answer string with inline [Source: citation] references.
+    """
+    if not chunks:
+        return "No relevant documents were found to answer your question."
+
+    context = _build_context(chunks)
+    user_message = f"Documents:\n\n{context}\n\nQuestion: {question}"
+
+    client = _get_client()
+    response = await client.messages.create(
+        model="claude-sonnet-4-5-20250929",
+        max_tokens=1024,
+        system=SYSTEM_PROMPT,
+        messages=[{"role": "user", "content": user_message}],
+    )
+
+    return response.content[0].text
