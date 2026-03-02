@@ -46,12 +46,21 @@ DEFAULT_DATA_DIR = Path("data/raw/rcy")
 
 
 def extract_text(pdf_path: Path) -> str:
-    """Extract plain text from a PDF using PyMuPDF."""
+    """Extract plain text from a PDF using PyMuPDF.
+
+    Tries get_text() first; falls back to blocks extraction if a page yields
+    no text (e.g. scanned image pages where layout analysis differs).
+    """
     try:
         doc = fitz.open(str(pdf_path))
         pages = []
         for page in doc:
-            pages.append(page.get_text())
+            text = page.get_text()
+            if not text.strip():
+                # Fallback: blocks returns (x0,y0,x1,y1,text,block_no,type)
+                blocks = page.get_text("blocks")
+                text = "\n".join(b[4] for b in blocks if isinstance(b[4], str) and b[4].strip())
+            pages.append(text)
         doc.close()
         return "\n".join(pages).strip()
     except Exception as exc:

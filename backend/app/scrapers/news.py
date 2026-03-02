@@ -48,6 +48,12 @@ QUERIES = [
     "MCFD class action BC",
     "MCFD foster care death BC",
     "MCFD social worker misconduct BC",
+    "MCFD BC investigation",
+    "foster care BC death",
+    "child welfare BC reform",
+    "Murphy Battista MCFD class action",
+    "T.L. v BC Court of Appeal CFCSA",
+    "Representative Children Youth BC",
 ]
 
 DDG_URL = "https://html.duckduckgo.com/html/"
