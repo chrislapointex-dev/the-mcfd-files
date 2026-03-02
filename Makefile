@@ -1,4 +1,4 @@
-.PHONY: up down build logs shell-backend shell-db reset
+.PHONY: up down build logs shell-backend shell-db reset scrape scrape-test
 
 up:
 	docker compose up --build
@@ -21,3 +21,9 @@ shell-db:
 reset:
 	docker compose down -v
 	docker compose up --build
+
+scrape:
+	cd backend && .venv/bin/python3.12 -m app.scrapers.run_all
+
+scrape-test:
+	cd backend && .venv/bin/python3.12 -m app.scrapers.run_all --limit 5
