@@ -22,11 +22,12 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    env_file:
+      - path: .env
+        required: false
     environment:
       DATABASE_URL: postgresql+asyncpg://mcfd:mcfd@db:5432/mcfd
-      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173}
-      MCFD_API_KEY: ${MCFD_API_KEY:-}
       CLAUDE_MODEL: ${CLAUDE_MODEL:-claude-sonnet-4-6}
     ports:
       - "8000:8000"
