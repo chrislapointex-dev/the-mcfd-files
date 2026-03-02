@@ -1,3 +1,5 @@
+import DOMPurify from 'dompurify'
+
 function courtAbbr(court) {
   if (court === 'BC Court of Appeal') return 'BCCA'
   if (court === 'BC Supreme Court') return 'BCSC'
@@ -50,7 +52,7 @@ export default function DecisionCard({ decision, onClick, index }) {
         {decision.snippet ? (
           <p
             className="text-slate-500 text-sm leading-relaxed line-clamp-2"
-            dangerouslySetInnerHTML={{ __html: decision.snippet }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(decision.snippet) }}
           />
         ) : (
           <p className="text-slate-700 text-sm italic">No excerpt available.</p>

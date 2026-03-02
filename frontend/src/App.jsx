@@ -27,6 +27,9 @@ export default function App() {
   // Memory panel
   const [memoryOpen, setMemoryOpen] = useState(false)
 
+  // Mobile nav menu
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   // Input mode: 'search' | 'semantic' | 'ask'
   const [inputMode, setInputMode] = useState('search')
 
@@ -187,6 +190,7 @@ export default function App() {
               </p>
             </div>
             <div className="flex items-center gap-2 flex-shrink-0">
+              {/* Desktop nav */}
               <button
                 onClick={() => setMemoryOpen(true)}
                 className="text-[10px] font-mono text-sky-400/70 border border-sky-500/25 px-2 py-1 rounded tracking-widest hover:text-sky-400 hover:border-sky-500/50 transition-colors hidden sm:block"
@@ -202,6 +206,37 @@ export default function App() {
               <span className="text-[10px] font-mono text-amber-500/60 border border-amber-500/25 px-2 py-1 rounded tracking-widest hidden sm:block">
                 UNREDACTED
               </span>
+
+              {/* Mobile hamburger */}
+              <div className="relative sm:hidden">
+                <button
+                  onClick={() => setMobileMenuOpen(v => !v)}
+                  className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors"
+                  aria-label="Open menu"
+                >
+                  ☰
+                </button>
+                {mobileMenuOpen && (
+                  <div className="absolute right-0 top-full mt-1 z-50 bg-ink-800 border border-ink-600 rounded shadow-lg flex flex-col min-w-[130px]">
+                    <button
+                      onClick={() => { setMemoryOpen(true); setMobileMenuOpen(false) }}
+                      className="text-[10px] font-mono text-sky-400/70 px-3 py-2.5 text-left hover:bg-ink-700 hover:text-sky-400 transition-colors tracking-widest"
+                    >
+                      R2 MEMORY
+                    </button>
+                    <Link
+                      to="/about"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-[10px] font-mono text-slate-500 px-3 py-2.5 hover:bg-ink-700 hover:text-slate-300 transition-colors tracking-widest"
+                    >
+                      ABOUT
+                    </Link>
+                    <span className="text-[10px] font-mono text-amber-500/60 px-3 py-2.5 tracking-widest border-t border-ink-600">
+                      UNREDACTED
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
