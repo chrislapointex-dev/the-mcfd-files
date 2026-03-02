@@ -10,10 +10,13 @@ Flow:
 """
 
 import asyncio
+import os
 import re
+import time
+from collections import defaultdict
 from typing import Optional
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Header, HTTPException, Request
 from pydantic import BaseModel
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -25,6 +28,33 @@ from r2d2 import R2Memory
 from r2d2.context import ContextBuilder
 
 router = APIRouter(prefix="/api", tags=["ask"])
+
+# ── Rate limiting ─────────────────────────────────────────────────────────────
+
+_RATE_LIMIT = 10       # max requests
+_RATE_WINDOW = 60.0    # per this many seconds
+_rate_store: dict[str, list[float]] = defaultdict(list)
+
+
+def _check_rate_limit(ip: str) -> None:
+    now = time.monotonic()
+    cutoff = now - _RATE_WINDOW
+    timestamps = [t for t in _rate_store[ip] if t > cutoff]
+    if len(timestamps) >= _RATE_LIMIT:
+        raise HTTPException(status_code=429, detail="Rate limit exceeded. Max 10 requests per minute.")
+    timestamps.append(now)
+    _rate_store[ip] = timestamps
+
+
+# ── API key guard ─────────────────────────────────────────────────────────────
+
+def _check_api_key(x_api_key: Optional[str]) -> None:
+    required = os.getenv("MCFD_API_KEY")
+    if required and x_api_key != required:
+        raise HTTPException(status_code=403, detail="Invalid or missing X-API-Key header.")
+
+
+# ── Constants ─────────────────────────────────────────────────────────────────
 
 FTS_LIMIT = 15
 SEMANTIC_LIMIT = 15
@@ -179,8 +209,12 @@ def _extract_sources(answer: str, chunks: list[dict]) -> list[SourceRef]:
 @router.post("/ask", response_model=AskResponse)
 async def ask_endpoint(
     body: AskRequest,
+    request: Request,
     db: AsyncSession = Depends(get_db),
+    x_api_key: Optional[str] = Header(default=None),
 ):
+    _check_api_key(x_api_key)
+    _check_rate_limit(request.client.host if request.client else "unknown")
     question = body.question.strip()
     mem = R2Memory(db=db, user_id=body.user_id)
 
