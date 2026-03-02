@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 
 from .database import init_db
 from . import models  # noqa: F401 — registers Decision + Memory with Base.metadata
-from .routers import decisions
+from .routers import decisions, memory
 
 
 @asynccontextmanager
@@ -30,6 +30,7 @@ app.add_middleware(
 
 
 app.include_router(decisions.router)
+app.include_router(memory.router)
 
 
 @app.get("/api/health")
