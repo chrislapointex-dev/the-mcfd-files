@@ -6,6 +6,7 @@ import DecisionDetail from './components/DecisionDetail'
 import Pagination from './components/Pagination'
 import MemoryPanel from './components/MemoryPanel'
 import AskPanel from './components/AskPanel'
+import SemanticPanel from './components/SemanticPanel'
 import { useDecisions } from './hooks/useDecisions'
 
 const EMPTY_FILTERS = { source: '', court: '', dateFrom: '', dateTo: '' }
@@ -25,11 +26,18 @@ export default function App() {
   // Memory panel
   const [memoryOpen, setMemoryOpen] = useState(false)
 
-  // Ask mode
-  const [inputMode, setInputMode] = useState('search') // 'search' | 'ask'
+  // Input mode: 'search' | 'semantic' | 'ask'
+  const [inputMode, setInputMode] = useState('search')
+
+  // Ask mode state
   const [askResult, setAskResult] = useState(null)
   const [askLoading, setAskLoading] = useState(false)
   const [askQuestion, setAskQuestion] = useState('')
+
+  // Semantic mode state
+  const [semanticResults, setSemanticResults] = useState(null)
+  const [semanticLoading, setSemanticLoading] = useState(false)
+  const [semanticQuery, setSemanticQuery] = useState('')
 
   // Filter options from API
   const [filterOptions, setFilterOptions] = useState({ sources: [], courts: [], year_min: null, year_max: null })
@@ -57,6 +65,23 @@ export default function App() {
       e.preventDefault()
       const q = query.trim()
       if (!q) return
+
+      if (inputMode === 'semantic') {
+        setSemanticQuery(q)
+        setSemanticResults(null)
+        setSemanticLoading(true)
+        setSelectedId(null)
+        try {
+          const res = await fetch(`/api/search/semantic?q=${encodeURIComponent(q)}&k=20`)
+          const data = await res.json()
+          setSemanticResults(data)
+        } catch {
+          setSemanticResults({ query: q, total: 0, results: [] })
+        } finally {
+          setSemanticLoading(false)
+        }
+        return
+      }
 
       if (inputMode === 'ask') {
         setAskQuestion(q)
@@ -91,16 +116,20 @@ export default function App() {
     setSubmittedQuery('')
     setAskResult(null)
     setAskQuestion('')
+    setSemanticResults(null)
+    setSemanticQuery('')
     setPage(1)
     setSelectedId(null)
   }, [])
 
-  const handleModeToggle = useCallback(() => {
-    setInputMode(m => m === 'search' ? 'ask' : 'search')
+  const handleSetMode = useCallback((newMode) => {
+    setInputMode(newMode)
     setQuery('')
     setSubmittedQuery('')
     setAskResult(null)
     setAskQuestion('')
+    setSemanticResults(null)
+    setSemanticQuery('')
     setSelectedId(null)
     setPage(1)
   }, [])
@@ -160,18 +189,29 @@ export default function App() {
 
           {/* Mode toggle + search bar */}
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={handleModeToggle}
-              title={inputMode === 'search' ? 'Switch to Ask mode (AI Q&A)' : 'Switch to Search mode'}
-              className={`flex-shrink-0 font-mono text-[10px] tracking-widest px-2 py-1.5 rounded border transition-colors ${
-                inputMode === 'ask'
-                  ? 'bg-sky-500/15 border-sky-500/40 text-sky-400 hover:bg-sky-500/25'
-                  : 'bg-ink-700 border-ink-500 text-slate-600 hover:text-slate-400 hover:border-ink-400'
-              }`}
-            >
-              {inputMode === 'ask' ? 'ASK' : 'FTS'}
-            </button>
+            {/* Three-way mode toggle */}
+            <div className="flex flex-shrink-0 rounded border border-ink-500 overflow-hidden">
+              {[
+                { id: 'search',   label: 'FTS',    active: 'bg-amber-500/15 border-r border-amber-500/30 text-amber-400' },
+                { id: 'semantic', label: 'VECTOR', active: 'bg-violet-500/15 border-r border-violet-500/30 text-violet-400' },
+                { id: 'ask',      label: 'ASK',    active: 'bg-sky-500/15 text-sky-400' },
+              ].map(({ id, label, active }, i) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => handleSetMode(id)}
+                  className={`font-mono text-[10px] tracking-widest px-2 py-1.5 transition-colors ${
+                    i < 2 ? 'border-r border-ink-500' : ''
+                  } ${
+                    inputMode === id
+                      ? active
+                      : 'bg-ink-700 text-slate-600 hover:text-slate-400'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
             <div className="flex-1">
               <SearchBar
                 value={query}
@@ -191,6 +231,22 @@ export default function App() {
 
         {selectedId !== null ? (
           <DecisionDetail id={selectedId} onBack={handleBack} />
+        ) : inputMode === 'semantic' ? (
+          semanticLoading || semanticResults ? (
+            <SemanticPanel
+              query={semanticQuery}
+              results={semanticResults}
+              loading={semanticLoading}
+              onSelectDecision={handleSelect}
+            />
+          ) : (
+            <div className="py-24 text-center">
+              <p className="font-mono text-xs text-slate-600 tracking-widest">VECTOR MODE ACTIVE</p>
+              <p className="font-mono text-[10px] text-slate-700 mt-2">
+                Semantic similarity search over embedded document chunks.
+              </p>
+            </div>
+          )
         ) : inputMode === 'ask' ? (
           askLoading || askResult ? (
             <AskPanel
