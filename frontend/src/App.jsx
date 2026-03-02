@@ -4,6 +4,7 @@ import FilterBar from './components/FilterBar'
 import DecisionCard from './components/DecisionCard'
 import DecisionDetail from './components/DecisionDetail'
 import Pagination from './components/Pagination'
+import MemoryPanel from './components/MemoryPanel'
 import { useDecisions } from './hooks/useDecisions'
 
 const EMPTY_FILTERS = { source: '', court: '', dateFrom: '', dateTo: '' }
@@ -19,6 +20,9 @@ export default function App() {
   // Filters + pagination
   const [filters, setFilters] = useState(EMPTY_FILTERS)
   const [page, setPage] = useState(1)
+
+  // Memory panel
+  const [memoryOpen, setMemoryOpen] = useState(false)
 
   // Filter options from API
   const [filterOptions, setFilterOptions] = useState({ sources: [], courts: [], year_min: null, year_max: null })
@@ -81,6 +85,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-ink-900 font-sans text-slate-200">
+      {memoryOpen && <MemoryPanel onClose={() => setMemoryOpen(false)} />}
 
       {/* Top amber accent line */}
       <div className="h-px bg-gradient-to-r from-transparent via-amber-500/60 to-transparent" />
@@ -99,9 +104,17 @@ export default function App() {
                 BC Court Decisions · Ministry of Children &amp; Family Development
               </p>
             </div>
-            <span className="flex-shrink-0 text-[10px] font-mono text-amber-500/60 border border-amber-500/25 px-2 py-1 rounded tracking-widest hidden sm:block">
-              UNREDACTED
-            </span>
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <button
+                onClick={() => setMemoryOpen(true)}
+                className="text-[10px] font-mono text-sky-400/70 border border-sky-500/25 px-2 py-1 rounded tracking-widest hover:text-sky-400 hover:border-sky-500/50 transition-colors hidden sm:block"
+              >
+                R2 MEMORY
+              </button>
+              <span className="text-[10px] font-mono text-amber-500/60 border border-amber-500/25 px-2 py-1 rounded tracking-widest hidden sm:block">
+                UNREDACTED
+              </span>
+            </div>
           </div>
 
           {/* Search bar */}
