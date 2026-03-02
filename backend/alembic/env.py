@@ -31,13 +31,25 @@ def run_migrations_offline() -> None:
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
+        include_object=_include_object,
     )
     with context.begin_transaction():
         context.run_migrations()
 
 
+def _include_object(obj, name, type_, reflected, compare_to):
+    """Exclude the HNSW index — created at startup via raw SQL in main.py, not via models."""
+    if type_ == "index" and name == "ix_chunks_embedding_hnsw":
+        return False
+    return True
+
+
 def do_run_migrations(connection: Connection) -> None:
-    context.configure(connection=connection, target_metadata=target_metadata)
+    context.configure(
+        connection=connection,
+        target_metadata=target_metadata,
+        include_object=_include_object,
+    )
     with context.begin_transaction():
         context.run_migrations()
 
