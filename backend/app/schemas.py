@@ -35,3 +35,23 @@ class FiltersResponse(BaseModel):
     courts: list[str]
     year_min: Optional[int]
     year_max: Optional[int]
+
+
+class SemanticChunk(BaseModel):
+    chunk_id: int
+    chunk_num: int
+    text: str
+    score: float          # cosine similarity 0–1 (higher = more similar)
+    decision_id: int
+    citation: Optional[str]
+    title: str
+    source: str
+    date: Optional[date]
+    court: Optional[str]
+    url: str
+
+
+class SemanticSearchResponse(BaseModel):
+    query: str
+    total: int
+    results: list[SemanticChunk]
