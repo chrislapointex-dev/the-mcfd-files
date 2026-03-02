@@ -46,10 +46,11 @@ logging.basicConfig(
 
 EMBED_MODEL = "text-embedding-3-small"
 EMBED_DIMS = 1536
-EMBED_BATCH = 512       # chunks per API call (OpenAI allows up to 2048)
+EMBED_BATCH = 20        # chunks per API call — conservative for low-tier keys
+INTER_BATCH_DELAY = 3.0 # seconds between API calls to respect TPM limits
 DB_BATCH = 200          # rows per UPDATE commit
-MAX_RETRIES = 5
-RETRY_DELAY = 5.0       # seconds, doubles on each retry
+MAX_RETRIES = 6
+RETRY_DELAY = 60.0      # seconds on first 429 — new keys have tight minute windows
 
 
 # ── Embedding call ────────────────────────────────────────────────────────────
@@ -148,6 +149,10 @@ async def run(
                 "  %d/%d  (%.0f%%)  |  %.1f chunks/s  |  %.0fs elapsed",
                 total_embedded, len(ids), pct, rate, elapsed,
             )
+
+            # Pace requests to stay within per-minute token limits
+            if batch_start + EMBED_BATCH < len(ids):
+                await asyncio.sleep(INTER_BATCH_DELAY)
 
     await client.close()
 
