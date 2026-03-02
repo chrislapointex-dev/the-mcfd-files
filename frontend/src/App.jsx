@@ -98,18 +98,43 @@ export default function App() {
         const controller = new AbortController()
         abortRef.current = controller
         setAskQuestion(q)
-        setAskResult(null)
+        setAskResult({ answer: '', sources: [], chunks_used: 0, memory_updated: false })
         setAskLoading(true)
         setSelectedId(null)
         try {
-          const res = await fetch('/api/ask', {
+          const res = await fetch('/api/ask/stream', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ question: q }),
             signal: controller.signal,
           })
-          const data = await res.json()
-          setAskResult(data)
+          const reader = res.body.getReader()
+          const decoder = new TextDecoder()
+          let buf = ''
+          while (true) {
+            const { done, value } = await reader.read()
+            if (done) break
+            buf += decoder.decode(value, { stream: true })
+            const parts = buf.split('\n\n')
+            buf = parts.pop()
+            for (const part of parts) {
+              const line = part.trim()
+              if (!line.startsWith('data: ')) continue
+              const data = JSON.parse(line.slice(6))
+              if (data.type === 'token') {
+                setAskResult(prev => ({ ...prev, answer: prev.answer + data.text }))
+              } else if (data.type === 'done') {
+                setAskResult(prev => ({
+                  ...prev,
+                  sources: data.sources,
+                  chunks_used: data.chunks_used,
+                  memory_updated: data.memory_updated,
+                }))
+              } else if (data.type === 'error') {
+                setAskResult(prev => ({ ...prev, answer: data.message }))
+              }
+            }
+          }
         } catch (err) {
           if (err.name !== 'AbortError') setAskResult({ answer: 'Request failed. Is the backend running?', sources: [], chunks_used: 0, memory_updated: false })
         } finally {

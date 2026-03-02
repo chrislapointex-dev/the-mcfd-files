@@ -57,6 +57,35 @@ def _build_context(chunks: list[dict]) -> str:
     return "\n---\n".join(parts)
 
 
+async def ask_stream(question: str, chunks: list[dict]):
+    """Stream Claude's answer token-by-token.
+
+    Yields:
+        ("token", text_fragment)  for each streamed token
+        ("done", full_text)       when stream ends with complete answer
+    """
+    if not chunks:
+        yield ("done", "No relevant documents were found to answer your question.")
+        return
+
+    context = _build_context(chunks)
+    user_message = f"Documents:\n\n{context}\n\nQuestion: {question}"
+
+    client = _get_client()
+    full_text = ""
+    async with client.messages.stream(
+        model=os.getenv("CLAUDE_MODEL", "claude-sonnet-4-6"),
+        max_tokens=1024,
+        system=SYSTEM_PROMPT,
+        messages=[{"role": "user", "content": user_message}],
+    ) as stream:
+        async for text in stream.text_stream:
+            full_text += text
+            yield ("token", text)
+
+    yield ("done", full_text)
+
+
 async def ask(question: str, chunks: list[dict]) -> str:
     """Ask Claude a question grounded in the provided document chunks.
 

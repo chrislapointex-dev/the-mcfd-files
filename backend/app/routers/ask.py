@@ -10,6 +10,7 @@ Flow:
 """
 
 import asyncio
+import json
 import os
 import re
 import time
@@ -17,12 +18,13 @@ from collections import defaultdict
 from typing import Optional
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Request
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_db
-from ..services.claude_service import ask as claude_ask
+from ..services.claude_service import ask as claude_ask, ask_stream as claude_ask_stream
 from ..services.embed_service import embed_query
 from r2d2 import R2Memory
 from r2d2.context import ContextBuilder
@@ -275,3 +277,88 @@ async def ask_endpoint(
         chunks_used=len(chunks),
         memory_updated=memory_updated,
     )
+
+
+@router.post("/ask/stream")
+async def ask_stream_endpoint(
+    body: AskRequest,
+    request: Request,
+    db: AsyncSession = Depends(get_db),
+    x_api_key: Optional[str] = Header(default=None),
+):
+    _check_api_key(x_api_key)
+    _check_rate_limit(request.client.host if request.client else "unknown")
+    question = body.question.strip()
+    mem = R2Memory(db=db, user_id=body.user_id)
+
+    async def generate():
+        try:
+            # 1. Load R2 context
+            r2_context = ""
+            try:
+                builder = ContextBuilder(mem)
+                r2_context = await builder.build(limit_per_region=3)
+            except Exception:
+                pass
+
+            # 2. FTS + semantic search in parallel
+            fts_chunks, sem_chunks = await asyncio.gather(
+                _fetch_fts_chunks(db, question),
+                _fetch_semantic_chunks(db, question),
+            )
+            chunks = _merge_chunks(fts_chunks, sem_chunks)
+
+            # 3. Build question with R2 context
+            if r2_context:
+                question_with_context = (
+                    f"[Research context from previous sessions]\n{r2_context}\n\n"
+                    f"Question: {question}"
+                )
+            else:
+                question_with_context = question
+
+            # 4. Stream tokens from Claude
+            full_text = ""
+            async for kind, payload in claude_ask_stream(question=question_with_context, chunks=chunks):
+                if kind == "token":
+                    yield f"data: {json.dumps({'type': 'token', 'text': payload})}\n\n"
+                elif kind == "done":
+                    full_text = payload
+
+            # 5. Extract sources from complete answer
+            sources = _extract_sources(full_text, chunks)
+
+            # 6. Save to R2 memory
+            memory_updated = False
+            try:
+                await mem.save(
+                    key=f"qa:{question[:100]}",
+                    value={
+                        "question": question,
+                        "answer": full_text,
+                        "sources_cited": [s.citation for s in sources],
+                        "chunks_used": len(chunks),
+                        "fts_chunks": len(fts_chunks),
+                        "semantic_chunks": len(sem_chunks),
+                    },
+                    category="search_query",
+                    region="HIPPOCAMPUS",
+                    source="ask_stream_endpoint",
+                )
+                memory_updated = True
+            except Exception:
+                pass
+
+            # 7. Yield done event with metadata
+            done_payload = {
+                "type": "done",
+                "sources": [s.model_dump() for s in sources],
+                "chunks_used": len(chunks),
+                "memory_updated": memory_updated,
+            }
+            yield f"data: {json.dumps(done_payload)}\n\n"
+
+        except Exception as exc:
+            yield f"data: {json.dumps({'type': 'error', 'message': str(exc)})}\n\n"
+
+    return StreamingResponse(generate(), media_type="text/event-stream")
