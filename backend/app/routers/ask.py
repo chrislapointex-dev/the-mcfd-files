@@ -2,13 +2,14 @@
 
 Flow:
   1. Load R2-D2 context (recent searches, flagged cases, research goals)
-  2. FTS search the chunks table for the top 20 most relevant chunks
+  2. Run FTS + semantic search in parallel, merge and deduplicate chunks
   3. Pass question + chunks + R2 context to claude_service.ask()
   4. Extract cited sources from the answer
   5. Save Q&A to R2 HIPPOCAMPUS
   6. Return answer, sources list, memory_updated flag
 """
 
+import asyncio
 import re
 from typing import Optional
 
@@ -19,12 +20,15 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_db
 from ..services.claude_service import ask as claude_ask
+from ..services.embed_service import embed_query
 from r2d2 import R2Memory
 from r2d2.context import ContextBuilder
 
 router = APIRouter(prefix="/api", tags=["ask"])
 
-CHUNKS_TO_FETCH = 20
+FTS_LIMIT = 15
+SEMANTIC_LIMIT = 15
+MERGED_CAP = 20
 
 
 # ── Schemas ───────────────────────────────────────────────────────────────────
@@ -50,20 +54,16 @@ class AskResponse(BaseModel):
     memory_updated: bool
 
 
-# ── FTS chunk retrieval ───────────────────────────────────────────────────────
+# ── Chunk retrieval ───────────────────────────────────────────────────────────
 
 
-async def _fetch_chunks(db: AsyncSession, question: str) -> list[dict]:
-    """Full-text search the chunks table, return top CHUNKS_TO_FETCH results."""
+async def _fetch_fts_chunks(db: AsyncSession, question: str) -> list[dict]:
+    """Full-text search the chunks table."""
     sql = text("""
         SELECT
             c.id, c.text, c.citation, c.chunk_num,
             d.id   AS decision_id,
-            d.title,
-            d.source,
-            d.url,
-            d.court,
-            d.date,
+            d.title, d.source, d.url, d.court, d.date,
             ts_rank_cd(
                 to_tsvector('english', c.text),
                 websearch_to_tsquery('english', :q)
@@ -74,21 +74,61 @@ async def _fetch_chunks(db: AsyncSession, question: str) -> list[dict]:
         ORDER BY rank DESC
         LIMIT :limit
     """)
-    rows = (await db.execute(sql, {"q": question, "limit": CHUNKS_TO_FETCH})).all()
-    return [
-        {
-            "id": r.id,
-            "citation": r.citation,
-            "text": r.text,
-            "source": r.source,
-            "decision_id": r.decision_id,
-            "title": r.title,
-            "url": r.url,
-            "court": r.court,
-            "date": str(r.date) if r.date else None,
-        }
-        for r in rows
-    ]
+    rows = (await db.execute(sql, {"q": question, "limit": FTS_LIMIT})).all()
+    return [_row_to_dict(r) for r in rows]
+
+
+async def _fetch_semantic_chunks(db: AsyncSession, question: str) -> list[dict]:
+    """Vector similarity search the chunks table."""
+    try:
+        query_vec = await embed_query(question)
+        vec_literal = f"[{','.join(str(x) for x in query_vec)}]"
+        sql = text(f"""
+            SELECT
+                c.id, c.text, c.citation, c.chunk_num,
+                d.id   AS decision_id,
+                d.title, d.source, d.url, d.court, d.date
+            FROM chunks c
+            JOIN decisions d ON d.id = c.decision_id
+            WHERE c.embedding IS NOT NULL
+            ORDER BY c.embedding <=> '{vec_literal}'::vector
+            LIMIT :limit
+        """)
+        rows = (await db.execute(sql, {"limit": SEMANTIC_LIMIT})).all()
+        return [_row_to_dict(r) for r in rows]
+    except Exception:
+        return []
+
+
+def _row_to_dict(r) -> dict:
+    return {
+        "id": r.id,
+        "citation": r.citation,
+        "text": r.text,
+        "source": r.source,
+        "decision_id": r.decision_id,
+        "title": r.title,
+        "url": r.url,
+        "court": r.court,
+        "date": str(r.date) if r.date else None,
+    }
+
+
+def _merge_chunks(fts: list[dict], semantic: list[dict]) -> list[dict]:
+    """Merge FTS and semantic results, deduplicate by chunk id, cap at MERGED_CAP.
+
+    FTS results come first (they matched the exact query terms); semantic fills
+    the remaining slots with conceptually similar chunks not already present.
+    """
+    seen: set[int] = set()
+    merged: list[dict] = []
+    for chunk in fts + semantic:
+        if chunk["id"] not in seen:
+            seen.add(chunk["id"])
+            merged.append(chunk)
+        if len(merged) >= MERGED_CAP:
+            break
+    return merged
 
 
 # ── Source extraction ─────────────────────────────────────────────────────────
@@ -152,8 +192,12 @@ async def ask_endpoint(
     except Exception:
         pass
 
-    # 2. FTS search for relevant chunks
-    chunks = await _fetch_chunks(db, question)
+    # 2. FTS + semantic search in parallel, merge results
+    fts_chunks, sem_chunks = await asyncio.gather(
+        _fetch_fts_chunks(db, question),
+        _fetch_semantic_chunks(db, question),
+    )
+    chunks = _merge_chunks(fts_chunks, sem_chunks)
 
     # 3. Build prompt — prepend R2 context as a system note if available
     if r2_context:
@@ -180,6 +224,8 @@ async def ask_endpoint(
                 "answer": answer,
                 "sources_cited": [s.citation for s in sources],
                 "chunks_used": len(chunks),
+                "fts_chunks": len(fts_chunks),
+                "semantic_chunks": len(sem_chunks),
             },
             category="search_query",
             region="HIPPOCAMPUS",
