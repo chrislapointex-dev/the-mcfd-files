@@ -23,6 +23,7 @@ from urllib.parse import quote_plus, urlparse
 
 import httpx
 from bs4 import BeautifulSoup
+from ddgs import DDGS
 
 # ── Logging ───────────────────────────────────────────────────────────────────
 
@@ -60,10 +61,11 @@ DDG_URL = "https://html.duckduckgo.com/html/"
 
 HEADERS = {
     "User-Agent": (
-        "MCFD-Files-Research/1.0 (non-commercial; "
-        "public interest; contact: research@example.com)"
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/122.0.0.0 Safari/537.36"
     ),
-    "Accept": "text/html,application/xhtml+xml",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "en-CA,en;q=0.9",
 }
 
@@ -159,20 +161,23 @@ class NewsScraper:
     async def _search(self, query: str) -> list[dict]:
         await asyncio.sleep(SEARCH_DELAY)
         try:
-            resp = await self._client.post(
-                DDG_URL,
-                data={"q": query, "b": "", "kl": "ca-en"},
-                headers={**HEADERS, "Content-Type": "application/x-www-form-urlencoded"},
-            )
-            resp.raise_for_status()
-        except httpx.HTTPStatusError as exc:
-            log.warning("Search HTTP %d for query: %s", exc.response.status_code, query)
-            return []
+            results = []
+            with DDGS() as ddgs:
+                for r in ddgs.text(query, region="ca-en", max_results=10):
+                    url = r.get("href", "")
+                    if not url or not url.startswith("http"):
+                        continue
+                    results.append({
+                        "title": r.get("title", ""),
+                        "url": url,
+                        "snippet": r.get("body", ""),
+                        "domain": urlparse(url).netloc,
+                        "query": query,
+                    })
+            return results
         except Exception as exc:
             log.warning("Search failed for %s: %s", query, exc)
             return []
-
-        return self._parse_ddg(resp.text, query)
 
     def _parse_ddg(self, html: str, query: str) -> list[dict]:
         soup = BeautifulSoup(html, "lxml")
