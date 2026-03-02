@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import SearchBar from './components/SearchBar'
 import FilterBar from './components/FilterBar'
 import DecisionCard from './components/DecisionCard'
@@ -181,6 +182,12 @@ export default function App() {
               >
                 R2 MEMORY
               </button>
+              <Link
+                to="/about"
+                className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block"
+              >
+                ABOUT
+              </Link>
               <span className="text-[10px] font-mono text-amber-500/60 border border-amber-500/25 px-2 py-1 rounded tracking-widest hidden sm:block">
                 UNREDACTED
               </span>
