@@ -5,6 +5,7 @@ import DecisionCard from './components/DecisionCard'
 import DecisionDetail from './components/DecisionDetail'
 import Pagination from './components/Pagination'
 import MemoryPanel from './components/MemoryPanel'
+import AskPanel from './components/AskPanel'
 import { useDecisions } from './hooks/useDecisions'
 
 const EMPTY_FILTERS = { source: '', court: '', dateFrom: '', dateTo: '' }
@@ -23,6 +24,12 @@ export default function App() {
 
   // Memory panel
   const [memoryOpen, setMemoryOpen] = useState(false)
+
+  // Ask mode
+  const [inputMode, setInputMode] = useState('search') // 'search' | 'ask'
+  const [askResult, setAskResult] = useState(null)
+  const [askLoading, setAskLoading] = useState(false)
+  const [askQuestion, setAskQuestion] = useState('')
 
   // Filter options from API
   const [filterOptions, setFilterOptions] = useState({ sources: [], courts: [], year_min: null, year_max: null })
@@ -46,22 +53,56 @@ export default function App() {
   })
 
   const handleSearch = useCallback(
-    e => {
+    async e => {
       e.preventDefault()
       const q = query.trim()
       if (!q) return
+
+      if (inputMode === 'ask') {
+        setAskQuestion(q)
+        setAskResult(null)
+        setAskLoading(true)
+        setSelectedId(null)
+        try {
+          const res = await fetch('/api/ask', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question: q }),
+          })
+          const data = await res.json()
+          setAskResult(data)
+        } catch {
+          setAskResult({ answer: 'Request failed. Is the backend running?', sources: [], chunks_used: 0, memory_updated: false })
+        } finally {
+          setAskLoading(false)
+        }
+        return
+      }
+
       setSubmittedQuery(q)
       setPage(1)
       setSelectedId(null)
     },
-    [query]
+    [query, inputMode]
   )
 
   const handleClear = useCallback(() => {
     setQuery('')
     setSubmittedQuery('')
+    setAskResult(null)
+    setAskQuestion('')
     setPage(1)
     setSelectedId(null)
+  }, [])
+
+  const handleModeToggle = useCallback(() => {
+    setInputMode(m => m === 'search' ? 'ask' : 'search')
+    setQuery('')
+    setSubmittedQuery('')
+    setAskResult(null)
+    setAskQuestion('')
+    setSelectedId(null)
+    setPage(1)
   }, [])
 
   const handleFilterChange = useCallback(newFilters => {
@@ -117,14 +158,31 @@ export default function App() {
             </div>
           </div>
 
-          {/* Search bar */}
-          <SearchBar
-            value={query}
-            onChange={setQuery}
-            onSubmit={handleSearch}
-            onClear={handleClear}
-            isSearch={isSearch}
-          />
+          {/* Mode toggle + search bar */}
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handleModeToggle}
+              title={inputMode === 'search' ? 'Switch to Ask mode (AI Q&A)' : 'Switch to Search mode'}
+              className={`flex-shrink-0 font-mono text-[10px] tracking-widest px-2 py-1.5 rounded border transition-colors ${
+                inputMode === 'ask'
+                  ? 'bg-sky-500/15 border-sky-500/40 text-sky-400 hover:bg-sky-500/25'
+                  : 'bg-ink-700 border-ink-500 text-slate-600 hover:text-slate-400 hover:border-ink-400'
+              }`}
+            >
+              {inputMode === 'ask' ? 'ASK' : 'FTS'}
+            </button>
+            <div className="flex-1">
+              <SearchBar
+                value={query}
+                onChange={setQuery}
+                onSubmit={handleSearch}
+                onClear={handleClear}
+                isSearch={isSearch}
+                mode={inputMode}
+              />
+            </div>
+          </div>
         </div>
       </header>
 
@@ -133,6 +191,22 @@ export default function App() {
 
         {selectedId !== null ? (
           <DecisionDetail id={selectedId} onBack={handleBack} />
+        ) : inputMode === 'ask' ? (
+          askLoading || askResult ? (
+            <AskPanel
+              question={askQuestion}
+              result={askResult}
+              loading={askLoading}
+              onSelectDecision={handleSelect}
+            />
+          ) : (
+            <div className="py-24 text-center">
+              <p className="font-mono text-xs text-slate-600 tracking-widest">ASK MODE ACTIVE</p>
+              <p className="font-mono text-[10px] text-slate-700 mt-2">
+                Ask any question about BC court decisions involving MCFD.
+              </p>
+            </div>
+          )
         ) : (
           <>
             {/* Filters */}
