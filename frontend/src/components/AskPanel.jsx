@@ -1,3 +1,5 @@
+import ReactMarkdown from 'react-markdown'
+
 export default function AskPanel({ question, result, loading, onSelectDecision }) {
   if (loading) {
     return (
@@ -38,8 +40,24 @@ export default function AskPanel({ question, result, loading, onSelectDecision }
           )}
         </div>
         <p className="font-mono text-[10px] text-slate-500 mb-3 italic">"{question}"</p>
-        <div className="text-sm text-slate-300 leading-relaxed whitespace-pre-wrap">
-          {result.answer}
+        <div className="prose-answer text-sm text-slate-300 leading-relaxed">
+          <ReactMarkdown
+            components={{
+              h1: ({children}) => <h1 className="text-base font-bold text-slate-100 mt-4 mb-2 first:mt-0">{children}</h1>,
+              h2: ({children}) => <h2 className="text-sm font-semibold text-slate-200 mt-4 mb-1.5 first:mt-0">{children}</h2>,
+              h3: ({children}) => <h3 className="text-sm font-medium text-slate-300 mt-3 mb-1 first:mt-0">{children}</h3>,
+              p: ({children}) => <p className="mb-3 last:mb-0">{children}</p>,
+              strong: ({children}) => <strong className="font-semibold text-slate-100">{children}</strong>,
+              em: ({children}) => <em className="italic text-slate-400">{children}</em>,
+              ul: ({children}) => <ul className="mb-3 space-y-1 pl-4 list-disc list-outside">{children}</ul>,
+              ol: ({children}) => <ol className="mb-3 space-y-1 pl-4 list-decimal list-outside">{children}</ol>,
+              li: ({children}) => <li className="text-slate-300">{children}</li>,
+              code: ({children}) => <code className="font-mono text-xs bg-ink-700 text-amber-400/80 px-1 py-0.5 rounded">{children}</code>,
+              blockquote: ({children}) => <blockquote className="border-l border-slate-600 pl-3 my-2 text-slate-500 italic">{children}</blockquote>,
+            }}
+          >
+            {result.answer}
+          </ReactMarkdown>
         </div>
       </div>
 
