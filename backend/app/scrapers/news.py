@@ -23,7 +23,7 @@ from urllib.parse import quote_plus, urlparse
 
 import httpx
 from bs4 import BeautifulSoup
-from ddgs import DDGS
+from duckduckgo_search import DDGS
 
 # ── Logging ───────────────────────────────────────────────────────────────────
 
@@ -55,9 +55,35 @@ QUERIES = [
     "Murphy Battista MCFD class action",
     "T.L. v BC Court of Appeal CFCSA",
     "Representative Children Youth BC",
+    # Broader BC coverage
+    "BC child welfare Indigenous family removal",
+    "CFCSA British Columbia child protection",
+    "BC foster care abuse neglect",
+    "child apprehension British Columbia wrongful",
+    "MCFD accountability transparency BC",
+    "BC child welfare death review",
+    "representative children youth BC investigation",
+    "MCFD social worker negligence British Columbia",
+    "child protection BC Supreme Court",
+    "BC child welfare class action lawsuit",
+    "foster care BC Indigenous children",
+    "MCFD wrongful apprehension settlement BC",
+    "BC family court child custody MCFD",
+    "CFCSA amendment reform British Columbia",
+    "child welfare British Columbia news",
+    "BC MCFD complaint ombudsman",
 ]
 
 DDG_URL = "https://html.duckduckgo.com/html/"
+
+BLOCKED_DOMAINS = {
+    # Chinese sites (match "BC" as Chinese abbreviation)
+    "zhidao.baidu.com", "baidu.com", "zhihu.com", "weibo.com",
+    # Social / video (not news)
+    "tiktok.com", "youtube.com", "facebook.com", "twitter.com", "reddit.com",
+    # Dictionary / generic reference
+    "merriam-webster.com", "wikipedia.org",
+}
 
 HEADERS = {
     "User-Agent": (
@@ -166,6 +192,9 @@ class NewsScraper:
                 for r in ddgs.text(query, region="ca-en", max_results=10):
                     url = r.get("href", "")
                     if not url or not url.startswith("http"):
+                        continue
+                    domain = urlparse(url).netloc.lstrip("www.")
+                    if any(domain == b or domain.endswith("." + b) for b in BLOCKED_DOMAINS):
                         continue
                     results.append({
                         "title": r.get("title", ""),
