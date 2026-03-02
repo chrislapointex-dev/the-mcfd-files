@@ -1,9 +1,10 @@
 from datetime import date, datetime
 from typing import Optional
 
-from sqlalchemy import Date, DateTime, Float, Index, Integer, String, Text, func
+from sqlalchemy import Date, DateTime, Float, ForeignKey, Index, Integer, String, Text, func
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
+from pgvector.sqlalchemy import Vector
 
 from .database import Base
 
@@ -68,3 +69,26 @@ class Memory(Base):
 
     def __repr__(self) -> str:
         return f"<Memory {self.region}/{self.key}>"
+
+
+class Chunk(Base):
+    __tablename__ = "chunks"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    decision_id: Mapped[int] = mapped_column(
+        ForeignKey("decisions.id", ondelete="CASCADE"), nullable=False
+    )
+    chunk_num: Mapped[int] = mapped_column(Integer, nullable=False)
+    text: Mapped[str] = mapped_column(Text, nullable=False)
+    citation: Mapped[Optional[str]] = mapped_column(String(150), nullable=True)
+    page_estimate: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    embedding: Mapped[Optional[list]] = mapped_column(Vector(1536), nullable=True)
+
+    __table_args__ = (
+        Index("ix_chunks_decision_id", "decision_id"),
+        # Unique constraint so re-runs don't double-insert
+        Index("ix_chunks_decision_chunk", "decision_id", "chunk_num", unique=True),
+    )
+
+    def __repr__(self) -> str:
+        return f"<Chunk decision={self.decision_id} #{self.chunk_num}>"
