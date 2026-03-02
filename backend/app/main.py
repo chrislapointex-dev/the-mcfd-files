@@ -25,7 +25,6 @@ async def _create_vector_index() -> None:
             "CREATE INDEX IF NOT EXISTS ix_chunks_embedding_hnsw "
             "ON chunks USING hnsw (embedding vector_cosine_ops)"
         ))
-        await conn.execute(text("COMMIT"))
 
 
 app = FastAPI(

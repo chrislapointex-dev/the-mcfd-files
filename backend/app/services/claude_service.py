@@ -75,7 +75,7 @@ async def ask(question: str, chunks: list[dict]) -> str:
 
     client = _get_client()
     response = await client.messages.create(
-        model="claude-sonnet-4-5-20250929",
+        model=os.getenv("CLAUDE_MODEL", "claude-sonnet-4-6"),
         max_tokens=1024,
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": user_message}],

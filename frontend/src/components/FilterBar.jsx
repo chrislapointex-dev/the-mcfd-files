@@ -106,7 +106,7 @@ export default function FilterBar({
           <span>YEAR</span>
           <input
             type="number"
-            placeholder={yearMin ?? '2001'}
+            placeholder={yearMin ?? 'YYYY'}
             min={yearMin}
             max={yearMax}
             value={filters.dateFrom ? filters.dateFrom.slice(0, 4) : ''}
@@ -116,7 +116,7 @@ export default function FilterBar({
           <span>–</span>
           <input
             type="number"
-            placeholder={yearMax ?? '2026'}
+            placeholder={yearMax ?? 'YYYY'}
             min={yearMin}
             max={yearMax}
             value={filters.dateTo ? filters.dateTo.slice(0, 4) : ''}

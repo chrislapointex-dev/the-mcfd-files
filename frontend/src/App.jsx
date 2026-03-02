@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import SearchBar from './components/SearchBar'
 import FilterBar from './components/FilterBar'
@@ -43,6 +43,9 @@ export default function App() {
   // Filter options from API
   const [filterOptions, setFilterOptions] = useState({ sources: [], courts: [], year_min: null, year_max: null })
 
+  // Abort controller for in-flight semantic/ask requests
+  const abortRef = useRef(null)
+
   const isSearch = submittedQuery.length > 0
   const mode = selectedId !== null ? 'detail' : isSearch ? 'search' : 'browse'
 
@@ -51,7 +54,7 @@ export default function App() {
     fetch('/api/decisions/filters')
       .then(r => r.json())
       .then(setFilterOptions)
-      .catch(console.error)
+      .catch(() => setFilterOptions({ sources: [], courts: [], year_min: null, year_max: null }))
   }, [])
 
   const { data, loading, error } = useDecisions({
@@ -68,16 +71,19 @@ export default function App() {
       if (!q) return
 
       if (inputMode === 'semantic') {
+        abortRef.current?.abort()
+        const controller = new AbortController()
+        abortRef.current = controller
         setSemanticQuery(q)
         setSemanticResults(null)
         setSemanticLoading(true)
         setSelectedId(null)
         try {
-          const res = await fetch(`/api/search/semantic?q=${encodeURIComponent(q)}&k=20`)
+          const res = await fetch(`/api/search/semantic?q=${encodeURIComponent(q)}&k=20`, { signal: controller.signal })
           const data = await res.json()
           setSemanticResults(data)
-        } catch {
-          setSemanticResults({ query: q, total: 0, results: [] })
+        } catch (err) {
+          if (err.name !== 'AbortError') setSemanticResults({ query: q, total: 0, results: [] })
         } finally {
           setSemanticLoading(false)
         }
@@ -85,6 +91,9 @@ export default function App() {
       }
 
       if (inputMode === 'ask') {
+        abortRef.current?.abort()
+        const controller = new AbortController()
+        abortRef.current = controller
         setAskQuestion(q)
         setAskResult(null)
         setAskLoading(true)
@@ -94,11 +103,12 @@ export default function App() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ question: q }),
+            signal: controller.signal,
           })
           const data = await res.json()
           setAskResult(data)
-        } catch {
-          setAskResult({ answer: 'Request failed. Is the backend running?', sources: [], chunks_used: 0, memory_updated: false })
+        } catch (err) {
+          if (err.name !== 'AbortError') setAskResult({ answer: 'Request failed. Is the backend running?', sources: [], chunks_used: 0, memory_updated: false })
         } finally {
           setAskLoading(false)
         }
@@ -124,6 +134,7 @@ export default function App() {
   }, [])
 
   const handleSetMode = useCallback((newMode) => {
+    abortRef.current?.abort()
     setInputMode(newMode)
     setQuery('')
     setSubmittedQuery('')
