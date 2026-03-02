@@ -51,7 +51,7 @@ The frontend provides four modes, toggled by the FTS / VECTOR / ASK buttons:
 | `bccourts`   | 954    | BC Supreme Court and Court of Appeal decisions   |
 | `rcy`        | 126    | Representative for Children and Youth BC reports |
 | `legislation`| 214    | CFCSA and related BC statutes (by section)       |
-| `news`       | 5+     | News articles (re-run scraper to expand)         |
+| `news`       | 139    | News articles (DuckDuckGo + gov.bc.ca)           |
 
 ### R2 Memory
 
@@ -84,6 +84,7 @@ Copy `.env.example` to `.env` and set:
 | GET    | `/api/decisions/{id}`        | Single decision detail                   |
 | GET    | `/api/search/semantic`       | Vector similarity search over chunks     |
 | POST   | `/api/ask`                   | Claude Q&A grounded in top chunks        |
+| POST   | `/api/ask/stream`            | Same as above, SSE token-by-token stream |
 | GET    | `/api/memory`                | List R2 memory entries                   |
 | POST   | `/api/memory`                | Save a memory entry                      |
 | DELETE | `/api/memory/{id}`           | Delete a memory entry                    |
@@ -134,8 +135,11 @@ python -m app.loaders.load_decisions --dry-run
 ```bash
 cd backend
 
-# Chunk all decisions and generate embeddings
-python -m app.scripts.chunk_and_embed
+# Chunk decisions (splits full_text into overlapping segments)
+python -m app.pipeline.chunker
+
+# Embed chunks (384-dim all-MiniLM-L6-v2 via sentence-transformers)
+python -m app.pipeline.embedder
 ```
 
 ---
