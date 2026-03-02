@@ -82,7 +82,7 @@ class Chunk(Base):
     text: Mapped[str] = mapped_column(Text, nullable=False)
     citation: Mapped[Optional[str]] = mapped_column(String(150), nullable=True)
     page_estimate: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
-    embedding: Mapped[Optional[list]] = mapped_column(Vector(1536), nullable=True)
+    embedding: Mapped[Optional[list]] = mapped_column(Vector(384), nullable=True)
 
     __table_args__ = (
         Index("ix_chunks_decision_id", "decision_id"),
