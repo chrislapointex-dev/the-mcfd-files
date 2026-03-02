@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
 from .database import init_db
-from . import models  # noqa: F401 — registers models with Base.metadata
+from . import models  # noqa: F401 — registers Decision + Memory with Base.metadata
 from .routers import decisions
 
 

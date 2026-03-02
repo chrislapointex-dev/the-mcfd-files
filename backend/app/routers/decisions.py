@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..database import get_db
 from ..models import Decision
 from ..schemas import DecisionDetail, DecisionSummary, FiltersResponse, PaginatedDecisions
+from r2d2 import R2Memory
 
 router = APIRouter(prefix="/api/decisions", tags=["decisions"])
 
@@ -115,6 +116,19 @@ async def search_decisions(
             summary.snippet = hl
         items.append(summary)
 
+    # Log search to R2 memory (fire-and-forget — never fails the request)
+    try:
+        mem = R2Memory(db=db)
+        await mem.log_search(
+            query=q,
+            result_count=total,
+            filters={"court": court, "source": source,
+                     "date_from": str(date_from) if date_from else None,
+                     "date_to": str(date_to) if date_to else None},
+        )
+    except Exception:
+        pass
+
     return PaginatedDecisions(
         items=items,
         total=total,
@@ -161,4 +175,16 @@ async def get_decision(decision_id: int, db: AsyncSession = Depends(get_db)):
     decision = result.scalar_one_or_none()
     if not decision:
         raise HTTPException(status_code=404, detail="Decision not found")
+
+    # Log view to R2 memory
+    try:
+        mem = R2Memory(db=db)
+        await mem.log_view(
+            decision_id=decision.id,
+            title=decision.title,
+            citation=decision.citation,
+        )
+    except Exception:
+        pass
+
     return DecisionDetail.model_validate(decision)
