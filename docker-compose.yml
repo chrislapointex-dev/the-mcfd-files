@@ -29,6 +29,9 @@ services:
       DATABASE_URL: postgresql+asyncpg://mcfd:mcfd@db:5432/mcfd
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173}
       CLAUDE_MODEL: ${CLAUDE_MODEL:-claude-sonnet-4-6}
+      # Optional — required only to run the CanLII scraper (app.scrapers.canlii)
+      # Set in .env: CANLII_API_KEY=your_key_here
+      CANLII_API_KEY: ${CANLII_API_KEY:-}
     ports:
       - "8000:8000"
     volumes:
