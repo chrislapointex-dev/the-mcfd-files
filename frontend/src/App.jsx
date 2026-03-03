@@ -225,6 +225,12 @@ export default function App() {
                 R2 MEMORY
               </button>
               <Link
+                to="/patterns"
+                className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block"
+              >
+                PATTERNS
+              </Link>
+              <Link
                 to="/about"
                 className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block"
               >
@@ -251,6 +257,13 @@ export default function App() {
                     >
                       R2 MEMORY
                     </button>
+                    <Link
+                      to="/patterns"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-[10px] font-mono text-slate-500 px-3 py-2.5 hover:bg-ink-700 hover:text-slate-300 transition-colors tracking-widest"
+                    >
+                      PATTERNS
+                    </Link>
                     <Link
                       to="/about"
                       onClick={() => setMobileMenuOpen(false)}
