@@ -283,6 +283,12 @@ async def ask_endpoint(
     except Exception:
         pass
 
+    # Fire-and-forget compaction — never fails the request
+    try:
+        await mem.compact_if_needed()
+    except Exception:
+        pass
+
     return AskResponse(
         answer=answer,
         sources=sources,
