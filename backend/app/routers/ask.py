@@ -24,7 +24,8 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_db
-from ..services.claude_service import ask as claude_ask, ask_stream as claude_ask_stream
+from ..services.claude_service import ask as claude_ask, ask_stream as claude_ask_stream, SYSTEM_PROMPT
+from r2d2.budget import ContextBudget
 from ..services.embed_service import embed_query
 from r2d2 import R2Memory
 from r2d2.context import ContextBuilder
@@ -84,6 +85,7 @@ class AskResponse(BaseModel):
     sources: list[SourceRef]
     chunks_used: int
     memory_updated: bool
+    budget: Optional[dict] = None
 
 
 # ── Chunk retrieval ───────────────────────────────────────────────────────────
@@ -235,6 +237,16 @@ async def ask_endpoint(
     )
     chunks = _merge_chunks(fts_chunks, sem_chunks)
 
+    # 2b. Budget allocation
+    budget_alloc = None
+    try:
+        raw_ctx = await mem.get_context(limit_per_region=10)
+        memory_items = [item for items in raw_ctx.values() for item in items]
+        budget_alloc = ContextBudget().allocate(SYSTEM_PROMPT, memory_items, len(chunks))
+        chunks = chunks[:budget_alloc["max_chunks"]]
+    except Exception:
+        pass
+
     # 3. Build prompt — prepend R2 context as a system note if available
     if r2_context:
         question_with_context = (
@@ -276,6 +288,7 @@ async def ask_endpoint(
         sources=sources,
         chunks_used=len(chunks),
         memory_updated=memory_updated,
+        budget=budget_alloc,
     )
 
 
