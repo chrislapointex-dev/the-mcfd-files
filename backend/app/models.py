@@ -71,6 +71,29 @@ class Memory(Base):
         return f"<Memory {self.region}/{self.key}>"
 
 
+class Entity(Base):
+    __tablename__ = "entities"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    decision_id: Mapped[int] = mapped_column(
+        ForeignKey("decisions.id", ondelete="CASCADE"), nullable=False
+    )
+    entity_type: Mapped[str] = mapped_column(String(50), nullable=False)
+    entity_value: Mapped[str] = mapped_column(Text, nullable=False)
+    context_snippet: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+
+    __table_args__ = (
+        Index("ix_entities_decision_id", "decision_id"),
+        Index("ix_entities_type", "entity_type"),
+    )
+
+    def __repr__(self) -> str:
+        return f"<Entity {self.entity_type}:{self.entity_value}>"
+
+
 class Chunk(Base):
     __tablename__ = "chunks"
 

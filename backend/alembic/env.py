@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
 
 # Import all models so Base.metadata is fully populated
-from app.models import Decision, Memory, Chunk  # noqa: F401
+from app.models import Decision, Memory, Chunk, Entity  # noqa: F401
 from app.database import Base
 
 config = context.config
