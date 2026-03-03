@@ -27,6 +27,7 @@ from ..database import get_db
 from ..services.claude_service import ask as claude_ask, ask_stream as claude_ask_stream, SYSTEM_PROMPT
 from r2d2.budget import ContextBudget, estimate_tokens
 from ..services.embed_service import embed_query
+from ..services.validator import validate_citations
 from r2d2 import R2Memory
 from r2d2.context import ContextBuilder
 
@@ -87,6 +88,7 @@ class AskResponse(BaseModel):
     memory_updated: bool
     budget: Optional[dict] = None
     diagnostics: Optional[dict] = None
+    citation_validations: Optional[list] = None
 
 
 # ── Chunk retrieval ───────────────────────────────────────────────────────────
@@ -261,6 +263,13 @@ async def ask_endpoint(
     # 4. Ask Claude
     answer = await claude_ask(question=question_with_context, chunks=chunks)
 
+    # 4b. Validate citations
+    citation_validations = None
+    try:
+        citation_validations = await validate_citations(answer, chunks)
+    except Exception:
+        pass
+
     # 5. Extract cited sources
     sources = _extract_sources(answer, chunks)
 
@@ -330,6 +339,7 @@ async def ask_endpoint(
         memory_updated=memory_updated,
         budget=budget_alloc,
         diagnostics=diagnostics,
+        citation_validations=citation_validations,
     )
 
 
