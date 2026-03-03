@@ -25,7 +25,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_db
 from ..services.claude_service import ask as claude_ask, ask_stream as claude_ask_stream, SYSTEM_PROMPT
-from r2d2.budget import ContextBudget
+from r2d2.budget import ContextBudget, estimate_tokens
 from ..services.embed_service import embed_query
 from r2d2 import R2Memory
 from r2d2.context import ContextBuilder
@@ -86,6 +86,7 @@ class AskResponse(BaseModel):
     chunks_used: int
     memory_updated: bool
     budget: Optional[dict] = None
+    diagnostics: Optional[dict] = None
 
 
 # ── Chunk retrieval ───────────────────────────────────────────────────────────
@@ -236,6 +237,7 @@ async def ask_endpoint(
         _fetch_semantic_chunks(db, question),
     )
     chunks = _merge_chunks(fts_chunks, sem_chunks)
+    chunks_after_merge = len(chunks)
 
     # 2b. Budget allocation
     budget_alloc = None
@@ -283,6 +285,38 @@ async def ask_endpoint(
     except Exception:
         pass
 
+    # 7. Build diagnostics from already-available data
+    diagnostics = None
+    try:
+        mem_regions = (budget_alloc or {}).get("memory_included", {})
+        seen_srcs: list[str] = []
+        seen_srcs_set: set[str] = set()
+        for c in chunks:
+            s = c.get("source", "")
+            if s and s not in seen_srcs_set:
+                seen_srcs.append(s)
+                seen_srcs_set.add(s)
+        diagnostics = {
+            "memory_regions_loaded": mem_regions,
+            "memory_total_items": sum(mem_regions.values()),
+            "chunks_retrieved_fts": len(fts_chunks),
+            "chunks_retrieved_semantic": len(sem_chunks),
+            "chunks_after_merge": chunks_after_merge,
+            "chunks_after_budget": len(chunks),
+            "top_chunk_sources": seen_srcs[:5],
+            "search_type": (
+                "hybrid"        if fts_chunks and sem_chunks else
+                "fts_only"      if fts_chunks else
+                "semantic_only" if sem_chunks else
+                "none"
+            ),
+            "model": os.getenv("CLAUDE_MODEL", "claude-sonnet-4-6"),
+            "response_tokens_estimate": estimate_tokens(answer),
+            "budget_utilization_pct": (budget_alloc or {}).get("utilization_pct"),
+        }
+    except Exception:
+        pass
+
     # Fire-and-forget compaction — never fails the request
     try:
         await mem.compact_if_needed()
@@ -295,6 +329,7 @@ async def ask_endpoint(
         chunks_used=len(chunks),
         memory_updated=memory_updated,
         budget=budget_alloc,
+        diagnostics=diagnostics,
     )
 
 
