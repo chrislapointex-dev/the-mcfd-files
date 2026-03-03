@@ -1,7 +1,12 @@
 """MCFD News Scraper
 
-Searches DuckDuckGo HTML for news articles about MCFD failures, then fetches
-full article text via httpx + BeautifulSoup4.
+Fetches news articles about MCFD / child welfare from direct BC news sources:
+  - CBC BC (RSS feed, filtered for MCFD/child welfare keywords)
+  - BC Gov News (Children and Family Development ministry releases)
+  - The Tyee (search results for MCFD/child welfare)
+  - Vancouver Sun (search results for MCFD/child welfare)
+
+DuckDuckGo is used as a fallback if a direct source fails or returns nothing.
 
 Saves each article as JSON to data/raw/news/.
 Manifest at data/raw/news/manifest.json tracks completed downloads.
@@ -17,13 +22,14 @@ import asyncio
 import json
 import logging
 import re
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import quote_plus, urlparse
+from urllib.parse import urlparse
 
 import httpx
 from bs4 import BeautifulSoup
-from duckduckgo_search import DDGS
+from ddgs import DDGS
 
 # ── Logging ───────────────────────────────────────────────────────────────────
 
@@ -38,62 +44,39 @@ log = logging.getLogger(__name__)
 
 DATA_DIR = Path("data/raw/news")
 MANIFEST_FILE = DATA_DIR / "manifest.json"
-SEARCH_DELAY = 3.0   # seconds between searches
-FETCH_DELAY = 2.0    # seconds between article fetches
-
-QUERIES = [
-    "MCFD wrongful removal BC",
-    "Ministry Children Family Development lawsuit",
-    "BC child protection failure",
-    "Representative Children Youth BC report",
-    "MCFD class action BC",
-    "MCFD foster care death BC",
-    "MCFD social worker misconduct BC",
-    "MCFD BC investigation",
-    "foster care BC death",
-    "child welfare BC reform",
-    "Murphy Battista MCFD class action",
-    "T.L. v BC Court of Appeal CFCSA",
-    "Representative Children Youth BC",
-    # Broader BC coverage
-    "BC child welfare Indigenous family removal",
-    "CFCSA British Columbia child protection",
-    "BC foster care abuse neglect",
-    "child apprehension British Columbia wrongful",
-    "MCFD accountability transparency BC",
-    "BC child welfare death review",
-    "representative children youth BC investigation",
-    "MCFD social worker negligence British Columbia",
-    "child protection BC Supreme Court",
-    "BC child welfare class action lawsuit",
-    "foster care BC Indigenous children",
-    "MCFD wrongful apprehension settlement BC",
-    "BC family court child custody MCFD",
-    "CFCSA amendment reform British Columbia",
-    "child welfare British Columbia news",
-    "BC MCFD complaint ombudsman",
-]
-
-DDG_URL = "https://html.duckduckgo.com/html/"
-
-BLOCKED_DOMAINS = {
-    # Chinese sites (match "BC" as Chinese abbreviation)
-    "zhidao.baidu.com", "baidu.com", "zhihu.com", "weibo.com",
-    # Social / video (not news)
-    "tiktok.com", "youtube.com", "facebook.com", "twitter.com", "reddit.com",
-    # Dictionary / generic reference
-    "merriam-webster.com", "wikipedia.org",
-}
+FETCH_DELAY = 2.0  # seconds between requests per domain
 
 HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/122.0.0.0 Safari/537.36"
-    ),
+    "User-Agent": "MCFDFiles/1.0 (research)",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "en-CA,en;q=0.9",
 }
+
+# Keywords for filtering CBC RSS items (lowercase match)
+KEYWORDS = frozenset({
+    "mcfd", "child welfare", "foster care", "child protection",
+    "ministry of children", "representative for children", "cfcsa",
+    "child apprehension", "family development", "child in care",
+    "children in care", "indigenous children", "child removal",
+    "children and family", "youth in care",
+})
+
+# DuckDuckGo fallback queries (used when a direct source fails)
+DDG_FALLBACK_QUERIES = [
+    "MCFD BC child welfare news",
+    "BC child protection failure news",
+    "Representative Children Youth BC report",
+    "MCFD wrongful removal BC",
+    "BC foster care death news",
+    "MCFD class action BC news",
+]
+
+BLOCKED_DOMAINS = {
+    "zhidao.baidu.com", "baidu.com", "zhihu.com", "weibo.com",
+    "tiktok.com", "youtube.com", "facebook.com", "twitter.com", "reddit.com",
+    "merriam-webster.com", "wikipedia.org",
+}
+
 
 # ── Manifest ──────────────────────────────────────────────────────────────────
 
@@ -154,20 +137,46 @@ class NewsScraper:
 
         all_results: list[dict] = []
         seen_urls: set[str] = set()
+        any_failed = False
 
-        for query in QUERIES:
-            if self.limit is not None and self.saved >= self.limit:
-                break
-            log.info("Searching: %s", query)
-            results = await self._search(query)
-            log.info("  → %d results", len(results))
-            for r in results:
-                if r["url"] not in seen_urls:
-                    seen_urls.add(r["url"])
-                    all_results.append(r)
+        # ── Direct source scrapers ──────────────────────────────────────────
+        sources = [
+            ("CBC BC",        self._scrape_cbc),
+            ("BC Gov News",   self._scrape_bc_gov),
+            ("The Tyee",      self._scrape_tyee),
+            ("Vancouver Sun", self._scrape_vsun),
+        ]
 
-        log.info("Total unique search results: %d", len(all_results))
+        for source_name, scraper_fn in sources:
+            try:
+                results = await scraper_fn()
+                log.info("%s: %d articles found", source_name, len(results))
+                if len(results) == 0:
+                    any_failed = True
+                for r in results:
+                    if r["url"] not in seen_urls:
+                        seen_urls.add(r["url"])
+                        all_results.append(r)
+            except Exception as exc:
+                log.warning("%s scraper failed: %s — will use DDG fallback", source_name, exc)
+                any_failed = True
 
+        # ── DuckDuckGo fallback (runs if any source failed or returned nothing) ──
+        if any_failed:
+            log.info("Running DuckDuckGo fallback queries")
+            try:
+                ddg_results = await self._ddg_fallback()
+                log.info("DuckDuckGo: %d results", len(ddg_results))
+                for r in ddg_results:
+                    if r["url"] not in seen_urls:
+                        seen_urls.add(r["url"])
+                        all_results.append(r)
+            except Exception as exc:
+                log.warning("DuckDuckGo fallback also failed: %s", exc)
+
+        log.info("Total unique articles to fetch: %d", len(all_results))
+
+        # ── Fetch full text and save each article ───────────────────────────
         for result in all_results:
             if self.limit is not None and self.saved >= self.limit:
                 log.info("Limit of %d reached.", self.limit)
@@ -175,80 +184,212 @@ class NewsScraper:
             await self._process(result)
 
         log.info(
-            "Done. saved=%d  skipped=%d  errors=%d",
-            self.saved,
-            self.skipped,
-            self.errors,
+            "Done. saved=%d  skipped=%d  errors=%d  manifest_total=%d",
+            self.saved, self.skipped, self.errors, len(self.manifest),
         )
         await self._client.aclose()
 
-    # ── Internal ──────────────────────────────────────────────────────────────
+    # ── Direct source scrapers ─────────────────────────────────────────────────
 
-    async def _search(self, query: str) -> list[dict]:
-        await asyncio.sleep(SEARCH_DELAY)
+    async def _scrape_cbc(self) -> list[dict]:
+        """Fetch CBC BC RSS feed and filter for MCFD/child welfare articles."""
+        rss_url = "https://www.cbc.ca/cmlink/rss-canada-britishcolumbia"
+        await asyncio.sleep(FETCH_DELAY)
+        resp = await self._client.get(rss_url)
+        resp.raise_for_status()
+
         try:
-            results = []
-            with DDGS() as ddgs:
-                for r in ddgs.text(query, region="ca-en", max_results=10):
-                    url = r.get("href", "")
-                    if not url or not url.startswith("http"):
-                        continue
-                    domain = urlparse(url).netloc.lstrip("www.")
-                    if any(domain == b or domain.endswith("." + b) for b in BLOCKED_DOMAINS):
-                        continue
-                    results.append({
-                        "title": r.get("title", ""),
-                        "url": url,
-                        "snippet": r.get("body", ""),
-                        "domain": urlparse(url).netloc,
-                        "query": query,
-                    })
-            return results
-        except Exception as exc:
-            log.warning("Search failed for %s: %s", query, exc)
+            root = ET.fromstring(resp.content)
+        except ET.ParseError as exc:
+            log.warning("CBC RSS parse error: %s", exc)
             return []
 
-    def _parse_ddg(self, html: str, query: str) -> list[dict]:
-        soup = BeautifulSoup(html, "lxml")
         results = []
+        for item in root.findall(".//item"):
+            title = (item.findtext("title") or "").strip()
+            link = (item.findtext("link") or "").strip()
+            # Fallback: guid element often holds the permalink
+            if not link:
+                guid = item.find("guid")
+                if guid is not None and guid.text:
+                    link = guid.text.strip()
+            desc = (item.findtext("description") or "").strip()
 
-        for result in soup.select(".result"):
-            title_el = result.select_one(".result__title a")
-            snippet_el = result.select_one(".result__snippet")
-
-            if not title_el:
+            if not link or not link.startswith("http"):
                 continue
 
-            url = title_el.get("href", "")
-            # DDG wraps URLs in redirects — extract the real URL
-            url = self._extract_real_url(url)
-            if not url or not url.startswith("http"):
+            # Only keep items that mention MCFD/child welfare topics
+            combined = (title + " " + desc).lower()
+            if not any(kw in combined for kw in KEYWORDS):
                 continue
 
-            title = title_el.get_text(strip=True)
-            snippet = snippet_el.get_text(strip=True) if snippet_el else ""
-            domain = urlparse(url).netloc
+            # Strip HTML from RSS description
+            desc_clean = BeautifulSoup(desc, "lxml").get_text(strip=True)[:300]
 
             results.append({
                 "title": title,
-                "url": url,
-                "snippet": snippet,
-                "domain": domain,
-                "query": query,
+                "url": link,
+                "snippet": desc_clean,
+                "domain": "cbc.ca",
+                "query": "cbc_rss_bc",
             })
 
         return results
 
-    def _extract_real_url(self, href: str) -> str:
-        """DDG sometimes wraps URLs in /l/?uddg=... — extract the real one."""
-        if href.startswith("//duckduckgo.com/l/") or "uddg=" in href:
-            match = re.search(r"uddg=([^&]+)", href)
-            if match:
-                from urllib.parse import unquote
-                return unquote(match.group(1))
-        if href.startswith("//"):
-            return "https:" + href
-        return href
+    async def _scrape_bc_gov(self) -> list[dict]:
+        """Fetch BC Gov News press releases for Children and Family Development."""
+        url = (
+            "https://news.gov.bc.ca/releases"
+            "?ministry=Children+and+Family+Development&pageSize=20"
+        )
+        await asyncio.sleep(FETCH_DELAY)
+        resp = await self._client.get(url)
+        resp.raise_for_status()
+
+        soup = BeautifulSoup(resp.text, "lxml")
+        results = []
+
+        # Try multiple selector patterns — BC Gov may restructure their page
+        articles = (
+            soup.select("article")
+            or soup.select(".release-list li")
+            or soup.select(".news-releases li")
+            or soup.select(".grid-list li")
+            or soup.select("li.item")
+        )
+
+        for article in articles:
+            a = article.select_one("a[href]")
+            if not a:
+                continue
+            href = a.get("href", "").strip()
+            if not href:
+                continue
+            if not href.startswith("http"):
+                href = "https://news.gov.bc.ca" + href
+            title = a.get_text(strip=True)
+            if not title or len(title) < 5:
+                continue
+            snippet_el = article.select_one("p, .summary, .description")
+            snippet = snippet_el.get_text(strip=True)[:300] if snippet_el else ""
+
+            results.append({
+                "title": title,
+                "url": href,
+                "snippet": snippet,
+                "domain": "news.gov.bc.ca",
+                "query": "bc_gov_cfcs",
+            })
+
+        return results
+
+    async def _scrape_tyee(self) -> list[dict]:
+        """Fetch The Tyee search results for MCFD/child welfare."""
+        url = "https://thetyee.ca/search/?q=MCFD+child+welfare+british+columbia"
+        await asyncio.sleep(FETCH_DELAY)
+        resp = await self._client.get(url)
+        resp.raise_for_status()
+
+        soup = BeautifulSoup(resp.text, "lxml")
+        results = []
+
+        for article in soup.select("article, .search-result, .story, li.item"):
+            # Prefer heading anchors; fall back to any link in the block
+            a = article.select_one(
+                "h2 a[href], h3 a[href], .headline a[href], .title a[href]"
+            ) or article.select_one("a[href]")
+            if not a:
+                continue
+            href = a.get("href", "").strip()
+            if not href:
+                continue
+            if not href.startswith("http"):
+                href = "https://thetyee.ca" + href
+            title = a.get_text(strip=True)
+            if not title or len(title) < 5:
+                continue
+            snippet_el = article.select_one("p, .summary, .excerpt, .description")
+            snippet = snippet_el.get_text(strip=True)[:300] if snippet_el else ""
+
+            results.append({
+                "title": title,
+                "url": href,
+                "snippet": snippet,
+                "domain": "thetyee.ca",
+                "query": "tyee_search",
+            })
+
+        return results
+
+    async def _scrape_vsun(self) -> list[dict]:
+        """Fetch Vancouver Sun search results for MCFD/child welfare."""
+        url = "https://vancouversun.com/search/?q=MCFD+child+welfare"
+        await asyncio.sleep(FETCH_DELAY)
+        resp = await self._client.get(url)
+        resp.raise_for_status()
+
+        soup = BeautifulSoup(resp.text, "lxml")
+        results = []
+
+        for article in soup.select("article, .article-card, .search-result, .story-card"):
+            a = article.select_one(
+                "h2 a[href], h3 a[href], .headline a[href], .title a[href]"
+            ) or article.select_one("a[href]")
+            if not a:
+                continue
+            href = a.get("href", "").strip()
+            if not href:
+                continue
+            if not href.startswith("http"):
+                href = "https://vancouversun.com" + href
+            title = a.get_text(strip=True)
+            if not title or len(title) < 5:
+                continue
+            snippet_el = article.select_one("p, .summary, .excerpt, .description")
+            snippet = snippet_el.get_text(strip=True)[:300] if snippet_el else ""
+
+            results.append({
+                "title": title,
+                "url": href,
+                "snippet": snippet,
+                "domain": "vancouversun.com",
+                "query": "vsun_search",
+            })
+
+        return results
+
+    # ── DuckDuckGo fallback ────────────────────────────────────────────────────
+
+    async def _ddg_fallback(self) -> list[dict]:
+        """Run DuckDuckGo searches as fallback when direct sources fail."""
+        results = []
+        seen: set[str] = set()
+
+        for query in DDG_FALLBACK_QUERIES:
+            await asyncio.sleep(3.0)  # DDG needs a longer delay
+            try:
+                ddgs = DDGS()
+                for r in ddgs.text(query, region="ca-en", max_results=8):
+                        url = r.get("href", "")
+                        if not url or not url.startswith("http") or url in seen:
+                            continue
+                        domain = urlparse(url).netloc.lstrip("www.")
+                        if any(domain == b or domain.endswith("." + b) for b in BLOCKED_DOMAINS):
+                            continue
+                        seen.add(url)
+                        results.append({
+                            "title": r.get("title", ""),
+                            "url": url,
+                            "snippet": (r.get("body") or "")[:300],
+                            "domain": urlparse(url).netloc,
+                            "query": query,
+                        })
+            except Exception as exc:
+                log.warning("DDG query failed (%s): %s", query, exc)
+
+        return results
+
+    # ── Article processing ─────────────────────────────────────────────────────
 
     async def _process(self, result: dict) -> None:
         url = result["url"]
@@ -306,12 +447,10 @@ class NewsScraper:
         """Extract readable text from article HTML."""
         soup = BeautifulSoup(html, "lxml")
 
-        # Remove boilerplate
         for tag in soup(["script", "style", "nav", "header", "footer",
                           "aside", "form", "iframe", "noscript"]):
             tag.decompose()
 
-        # Try common article containers first
         for selector in ["article", "main", '[role="main"]',
                           ".article-body", ".story-body", ".post-content",
                           ".entry-content", ".article-content", "#content"]:
@@ -321,7 +460,6 @@ class NewsScraper:
                 if len(text) > 200:
                     return text
 
-        # Fall back to body
         body = soup.find("body")
         if body:
             return body.get_text(separator="\n", strip=True)
@@ -343,7 +481,7 @@ class NewsScraper:
 
 async def _main() -> None:
     parser = argparse.ArgumentParser(
-        description="Search and save news articles about MCFD failures"
+        description="Scrape BC news sources for MCFD/child welfare articles"
     )
     parser.add_argument(
         "--limit",
