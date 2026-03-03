@@ -33,3 +33,10 @@ body {
   background: rgba(245, 158, 11, 0.25);
   color: #fff;
 }
+
+/* ── Print ─────────────────────────────────────────── */
+@media print {
+  header, footer, button, nav { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+  pre { white-space: pre-wrap; font-size: 11px; }
+}

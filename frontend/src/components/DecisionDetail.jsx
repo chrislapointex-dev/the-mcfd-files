@@ -20,6 +20,13 @@ export default function DecisionDetail({ id, onBack }) {
   const [decision, setDecision] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [citationCopied, setCitationCopied] = useState(false)
+
+  const handleCopyCitation = (citation, title) => {
+    navigator.clipboard.writeText(citation || title || '')
+    setCitationCopied(true)
+    setTimeout(() => setCitationCopied(false), 2000)
+  }
 
   useEffect(() => {
     setLoading(true)
@@ -91,14 +98,28 @@ export default function DecisionDetail({ id, onBack }) {
               {decision.source}
             </span>
           </div>
-          <a
-            href={decision.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[11px] font-mono text-slate-500 hover:text-amber-500 transition-colors"
-          >
-            SOURCE DOC →
-          </a>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => handleCopyCitation(decision.citation, decision.title)}
+              className="text-[11px] font-mono text-slate-500 hover:text-amber-500 transition-colors"
+            >
+              {citationCopied ? 'COPIED ✓' : 'COPY CITATION'}
+            </button>
+            <button
+              onClick={() => window.print()}
+              className="text-[11px] font-mono text-slate-500 hover:text-slate-300 transition-colors"
+            >
+              PRINT
+            </button>
+            <a
+              href={decision.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] font-mono text-slate-500 hover:text-amber-500 transition-colors"
+            >
+              SOURCE DOC →
+            </a>
+          </div>
         </div>
 
         {/* Citation */}

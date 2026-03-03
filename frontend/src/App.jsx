@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import SearchBar from './components/SearchBar'
 import FilterBar from './components/FilterBar'
 import DecisionCard from './components/DecisionCard'
@@ -11,8 +11,11 @@ import SemanticPanel from './components/SemanticPanel'
 import { useDecisions } from './hooks/useDecisions'
 
 const EMPTY_FILTERS = { source: '', court: '', dateFrom: '', dateTo: '' }
+const EMPTY_ASK_RESULT = { answer: '', sources: [], chunks_used: 0, memory_updated: false, budget: null, diagnostics: null }
 
 export default function App() {
+  const [searchParams] = useSearchParams()
+
   // Search state
   const [query, setQuery] = useState('')
   const [submittedQuery, setSubmittedQuery] = useState('')
@@ -33,10 +36,9 @@ export default function App() {
   // Input mode: 'search' | 'semantic' | 'ask'
   const [inputMode, setInputMode] = useState('search')
 
-  // Ask mode state
-  const [askResult, setAskResult] = useState(null)
+  // Ask mode: array of { question, result } messages
+  const [askMessages, setAskMessages] = useState([])
   const [askLoading, setAskLoading] = useState(false)
-  const [askQuestion, setAskQuestion] = useState('')
 
   // Semantic mode state
   const [semanticResults, setSemanticResults] = useState(null)
@@ -67,6 +69,106 @@ export default function App() {
     page,
   })
 
+  // ── Ask streaming ────────────────────────────────────────────────────────────
+
+  const triggerAsk = useCallback(async (q) => {
+    abortRef.current?.abort()
+    const controller = new AbortController()
+    abortRef.current = controller
+
+    setAskMessages(prev => [...prev, { question: q, result: { ...EMPTY_ASK_RESULT } }])
+    setAskLoading(true)
+    setSelectedId(null)
+
+    try {
+      const res = await fetch('/api/ask/stream', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: q }),
+        signal: controller.signal,
+      })
+      const reader = res.body.getReader()
+      const decoder = new TextDecoder()
+      let buf = ''
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        buf += decoder.decode(value, { stream: true })
+        const parts = buf.split('\n\n')
+        buf = parts.pop()
+        for (const part of parts) {
+          const line = part.trim()
+          if (!line.startsWith('data: ')) continue
+          const data = JSON.parse(line.slice(6))
+          if (data.type === 'token') {
+            setAskMessages(prev => {
+              const msgs = [...prev]
+              const last = msgs[msgs.length - 1]
+              msgs[msgs.length - 1] = { ...last, result: { ...last.result, answer: last.result.answer + data.text } }
+              return msgs
+            })
+          } else if (data.type === 'done') {
+            setAskMessages(prev => {
+              const msgs = [...prev]
+              const last = msgs[msgs.length - 1]
+              msgs[msgs.length - 1] = {
+                ...last,
+                result: {
+                  ...last.result,
+                  sources: data.sources,
+                  chunks_used: data.chunks_used,
+                  memory_updated: data.memory_updated,
+                  budget: data.budget ?? null,
+                  diagnostics: data.diagnostics ?? null,
+                },
+              }
+              return msgs
+            })
+          } else if (data.type === 'error') {
+            setAskMessages(prev => {
+              const msgs = [...prev]
+              const last = msgs[msgs.length - 1]
+              msgs[msgs.length - 1] = { ...last, result: { ...last.result, answer: data.message } }
+              return msgs
+            })
+          }
+        }
+      }
+    } catch (err) {
+      if (err.name !== 'AbortError') {
+        setAskMessages(prev => {
+          const msgs = [...prev]
+          const last = msgs[msgs.length - 1]
+          msgs[msgs.length - 1] = { ...last, result: { ...last.result, answer: 'Request failed. Is the backend running?' } }
+          return msgs
+        })
+      }
+    } finally {
+      setAskLoading(false)
+    }
+  }, [])
+
+  // ── URL param auto-submit (#3: crosslink from PatternMapper) ─────────────────
+
+  useEffect(() => {
+    const q = searchParams.get('q')
+    const ask = searchParams.get('ask')
+    if (q) {
+      setInputMode('search')
+      setQuery(q)
+      setSubmittedQuery(q)
+      setPage(1)
+    } else if (ask) {
+      setInputMode('ask')
+      setQuery(ask)
+      triggerAsk(ask)
+    }
+    // Only run once on mount — intentionally no deps on searchParams
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // ── Handlers ─────────────────────────────────────────────────────────────────
+
   const handleSearch = useCallback(
     async e => {
       e.preventDefault()
@@ -94,54 +196,7 @@ export default function App() {
       }
 
       if (inputMode === 'ask') {
-        abortRef.current?.abort()
-        const controller = new AbortController()
-        abortRef.current = controller
-        setAskQuestion(q)
-        setAskResult({ answer: '', sources: [], chunks_used: 0, memory_updated: false, budget: null, diagnostics: null })
-        setAskLoading(true)
-        setSelectedId(null)
-        try {
-          const res = await fetch('/api/ask/stream', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ question: q }),
-            signal: controller.signal,
-          })
-          const reader = res.body.getReader()
-          const decoder = new TextDecoder()
-          let buf = ''
-          while (true) {
-            const { done, value } = await reader.read()
-            if (done) break
-            buf += decoder.decode(value, { stream: true })
-            const parts = buf.split('\n\n')
-            buf = parts.pop()
-            for (const part of parts) {
-              const line = part.trim()
-              if (!line.startsWith('data: ')) continue
-              const data = JSON.parse(line.slice(6))
-              if (data.type === 'token') {
-                setAskResult(prev => ({ ...prev, answer: prev.answer + data.text }))
-              } else if (data.type === 'done') {
-                setAskResult(prev => ({
-                  ...prev,
-                  sources: data.sources,
-                  chunks_used: data.chunks_used,
-                  memory_updated: data.memory_updated,
-                  budget: data.budget ?? null,
-                  diagnostics: data.diagnostics ?? null,
-                }))
-              } else if (data.type === 'error') {
-                setAskResult(prev => ({ ...prev, answer: data.message }))
-              }
-            }
-          }
-        } catch (err) {
-          if (err.name !== 'AbortError') setAskResult({ answer: 'Request failed. Is the backend running?', sources: [], chunks_used: 0, memory_updated: false })
-        } finally {
-          setAskLoading(false)
-        }
+        triggerAsk(q)
         return
       }
 
@@ -149,14 +204,13 @@ export default function App() {
       setPage(1)
       setSelectedId(null)
     },
-    [query, inputMode]
+    [query, inputMode, triggerAsk]
   )
 
   const handleClear = useCallback(() => {
     setQuery('')
     setSubmittedQuery('')
-    setAskResult(null)
-    setAskQuestion('')
+    setAskMessages([])
     setSemanticResults(null)
     setSemanticQuery('')
     setPage(1)
@@ -168,12 +222,18 @@ export default function App() {
     setInputMode(newMode)
     setQuery('')
     setSubmittedQuery('')
-    setAskResult(null)
-    setAskQuestion('')
+    setAskMessages([])
     setSemanticResults(null)
     setSemanticQuery('')
     setSelectedId(null)
     setPage(1)
+  }, [])
+
+  const handleNewConversation = useCallback(() => {
+    abortRef.current?.abort()
+    setAskMessages([])
+    setAskLoading(false)
+    setQuery('')
   }, [])
 
   const handleFilterChange = useCallback(newFilters => {
@@ -341,12 +401,12 @@ export default function App() {
             </div>
           )
         ) : inputMode === 'ask' ? (
-          askLoading || askResult ? (
+          askLoading || askMessages.length > 0 ? (
             <AskPanel
-              question={askQuestion}
-              result={askResult}
+              messages={askMessages}
               loading={askLoading}
               onSelectDecision={handleSelect}
+              onNewConversation={handleNewConversation}
             />
           ) : (
             <div className="py-24 text-center">

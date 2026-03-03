@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import * as d3 from 'd3'
 
 const TYPE_COLORS = {
@@ -46,6 +46,7 @@ function TimelineStrip({ entries }) {
 export default function PatternMapper() {
   const svgRef  = useRef(null)
   const simRef  = useRef(null)
+  const navigate = useNavigate()
 
   const [typeA,      setTypeA]      = useState('judge')
   const [typeB,      setTypeB]      = useState('outcome')
@@ -350,6 +351,22 @@ export default function PatternMapper() {
               <button onClick={() => { setSelectedNode(null); setNodeDetail(null); setTimelineData(null) }}
                 className="text-slate-600 hover:text-slate-400 font-mono text-xs flex-shrink-0 mt-0.5">
                 ✕
+              </button>
+            </div>
+
+            {/* Action buttons */}
+            <div className="px-4 py-2.5 border-b border-ink-600/50 flex gap-2 flex-shrink-0">
+              <button
+                onClick={() => navigate(`/?q=${encodeURIComponent(selectedNode.id)}`)}
+                className="flex-1 font-mono text-[9px] tracking-widest border border-amber-500/25 text-amber-500/70 hover:text-amber-400 hover:border-amber-500/50 px-2 py-1.5 rounded transition-colors text-center"
+              >
+                SEARCH DECISIONS
+              </button>
+              <button
+                onClick={() => navigate(`/?ask=${encodeURIComponent(selectedNode.id)}`)}
+                className="flex-1 font-mono text-[9px] tracking-widest border border-sky-500/25 text-sky-400/70 hover:text-sky-400 hover:border-sky-500/50 px-2 py-1.5 rounded transition-colors text-center"
+              >
+                ASK AI
               </button>
             </div>
 
