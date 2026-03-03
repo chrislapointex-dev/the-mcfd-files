@@ -1,4 +1,5 @@
 import ReactMarkdown from 'react-markdown'
+import DiagnosticsPanel from './DiagnosticsPanel'
 
 const MD_COMPONENTS = {
   h1: ({children}) => <h1 className="text-base font-bold text-slate-100 mt-4 mb-2 first:mt-0">{children}</h1>,
@@ -60,6 +61,9 @@ export default function AskPanel({ question, result, loading, onSelectDecision }
             {result.answer + (loading ? '▋' : '')}
           </ReactMarkdown>
         </div>
+        {!loading && (
+          <DiagnosticsPanel budget={result.budget} diagnostics={result.diagnostics} />
+        )}
       </div>
 
       {/* Sources — only shown after stream completes */}

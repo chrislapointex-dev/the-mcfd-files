@@ -361,6 +361,17 @@ async def ask_stream_endpoint(
                 _fetch_semantic_chunks(db, question),
             )
             chunks = _merge_chunks(fts_chunks, sem_chunks)
+            stream_chunks_after_merge = len(chunks)
+
+            # 2b. Budget allocation
+            stream_budget = None
+            try:
+                raw_ctx = await mem.get_context(limit_per_region=10)
+                memory_items = [item for items in raw_ctx.values() for item in items]
+                stream_budget = ContextBudget().allocate(SYSTEM_PROMPT, memory_items, len(chunks))
+                chunks = chunks[:stream_budget["max_chunks"]]
+            except Exception:
+                pass
 
             # 3. Build question with R2 context
             if r2_context:
@@ -403,12 +414,45 @@ async def ask_stream_endpoint(
             except Exception:
                 pass
 
-            # 7. Yield done event with metadata
+            # 7. Build diagnostics + yield done event
+            stream_diagnostics = None
+            try:
+                mem_regions = (stream_budget or {}).get("memory_included", {})
+                seen_srcs: list[str] = []
+                seen_srcs_set: set[str] = set()
+                for c in chunks:
+                    s = c.get("source", "")
+                    if s and s not in seen_srcs_set:
+                        seen_srcs.append(s)
+                        seen_srcs_set.add(s)
+                stream_diagnostics = {
+                    "memory_regions_loaded": mem_regions,
+                    "memory_total_items": sum(mem_regions.values()),
+                    "chunks_retrieved_fts": len(fts_chunks),
+                    "chunks_retrieved_semantic": len(sem_chunks),
+                    "chunks_after_merge": stream_chunks_after_merge,
+                    "chunks_after_budget": len(chunks),
+                    "top_chunk_sources": seen_srcs[:5],
+                    "search_type": (
+                        "hybrid"        if fts_chunks and sem_chunks else
+                        "fts_only"      if fts_chunks else
+                        "semantic_only" if sem_chunks else
+                        "none"
+                    ),
+                    "model": os.getenv("CLAUDE_MODEL", "claude-sonnet-4-6"),
+                    "response_tokens_estimate": estimate_tokens(full_text),
+                    "budget_utilization_pct": (stream_budget or {}).get("utilization_pct"),
+                }
+            except Exception:
+                pass
+
             done_payload = {
                 "type": "done",
                 "sources": [s.model_dump() for s in sources],
                 "chunks_used": len(chunks),
                 "memory_updated": memory_updated,
+                "budget": stream_budget,
+                "diagnostics": stream_diagnostics,
             }
             yield f"data: {json.dumps(done_payload)}\n\n"
 

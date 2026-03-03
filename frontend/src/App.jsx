@@ -98,7 +98,7 @@ export default function App() {
         const controller = new AbortController()
         abortRef.current = controller
         setAskQuestion(q)
-        setAskResult({ answer: '', sources: [], chunks_used: 0, memory_updated: false })
+        setAskResult({ answer: '', sources: [], chunks_used: 0, memory_updated: false, budget: null, diagnostics: null })
         setAskLoading(true)
         setSelectedId(null)
         try {
@@ -129,6 +129,8 @@ export default function App() {
                   sources: data.sources,
                   chunks_used: data.chunks_used,
                   memory_updated: data.memory_updated,
+                  budget: data.budget ?? null,
+                  diagnostics: data.diagnostics ?? null,
                 }))
               } else if (data.type === 'error') {
                 setAskResult(prev => ({ ...prev, answer: data.message }))
