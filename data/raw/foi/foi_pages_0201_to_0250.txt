@@ -1,0 +1,3581 @@
+Less noteworthy
+
+These genctypes are normal.
+
+More information
+
+Lactose is a disaccharide found in milk that Is made up of two sugars. glucose and galactose,
+Lactase, an enzyme in the smaii intestine, hydrolyzes lactose into glucose and galactose so that
+they may be absorbed. By adulthood, some people have lost the ability to digest lactose (lactase
+non-persistence), while others maintain this ability throughout life (lactase persistence). Ethnicity is
+a factor in lactose metabolism since most northern Europeans can tolerate lactose into adulthood
+while most Individuals of African and Asian descent cannot. Without adequate lactase, lactose
+Passes undigested from the small intestine into the colon where it Is subject to bacterial
+fermentation. Individuals with lactase non-persistence may experience symptoms such as nausea,
+abdominal pain or diarrhea when consuming lactose-containing foods.
+
+‘This genotype, rs4988235(T;T) is associated with lactose tolerance (lactase persistence)
+in adulthood,
+
+‘There are common polymorphisms In the MCM6 gene, which codes for a regulatory element that
+interacts with the promoter of the nearby lactase (LC7) gene. LCT is down-regulated after childhood
+resulting in almost no lactase production, However, the T allele of this polymorphism, rs4988235
+{also known as C13910T), disrupts this down-regulation, resulting in lactase production into
+
+Researchers discovered this polymorphism in a study of 9 Finnish pedigrees who exhibited lactose
+
+Intolerance. They found that the (6:6) genotype was completely conelated with biochemically
+verified lactose intolerance. They confirmed this relationship In 236 unrelated individuals.
+
+New research suggests that this palymorphism may also be associated with obesity. In a study of
+940 individuals with cardiovascular disease risk, those with the (C;C) genotype had lower BMI, lower
+weight and smaller waist circumferences than carriers of the T allele. individuals with the T allele
+Jhad-@ higher risk for obesity than those with the (¢:¢! genotype, These associations were only
+
+significant in those who consumed > 8g lactose per day.
+
+A recent genome-wide association study suggested that thegui microbiome of (¢:¢) individuals:
+
+‘Sentains more. gilfetabactariym than that of T allele carriers, The authors speculate that (C;C)
+individuals have undigested lactose in the gut and Bifidobacterium preter lactose for growth,
+
+A study was conducted to determine if the composition of the gut microblome affected weight loss,
+Investigators used the C allele as a surrogate marker for Bifidobacterial abundance. Researchers
+randomly assigned overweight or obese Individuals (n=$38) to 1 of 4 hypocaloric diets (low-fat,
+high-fat, low-protein, or high-protein). The'results showed that individuals with the ¢ allele.
+Diherlenced more fat loss on a high-protein diet and less fat loss on'a low-protein diet as compared
+
+to those without the C allele. The authors suggest that overweight or obese C allele carriers may
+benefit from a low-calorie, high-protein diet for fat loss.
+
+© Bead more shout 154988235 on SNPedia
+
+SNPs Involved
+
+rs49B88235(T;T)
+
+There are a cluster of polymorphisms in two genes that regulate iron levels in the body. Carriers of
+
+Gene SNPs involved Status.
+MCMB eabeg23scr Lactose tolerance
+(lactase persistence) in
+adulthood
+adulthood.
+TR and HFE 1s1049296(C;T) Normal free iron and
+1s1800562(G:G) normal alzheimer's
+
+disease risk
+
+the minor alleles for-r52049296 in the transferrin gene (LE) and r51800562 in the human
+hemochromatosis protein (IEE) have a 5 times increased risk of Alzheimer's disease due to elevated
+free iron in the body, Your genotype Is normal and does not indicate this Increased risk
+
+Individuals that do have these polymorphisms may want to monitor thelr blood iron and ferritin
+levels and limit iron intake. Additionally, alpha lipoic acid supplementation has been shown to bind
+and chelate free iron,
+
+‘SNPs Involved
+
+1$1049296(C;T)
+
+s1800562(G;G)
+
+vitamin —s52282679{A:A) No genetic risk for
+binding vitamin d deficiency
+protein
+
+GC Vitamin D binding protein is a member of the albumin family Involved in the storage and
+transport of vitamin D throughout the body. The vitamin D binding protein affects the delivery of 25+
+hy¢roxyvitamin D (precursor to vitamin D hormone) and activated vitamin D (1,25-dihydroxyvitamin
+D) to target organs, as well as the clearance of vitamin D metabolites from circulation.
+
+This genotype, rs2282679(A;A), has been associated with no risk for vitamin D
+deficiency.
+
+There are common polymorphisms in the GC gene, which codes for the vitamin D binding protein,
+The variant form (C) of the rs2282679 polymorphism, located in the intronic region of the gene, is
+thought to result in a protein that binds less efficiently to vitamin D.
+
+The (A;A) genotype has not been associated with an increased risk of vitamin D deficiency (thls
+
+CFD-2025-53478 , Page 275 of 1238
+
+|
+|
+
+---PAGE BREAK---
+
+widely across Europe and North America, but not East Asia. Subtype A2a, also known as D614G, has
+a mutation in the spike protein that creates an additional enzyme site where the 5 protein can be
+cut and activated, This mutation may allow the virus to more easily enter host cells,
+
+The T variant of this polymorphism is predicted to cleave the spike protein of the A2a strain less
+effectivély (than the € allele), thus limiting the virus's entry into cells, The T allele is negatively
+correlated (r? = -0.4) with the frequency of the A2a viral subtype, suggesting that individuats with
+
+thy mi vee GRO 4 stt The allele
+
+frequencies of this polymorphism differ between populations, with ~19 percent of East Asians
+having the (TT) genotype, while only ~7 percent of Europeans and ~4 percent of North Americans
+possess the (T;T) genotype. These varying frequencies may partly explain why the Aza strain
+spread less rapidly In East Asia, Further research Is needed to determine If these preliminary
+findings are validated in other studies.
+
+* Read mene shout 312379760 on SNPedia
+
+SNPs Involved
+
+512329760(C;T)
+
+ABO
+
+Associated with a normal
+risk of severe covid-19
+disease
+
+Glycosyltransferase (ABO) is an enzyme involved in determining a person's blood type. The ABO
+blood group system, discovered over one hundred years ago, is a critical aspect of transfusion and
+transplantation medicine. individuals are typed as either A, B, AG, or O, based on antigens located
+‘on the surface of their ceils.
+
+This genotype, rs6572152(G;G), has been associated with a normal risk of severe COVID-
+
+19 disease,
+
+There are common polymorphisms in the ABO gene, which codes for' the glycosyltransterase
+enzyme. The variant form (T) of the rs657152 polymorphism is located in the intronic region of the
+gene.
+
+Scientists are learning more about the SARS-CoV-2 virus and the disease it causes, COVID-19. Of
+particular interest is why some people experience no symptoms, while others have life-threatening
+complications, Two studies published in pre-print versions, in advance of rigorous peer review, have
+suggested that the A blood type was associated with higher suscepthbility to the disease, while the O
+blood type was linked to a lower risk 1 and 2.
+
+Researchers from several European countries collaborated to complete a genome-wide association
+study (GWAS) to determine whether genetic differences affect COVID-19 severity,
+
+Investigators recruited participants from Italy (n = 835 COVID-19 patients and 2,255 controls) and
+Spain (n = 775 COVID-19 patients and 950 controls), two European countries hit hardest by the
+COVviD-19 pandemic, Researchers observed that the ism.
+
+with an increased sisk of COVID-19-indy atory fi ,
+
+The authors state that these genetic data reinforce previous research correlating the A blaod type
+with a higher risk of acquiring COVID-19, and the O blood type with a lower risk, The authors propose
+two theories why this might be the case, one involving the development of neutralizing antibodies
+and the other regarding the stabilization of a blood glycoprotein known as the von Willebrand
+
+factor. More research Is needed to elucidate the mechanisms of how the ABO gene region is
+involved in COVID-19 severity before this can be a clinically useful marker.
+
+= Read more about 15657152 00 SNPadia
+
+SNPs Involved
+
+£8657152(G;G)
+
+GCHE
+
+1510483639(C;G)
+1$3783641(A;T)
+1$8007267(C;T)
+
+Lower
+tetrahydrobiopterin
+levels
+
+This genotype has one copy of the GCH2 varlant associated with lower levels of
+tetrahydroblopterin (BH4). BH4 is a colactor for three aromatic amino acid hydroxylase enzymes,
+used in the biosynthesis of the neurotransmitters serotonin, dopamine. and norepinephrine
+(noradrenaline).
+
+tis also used for the production of melatonin and is a cofactor for the production of nitric oxide (NO)
+by the nitric oxide synthases. Nitric oxide is Involved in vasodilation, which improves systematic
+blood flow.
+
+Supplementation with BH4 may be helpful; however, there is limited availability of the correct form
+of BH4 supplements,
+
+There is a connection between the gut nilcrobiome and BH4. Certain specles of bacteria In the gut
+
+produce BH4, The BH4-pfeducing bacteria in the gut are Aldercrautzigequolifaciens ang
+Migcobacterium schlelferiand are from the phyla Actinobacteria. Mango has been shown to Increase
+
+Aldercreutzia gut bacteria,
+© Rend more on SNPodin
+
+SNPs Involved
+
+rs10483639(C:G)
+153783641(A;7)
+
+rsBO07267(C;T)
+
+CFD-2025-53478.,. Page.276.o0f .1238 i
+
+---PAGE BREAK---
+
+eplication of certain viruses, including SARS Co...
+
+This genotype, rs1946518(G;T), has been associated with stightly Increased viral load in
+SARS-CoV-1.
+
+There are common polymorphisms in the /18 gene, which codes for the interleukin 18 protein. The
+variant form (7) of the rs1946528 polymorphism; located in the promoter region of the gene, Is
+thought to disrupt a transcription factor-binding site and lead to reduced IL18 production.
+
+In the SARS-CoV-1 outbreak of 2003, patients experienced inter-individual differences in
+nasopharyngeal viral loads, with higher viral load predicting poor prognosis. To determine whether
+host genetic factors accounted for some of these differences, researchers analyzed Immunity
+related genes in 94 SARS CoV-1 patients. Investigators observed that patients with the T allele of
+
+the 131946519 volymorphism exhibited increased risk of virus shedding as compared to those with
+the (G;G) genotype.
+
+The authors suggest that in a pandemic where no preexisting immunity exists, the host's innate
+Immunity will be Important to decrease viral burden and potentially Influence the cilnical outcome.
+
+. reg a,
+
+SNPs Involved
+
+151946518(G;T)
+
+HIFIA
+
+1511549465(C;T)
+
+A decreased response to
+aerobic exercise with
+advancing age
+
+TMPRSS2
+
+1812329760(C:T)
+
+Predicted to provide
+slight protection from the
+a2a (46149) strain of
+Sars-Cov-2
+
+CFD-2025-
+
+Hypoxia-inducible factor-a (HIF-1a) Is a transcription factor involved in the regulation of more than
+sixty genes In response to hypoxia or conditions of low oxygen. Some of these genes stimulate
+anglogenesis (the formation of new blood vessels) and erythropoiesis {the production of new red
+blood cells) to assist the body In dealing with the low oxygen conditions.
+
+This genotype, rs11549465(C;T), has been associated with a decreasedresponse to
+aerobic exercise with advancing age.
+
+‘There are common polymorphisms in the H/FJA gene, which codes for hypoxia-inducible factor-1[h.
+The variant form (T) of the rs11549465 polymorphism (also known as Pro582Ser), located in the
+exonic region of the gene, is thought to increase transcription and stability of the HIF-1a protein,
+
+Vo2 max response to exercise upon aging
+Investigators measured the maximal oxygen consumption (VO2 max) of 123 men before and after
+24 weeks of aerobic training, Researchers observed that individuals with the (C;C) genotype
+maintained the capabllty to Increase VOZ max with training at ages 55, 60, and 65 years. However,
+
+authors propose that while more research is needed, these changes are a result of an altered
+function of the HIF-1a protein which may impact the response to exercise with advancing age. The
+authors conclude that this polymorphism may affect how an individual's cardlorespiratory fitness
+responds to aerobic exercise training with age.
+
+Endurance athlete status and the € allele
+in a study of Caucasian mates (n = 316 elite endurance athletes and 304 sedentary controls)
+
+researchers observed that the ¢ allele was more prevalent in endurance athletes.
+
+Power athletes and the T allele
+In a study of competitive strength athletes (n = 122 weightlifters and 86 wrestlers) and contro!
+
+subjects (n = 1,413), the T allele was more prevalent in weightlifters and wrestlers thant in control
+individuals. Moreover, elite strength athletes had the highest likelihood of possessing aT allele. The
+
+authors determined that individuals with the T allele are 2,27 times more likely to be a strength
+athlete than those without the T allele,
+
+Researchers evaluated the presence of this polymorphism in a second cohort (n = 100 endurance-
+orlented athletes, 110 power-orientated athletes, and 326 controls). The authors observed that the T
+
+allele was associated with the nower-oriented athlete group.
+« Read mare about 911549465 on SiPedia
+
+SNPs Involved
+
+1s11549465(C:T)
+
+‘Transmembrane serine protease 2 (TMPRSS2) is an enzyme expressed in cells of the fung. ileum,
+and nasal passage, that particlpates In both physlological and pathological activities. In some viral
+infections, Including influenza and the coronavirus diseases, SARS1 (severe acute resplratory
+syndrome) and MERS (Middle East respiratory syndrome), this protease cleaves a viral protein,
+facilitating Its entry into the host cell. The SARS-CoV-2 spike (S) glycoprotein exploits the ACE2
+receptor to gain entry into host cells. For the viral and cell membranes to fuse, a protease, such as
+‘TMPRSS2, must cleave the spike (S) protein in a process known as priming, SARS-CoV-2 was
+recently shown to use the ACE2 receptor for binding and the TMPRSS2 protease for S protein
+rlming.
+
+This genotype, rs12329760(C;T), has been predicted to provide slight protection from the
+A2a (D6146) strain of SARS-CoV-2.
+
+‘There are common polymorphisms in the TMPRSS2 gene, which codes for thetransmembrane serine
+Protease 2 enzyme, The variant form (T} of the rs12329760 polymorphism (also known as V160M),
+located in the coding region of the gene, is thought to disrupt a pathogen interaction site.
+
+Viruses are constantly mutating, and only changes that do not affect essential viral functions persist
+in the population. SARS-CoV-2 has mutated Into at least 10 subtypes, with subtype A2a spreading
+
+53478 , Page 277 of 1238
+
+|
+i
+‘|
+|
+
+---PAGE BREAK---
+
+unbalanced tenin-angiotensin system and lung damage. Thus, ACE2 is thought to have a dual role,
+involved both in viral entry and protecting the lung from damage.
+
+Investigators analyzed 1,700 polymorphisms found in the ACE2 gene to determine whether their
+
+frequency diferéd across populations, They f found that t variants asagclated with hlaher ACER tse
+
+gains and propose that
+this may after! suscepti lity oF severity to the SARS-CoV-2 virus. The authors did not identify any
+variations in the ACE2 gene that would predict a weakened binding of the coronavirus S-protein,
+which might confer resistance,
+
+A promising study in human organoid tissue tevealed that a reconibinant form of the buman ACE?
+tocepter was able-to neutralize the SARS.CoV-2 virus by binding to It, thus blocking it from Infecting
+
+the cell. The recombinant receptor reduced viral load by a factor of 1.000 to 5,000 and may diminish
+excessive inflammation, limiting lung injury, A tandomized, double-blind Phase tt trial in 200
+severely infected SARS-CoV-7 uatinnts will begin soon,
+
+SNPs Involved
+
+15215B082(A;G)
+
+LPA
+
+FS30455872(A;A)
+
+Normal plasma
+lipoprotein(a) levels and
+a normal tisk for coronary
+heart disease
+
+Lipoprotein(a), [Lp(a)J, is 2 low-density lipoprotein-like particle with an apolipoprotein(a) coiled
+around it. Lipid-protein complexes, such as Lp(a) allow fats to move through the aqueous
+environment inside and outside cells, High levels of circulating Lp(a) are considered to be an
+independent genetic risk factor for cardiovascular disease.
+
+This genotype, rs10455872(A;A), has been associated with normal plasma lipoprotein(a)
+levels and a normal-risk for coronary heart disease.
+
+There are common polymorphisms in the LPA gene, which codes for apolipoprotein(a). The variant
+form (G) of the 1510455872 polymorphism is located in the intron region of the gene.
+
+Ina case-control study (n = 3,145 subjects with a coronary disease diagnosis before age 66 and a
+sibling with the same condition and 3,352 controls), researchers probed the genotypes of
+participants using a DNA chip.enriched with loc! having potential relevance to cardiovascular
+
+disease, Investigators observed that the G allele was associated with circulating Loja) lipanratein
+fevals. They replicated these results in-an additional conort of families (n = 4,846 subjects with,
+‘coronary disease and 4,594 control subjects). The authors conclude that this study suggests a causat
+
+role for Lp(a) in coronary disease,
+* Zon SN
+
+SNPs Involved
+
+1810455872(A;A)
+
+UPA.
+
+133798220(T;T)
+
+Normal plasma
+lipoprotein(a) levels and
+normal risk for coronary
+artery disease
+
+a8
+
+1819465 18(G;T)
+
+Associated with slightly
+increased viral load in
+sars-cov-l infection
+
+— CED=2025-53478. Page 278 of 1238 _
+
+Lipoprotein(a), (Lp(a)], is a low-density lipoprotein-like particle with an apolipoprotein(a) coiled
+around it. Lipld-protein complexes, such as Lp(a) allow fats to move through the aqueous
+environment inside and outside cells. High levels of circulating Lp(a) are considered to be an
+independent genetic risk factor for cardiovascular disease.
+
+This genotype, rs3798220(T;T), has been associated with normal plasma lipoprotein(a)
+levels and tiormal risk for coronary artery disease.
+
+There are common polymorphisms in the LPA gene, which codes for apolipoprotein(a). The variant
+form (C) of the 153798220 polymorphism (also known as tle4399Met), is located in the exonic region
+of the gene.
+
+In a case-contro} study (n = 3,145 subjects with a coronary disease diagnosis before age 66 ani! a
+sibling with the same condition and 3,352 controls), researchers probed the genotypes of
+participants using a DNA chip enriched with loci having potential relevance to cardiovascular
+
+disease, Investigators observed that the Caliple was associated with circulating Lola) lloopretain
+
+Jgyels. They replicated these results in an additional cohort of families (n= 4,846 subjects with
+coronary disease and 4,594 control subjects), The authors conclude that this study suggests a causal
+role for Lp(a) In coronary disease.
+
+As part of the Women's Health Study (n = 25,131 Caucasian individuals), investigators measured
+Lp(a) levels at baseline and observed that participants with the (T;T) genotype had the lowest levels
+at 10.0 mg/dL, whereas subjects with the (C;C) genotype had the highest levels at 153.9 mg/dl and
+those with the (C;T) genotype were in between at 79.5 mg/dl. Researchers tandomly assigned some
+of the women (aged at least 45 years) to receive aspirin (100 mg) or.a placebo every other day and
+
+followed thern for ten years, The results showed that ganlers of the © alisie hada two-fold recuced
+disk for major cardiovascular gvants when they were taking the aspirin compared to the placebo.
+
+Participants with the (T;T} genotype experienced no reduced risk of cardiovascular disease with
+aspirin therapy.
+
+© Read more about 153799220 on SNPedia
+
+SNPs Involved
+
+1$3798220(T;T)
+
+Interleukin 18 (1L18) is a potent proinflammatory cytokine expressed in the lung. 1L18 performs
+several functions in the immune response, including stimulation of interferon-gamma (IFN-y) release
+from natural killer cells and T lymphocytes. Interestingly, IFN-y has been shown to directly inhibit the
+
+---PAGE BREAK---
+
+However, those with the A allele may have an ili.:..-d risk for late-onset AD. In a study of $12
+Einolsh Individuals aged 85: voors, sublects were assessed for AD and followed for 20. years. The A
+allele was significantly associated with clinical signs of AD, such as dementia. When brain tissue
+was examined post-mortem, A allele carriers had more amyloid-beta plaques and neurofibrillary
+tangles (hallmark signs of AD) than those without the A allele. in fact, all (A;A) subjects had severe
+amyloid-beta plaques and neurofibrillary tangles upon autopsy. This association was confirmed in a
+second case-control cohort of 673 AD patients and 686 controls {participants over age 75), This
+association was not observed in a case-control study of younger individuals (average age 70).
+
+SNPs Involved
+
+1$12506228(C;C)
+
+PosKs 18283622B6(C;C) Normat risk of developing Proproteln convertase subtilisirvkexin type 9 (PCSKS), a glycoprotein found In the liver, intestine,
+heart disease and kidney, plays a role In cholesterol and lipid metabolism. PCSK9 is secreted into the bloodstream
+and transported to the liver, where It binds to low-density cholesterol (LDL-C) receptors on the
+surface of hepatocytes. Once an LDL-C particle binds to this receptor, the entire complex (PCSK9 +
+LDL-C + receptor) is taken into the cell and degraded. In the absence of PCSK9, LDL-C alone binds to
+the receptor and enters the cell, where it is digested and the receptor then returns to the cell
+surface where it can remove more LDL-C particles from circulation.
+
+This genotype, rs28362286(C;C), has been associated with average LDL cholesterol tevels
+and an average risk of developing heart disaase.
+
+There are polymorphisms in the gene that codes for PCSK9, The varlant form(A} of the
+polymorphism, 528362286 (also known as 2037C-+A, C679X), introduces a premature stop codon
+into the gene, resulting in the production of a non-functional PSCK9 protein. This polymorphism is
+somewhat rare, present in only 0.1 - 2% of individuals depending on the population studied.
+However, the effects on LDL-C reduction and cardiovascular disease risk are generally seen as
+sufficiently desirable that, in fact, pharmaceutical drugs have been designed to target inhibition of
+PCSK9, thus mimicking the action of this variant. Two such drugs, recently approved by the FDA,
+are the monoclonal antibody drugs Repatha (evolocumab) and Praluent (alirocumab).
+
+The ARIC study investigated the effects of two SNPs simultaneously in 3363 Individuals of African
+descent (aged 45 - 64) and followed them for 15 years. Individuals with either the A allele of this
+polymorphism (rs28362286) or the G allele of the PCSK9 variant (rs67608943) had 2 28% reduction
+In:LOL-C and d 88% reduction tisk of coronary hisart disease (CHD) when compared to non-variant
+individuals. Reduction in CHD risk was observed despite the high incidence of other cardiovascular
+disease risk factors such as hypertension, type 2 diabetes, and smoking, The authors propose that a
+life-long decrease in LDL-C, due to the presence of the A allele may confer protection against
+cardiovascular events. They maintaln that even modest reductions in LDL-C (20 - 40mg/dL)
+sustained over a lifetime may reduce the incidence of CHD.
+
+* Read more about 1528362286 on SNPedin
+
+SNPs Involved
+s28362286(C;C)
+PCSKY 1511591147(G;G) Normal risk of developing Proprotein convertase subtilisin/kexin type 9 (PCSK9), a glycoprotein found in the liver, intestine,
+heart disease and kidney, plays a role in cholesterol and lipid metabolism. PCSK9 Is secreted Into the bloodstream
+
+and transported to the liver, where it binds to low-density cholesterol (LDL-C) receptors on the
+surface of hepatocytes. Once an LDL-C particle binds to this receptor, the entire complex (PCSK9 +
+LDL-C + receptor) Is taken into the cell and degraded. In the absence of PCSK9, LDL-C alone binds to
+the receptor and enters the cell, where it is digested and the receptor returns to the cell surface
+where it can remove more LDL-C particles from circulation.
+
+This genotype, rs11591147(G;G), has been associated with average LDL cholesterol levels
+and an average risk of developing heart disease.
+
+There are polymorphisms in the gene that codes for PCSK9. The variant form(T) of the
+polymorphism, rs21591147 (also known as 137G > T, R46L), Js a loss-of-function variant resulting in
+the production of a non-functional PSCK9 protein, This polymorphism is somewhat rare, present in 1-
+3% of individuals depending on the population studied. However, the positive effects on LDL-C
+reduction and cardiovascular disease risk are so strong that pharmaceutical drugs have been
+designed to target inhibition of PCSK9, thus mimicking the action of this variant. Two such drugs,
+recently approved by the FDA, are the monoclonal antibody drugs Repatha (evolocumab) and
+Praluent (alirocumab).
+
+The ARIC study followed 9,524 Caucasian individuals {aged 45 - 64) for 15 years. Individuals with
+
+the T allele (3.2%) had 3.21% reduction in LDL-C (about 20 ma/dl) and a 47% reduction in coronary
+heart disease (CHD) as compared to (G;G) individuals, The authors propose that a lifelong decrease
+in LDL-C, due to the presence of the T allele, may confer protection against cardiovascular events.
+They maintain that even modest reductions in LDL-C (20 - 40mg/dL) sustained over a lifetime may
+reduce the incidence of CHD.
+
+» Bead more sbout 1311591147 on SiPedia
+
+‘SNPs Involved
+
+811591147(G:G)
+
+CFD-2025-53478 , Page 279 of 1238
+
+---PAGE BREAK---
+
+rather, they regulate gene expression at the transcriptional and post-transcriptional fevel.) COKN28-
+AS may play a role in several conditions associated with aging, including impaired physical function,
+cardiovascular disease, diabetes, and Alzheimer's disease,
+
+SNPs Involved
+
+fs2811712(A:A)
+
+GFN
+
+1534516635(G:G)
+
+Associated with normal
+lifespan
+
+This genotype, rs34516635(G;G), is common. People who carry this genotype typically
+live a normal lifespan, However, in a study of 384 Ashkenszi laws between the ages of 95 and
+108 years, those who carried one or more of the A alleles (A;A or A;G) of the 1334516635 variant of
+the IGF-1R gene were more tikely to achieve older age, especially females,
+
+= Bead more about r34516635 on SNPedia
+IGF-1 Receptor
+
+Insulin-like growth tactor-1 {IGF-2) is a protein produced by the liver and many other tissues in the
+hody. Its molecular structure is very similar to that of insulin - hence the name. IGF-1 acts as a
+hormone and plays a key role In growth. When IGF-1 binds to its receptor, known as the insulin-like
+growth factor-1 receptor (IGF-1R), IGF-I activates several cell signaling pathways,'some of which
+may contribute to biological aging.
+
+SNPs Involved
+
+1534516635(G;G)
+
+TCFTLE
+
+157903146(C;C)
+
+Normal risk for type 2
+diabetes in association
+with saturated and
+
+polyunsaturated fat
+consumption
+
+Transcription factor 7-like 2, (TCF71.2) Is a transcription factor that Js involved in the regulation of a
+variety of genes. It is part of the Wnt signaling pathway, whichis vital in cellular communication.
+Not much is known about the mechanism of action of TCF7L2, although it is thought to be involved in
+
+lipid metabolism in an insulin-dependent manner. The rs7903146 polymorphism has been suggested
+to result In increased gene expression and thus decreased insulin secretion and enhanced glucose
+
+production in the liver.
+
+This genotype, rs7903146(C;C), has been associated with a normal risk for type 2
+diabetes.
+
+Ina meta-analysis of 35,843 type 2 diabetics and 39,123 controls, those with the{T:T).aenotyee
+had a 2-fold Incronsed risk, and those wi sTLcenotyoe had 2 1.4-fold increased risk 0
+
+SNPs Involved
+
+£87903146(C;C)
+
+TCETLZ
+
+¥12255372(G:G)
+
+Normal risk for type 2
+diabetes
+
+Transcription factor 7-like 2 (TCF7L2) is involved. in the regulation of a variety of genes. Itis part of
+the Wnt signaling pathway, which is vital for cellular communication. While not much Is, known about
+the mechanism of action of TCF7L2, it is thought to be involved in lipid metabolism in an insulin-
+
+dependent manner.
+
+This genotype, rs12255372(G:G), has been associated with a normal risk for type 2
+diabetes,
+
+There are common polymorphisms in the TCF7L2 gene, which codes for the transcription factor 7+
+like 2 protein, The variant form (T) of the 1812255372 polymorphism {also known as IVS4G>T) is
+located in the intronic region of the gene,
+
+In a case-control study involving 2809 patients with type 2 diabetes and 3501 healthy controls, all of
+European ancestry, the T-allale wi i ings rake
+
+In a meta-analysis (n = 35,843 cases of type 2 diabetes and 39,123 controlslindwiduals with the,
+
+9 increased risk. of type 2.diaberes compared
+
+4G:G} genotype, whereas (G;T) participants were found to have a 1.4 times increased risk,
+
+SNPs Involved
+
+$12255372(G;G)
+
+MINAIA
+
+15125062 28(C;C)
+
+Normal risk for fate-onset
+alzheimer's disease
+
+‘There is a common polymorphism located downstream of melatonin receptor type 1A gene
+(MTNRIA) that codes for the MT1 melatonin receptor. Melatonin is a hormone produced primarily by
+the pineal gland in the brain. Melatonin, which Is secreted in high levels at night, decreases with age
+and is particularly low in Alzheimer's disease (AO) patients. Along with dementia, sleep disturbances
+and altered circadian rhythms are commonly observed in AO patients.
+
+This genotype, rs12506228(C;C) is associated with normal risk for late-onset Alzheimer's
+disease (AD).
+
+CFD-2025-53478 , Page. 280 of 1238
+
+---PAGE BREAK---
+
+Individuals with the C allele possess the insertic.,, u... those with theT allele carry the deletion.
+
+The Influenza HIN1 pandemic of 2009 typically produced mild infectlon, however, some patients
+developed severe pneumonia, To investigate whether host genetic factors influenced disease
+severity, researchers performed a small genome-wide assaciation study {GWAS) Involving 25
+patlents with severe H1N1 infection and 26 canteals with mild symptoms, They identified
+polymorphisms in the CD55 gene that strongly associated with disease severity, in a second study of
+425 Chinese patients with severe (n = 177) or mild (n = 248) disease, Investigators observed that
+
+Moreover, the Investigators report that Individuals with the (T;T) genotype had lower monocyte
+CD55 levels compared to C allele cartlers. The authors propose that COSS plays a role in
+determining the severity of HiN1 by protecting respiratory epithelial cells from complement
+damage. Since T allele carriers have lower CDSS levels, they are more prone to severe disease.
+
+In another gene association study (n = 275 patients with avlan H7N9 or pandemic H1N1 Influenza)
+
+In a study of European individuals from northern Greece with severe (n = 59) or mild (n= 51) HIN1
+
+Infection, the (7) aefotvne was associated With an Increased mortality. risk ps compared to
+‘¢artiers. of the € allele, CDSS inhibits an overactive complement system. The researchers propose
+
+that Individuals with the (T;T) genotype who have a deletion in the promoter of the CD55 gene. and
+thus lower CDSS levels, may generate a stronger complement activation, which may damage
+respiratory epithelial cells leading to worse outcomes. The authors state that their findings are
+preliminary and that more research Is needed,
+
++ Read more about 192564975 on SNPegia
+
+SNPs Involved
+
+182564978(C;T)
+
+TLURA
+
+1s4986790(A;A)
+
+Associated with normal
+tisk for septic shack
+
+Tolllike receptor 4 (TLR4) Is a member of a family of receptors found on the surfaces of
+macrophages and dendritic cells. As part of the innate immune response, TLRs recognize specific
+bacterial and viral proteins and target them for destruction. The interaction of TLR4 and a viral
+protein leads to the production of pro-Inflammatory cytokines, Uncontrolled activation of the TLR4
+pathway is a feature of sepsis and cytokine storm,
+
+This genotype, rs4986790(A:A), has been associated with normal risk for septic shock.
+
+There are common polymorphisms in the 7LR4 gene, which codes for the toll-like receptor 4 pratein.
+The varlant form (G) of the rs4986790 polymorphism (also known as Asp299Gly) Is located in the
+coding region of the gene.
+
+authors propose that individuals with the G allele might be predisposed to develop septic shock
+when infected with gram-negative bacterla,
+
+Investigators examined 99 hospitalized infants with severe respiratory syncytial virus (RSV)
+bronchiolitis, 88 infants with mild RSV bronchiolitis, and 90 healthy adults. They observed that the G
+allsic was associated with severe RSV bronchiolitis.
+
+Animal studies show that deleting the TLA4 gene in mice renders the animals resistant to a lethal
+Anfluenza vinss.
+
++ Baad more about 154986790 on SNPedla
+
+SNPs Involved
+
+184986 790(A;A)
+
+Unavailable
+
+Disclalmer
+
+Depending on the dataset you provided for report generation, not all possible report entries may be available, This is normal. In this case, the
+following groups were excluded because the data you upload did not contain the requisite SNPs:
+
+GHR, SELENOS, TERC, TERC, ACYP2, RTEL1, NOS3,_NAF1, PEMT, DEC2, SLC23A1, FOXO3, ADORA2A, SIRT1, SLC23A2, CD36,
+COLSA1, MCT1, ADA, AKT1, PER2, ACE2, IFITM3, FGL2, TLR1
+
+‘The results found in this report are NOT FOR MEDICAL PURPOSES and are subject to change in future software updates without notice. Raw data from genetic providers is
+suitable only for research, educational, and informational use and not for medical or other use,
+
+CFD.
+
+2025-53478 , Page 281 of 1238
+
+---PAGE BREAK---
+
+protective effect of the G allele. The authors suggest that among Chinese individuals the G allele
+
+confats protection against SARS-CoV-1 lifection, The estimated frequencies of the G allele are
+
+41,7% among European-Americans, 10.9% among African-Americans, 18.2% among Japanese. and
+36.4% among Chinese individuals.
+
+* Bead mont shout 12660 on SNPaula
+
+SNPs Involved
+
+1s2660(A;A)
+
+Associated with a
+decreased risk of ards in
+patients with pneumonia
+
+Associated with a
+
+developing acute
+respiratory distress
+
+Aryl hydrocarbon receptor (AhR) Is a transcription factor that controls several genes involved in
+diverse cellular processes, including inflammation, immune regulation, and the detoxification of
+xenoblotic substances. A mounting body of evidence suggests that AhR plays a critical role In the
+intersection between the innate and adaptive immune system, helping to maintain immune
+homeostasis. Furthermore, AhR may be involved in controlling pathways that protect the lungs from
+oxidative stress.
+
+This genotype, rs2066853(G;G), has been associated with a decreased risk of AROS in
+patients with nosocomial pneumonia,
+
+There are common polymorphisms in the AHA gene, which codes for the aryl hydrocarbon receptor.
+The variant form (A) of the 152066853 polymorphism (also known as Arg554Lys is located in the
+coding region of the gene and is thought to decrease gene expression.
+
+Nosocomial (hospital-acquired) pneumonia is a complication of trauma that can progress to acute
+respiratory distress syndrome (ARDS), a Serious form of respwatory fallure dué to excessive
+inflammation in the lungs. Researchers conducted a prospective study to evaluate if Hiost genetic
+factors affect whether individuals progress trom pneumonia to ARDS. They studied 419 hospitalized
+patients at high risk of critical illness and 331 healthy controls, Of the hospitalized patients, 268
+developed pneumonia, and 151 patients did not. Investigators observed that In:patients with
+
+hospital-acquired. pneumonia, ARDS than
+patignts with the (G:Gi genotyns, The authors propose that variants In the AHR gene may be
+
+involved with increasing [ung inflammation and the development of ARDS,
+© Aeod more about 152066853 on StPeuia
+
+SNPs Involved
+
+¥$2066853(G;G}
+
+Interleukin 17 (1L27), also known as IL17A is a proinflammatory cytokine produced by activated
+memory CD4 + and T-cells. Some patients with acute respiratory distress syndrome have elevated
+levels of 1L17, IL17 amplifies the inflammatory response by attracting other immune cells, While IL17
+is useful to defend against pathogens, excessive IL17 may pose problems, The cytokine storm, a
+characteristic feature of severe COVID-19, involves the expression of mass amounts of
+proinflammatory cytokines Ike (L17,
+
+This. genotype, rs2275913(A;A), has been associated with a reduced risk of developing
+acute respiratory distress syndrome.
+
+There are common polymorphisms in the /L17A gene, which codes for the interleukin 17 protein.
+The varlant form (A) of the 152275913 polymorphism (also known as G197A), located in the
+promoter region of the gene may affect gene expression.
+
+Acute respiratory distress syndrome (ARDS) is a serious form of respiratory failure that occurs in
+some critically ill patients due.to uncontrolled inflammation in the lungs, In a study of 210 patients
+with ARDS and 210 at-risk patients without ARDS, carriers of the A allele exhibited a reduced risk of
+ARDS as compared to patients with the (G;G) genotype. Furthermore, patients with theA allele had
+a decreased 30-day mortality risk compared to patients with the (G:G) genotype. The authors note
+that A allele carriers had lower IL17 serum levels, which they suggest may provide the patient with
+some protection from developing AROS. paper
+
+While further studies are needed, the regulation of IL17 might be involved in the Initiation and
+progression of ARDS, and this polymorphism may be a marker to predict the risk of ARDS.
+
++ Regd more about 92275933 on ShPedin
+
+SNPs Involved
+
+rs2275913(A;A)
+
+Associated with normal
+
+ANB. #$2066853(G:G)
+WaT 18227591 3(A;A)
+reduced risk of
+syndrome
+ess ¥52564978(C;T)
+
+influenza a disease
+severity
+
+Complement regulatory protein CDSS (CDSS), also known asdecay accelerating factor (DAF), occurs
+as both a membrane-bound and soluble protein that is involved in regulating the complement
+system of the innate immune response. The complement system is a host-defensestrategy against
+invading pathogens. CDSS binds to complement proteins and induces an accelerated decay, thus
+keeping the complement system in check so that it does nat damage host cells.
+
+This genotype, rs2564978(C;T), has been associated with normal influenza A disease
+severity.
+
+There are common polymorphisms in the CD55 gene, which codes for the mmplement regulatory
+protein CD55. The variant form (T) of the rs2564978 polymorphism, located in the intronic region of
+the gene, decreases gene expression and results in lower CDSS protein synthesis. This SNP serves
+as a proxy for a 21 base pair insertion/deletion that occurs in the promoter region of the gene.
+
+CFD-2025-53478 , Page 282. of 1238
+
+---PAGE BREAK---
+
+1A
+
+according to polyunsaturated fatty acids (PUFA; ....-..-: low (<4% of energy), medium (4-8% of
+energy) and high (>8% of energy). Researchers observed that women with the allele who
+consumed more PUFAS had blaliet HDL-cholesterol levels. However, for women with the (iG)
+
+genotype, as PUFA intake increased, HDL-cholestero! concentrations decreased, The authors.
+suggest that women with the A allele may benefit from a PUFA-rich diet to improve their HOL-
+cholesterol levels, whereas women with the (G;G) genotype may consider decreasing PUFA intake to
+raise HDL-cholesterol concentrations.
+
+* Bead more about 5670 on SNPedia
+
+‘SNPs invoived
+
+15670(G;G)
+
+Associated with 3 lower
+viral load in sars-cov-1
+infection
+
+Interleukin 1 alpha (IL1A) is a proinflammatory cytokine located both intracellularly and bound to
+cell membranes, IL1A performs several rotes In the Immune response, Functioning as an alarmin,
+{L1A alerts the host to infection or cell damage and triggers an inflammatory response. While much
+Femains unknown about 1L1A, some research suggests that it gauges the level of infection or
+damage and signals other immune response molecules to launch the appropriate response.
+
+This genotype, rs1800587(C;C), has been associated with a lower viral load In SARS-CoV-
+1 Infection.
+
+There are common polymorphisms in the /L2A gene, which codes for the interleukin 1 alpha protein.
+The varlant form (T) of the rs1800587 polymorphism (also known as -889 C>T). Is located in the 5
+prime untranslated region of the genie and may alter the level of gene expression.
+
+In the SARS-CoV-1 outbreak of 2003, patients experienced inter-individual differences in
+nasopharyngeal viral toads, with higher viral load predicting poor prognosis. To determine whether
+host genetic factors accounted for some of these differences, researchers analyzed immunity
+
+related genes In 94 SARS CoV-1 patients. investigators observed that patients with the T allele of
+koty hasiding as compared to those with
+
+the (C:C) genotype.
+
+The authors suggest that in a pandemic where no preexisting immunity exists, the host's innate
+immunity will be important to decrease viral burden and potentially influence the clinical outcome.
+
+© Read more about 51800587 on SNPadia
+
+‘SNPs involved
+
+731800587(C:C)
+
+OAS]
+
+£517000900(C;C)
+
+Associated with normal
+susceptibifity to sars-cov-
+1 infection
+
+Myxovirus resistance A (MxA) is an Intracellular protein with antiviral properties. Levels of MxA
+protein in the cells of healthy individuals are low, however, upon viral infection, these proteins are
+Induced by Interferons.
+
+This genotype, r527000900(C;C), has been assoclated with normal susceptibility to SARS
+1 coronavirus Infection.
+
+There are common polymorphisms in the MX1 gene, which codes for the myxovirus resistance A
+protein, The variant form (A) of the r517000900 polymorphism (also known as -123 C>A), located In
+the promoter region of the gene, increases promoter activity leading to higher gene expression and
+production of the myxovirus resistance A protein.
+
+In a case-control genetic-association study (n = 817 SARS} patients and 422 seronegative
+
+household members), researchers observed that carriers of the f allele had a lower risk of SARS.
+COV-) Infection than those with the (CiC} cengtype The authors propose that theA allele of this
+
+polymorphism enhances the basal expression of the MX1 gene without requiring Induction by
+Interferon, which may be significant In a disease such as SARS1 where the virus suppresses
+interferons. In this study, A allele carriers exhibited a decreased susceptibility to SARS-CoV-1
+infection, however the polymorphism was not assotiated with clinical outcomes. The authors
+conclude that thls SNP may be useful in assessing susceptibility to infectious diseases, particularly
+those that are similar to SARS CoV-1.
+
+* Rend more about 1517000900 on SNPedia
+
+SNPs Involved
+
+1817000900(C;C)
+
+TS2660(A;A)
+
+Associated with normal
+susceptibility to sars1
+
+CED-2025
+
+Oligoadenylate synthetase 1 (OAS1) Is an interferon-induced protein with antiviral properties. OAS1
+activates latent RNase L, a ribonuclease enzyme capable of degrading viral RNA and inhibiting
+feptication,
+
+This genotype, rs2660(A;A), has been associ:
+
+ed with normal susceptibility to SARS1,
+
+There are common polymorphisms In the OASI gene, which codes for the 2',5-oligoadenylate
+synthetase 1 enzyme. The variant form (G) of the rs2660 polymorphism {also known as Arg397Gly),
+located In the exonic region of the gene, Is thought to affect a splicing site resulting In an OAS]
+enzyme with higher activity,
+
+In a case-control study of Chinese subjects (n = 66 Confirmed SARS1 patients and 64 serologically
+Negative close contacts), this polymorphism was associated with SARS-CoVe1 infection. Carriers of
+the G allele were more likely to be in the control group than the case group, suggesting 2 possible
+
+-53478_, Page 283 of 1238
+
+---PAGE BREAK---
+
+This genotype, rs1050450(C;C), has been associated with normal GPX1 activity and
+typicai ability to combat oxidative stress.
+
+There are common polymorphisms In the GPXJ gene, which codes for the ylutathione peroxidase 1
+enzyme. The variant form (T) of the rs1050450 polymorphism (also known as Prol98Leu or
+Pro200Leu), located In the exonic region of the gene, is thought to decrease enzyme activity,
+
+This genotype (C:C) confers normal GPX1 activity. However, a mounting body of evidence suggests
+that the T allele associated with lower GPX1 activity may reduce the ability to combat oxidative
+stress and increase the risk for diseases including inflammatory bowel disease, cardiovascular
+idisnass, and cancer.
+
+{na study of 69 men with coronary heart disease, individuals carrying the allele had 17% lower
+GPx1 enzyme activity as compared to subjects with, the (C}C) genotype. Researchers observed that
+
+Bublects with the 7 ollsie had. 74% higher linpperpsides and 27% higher MDA(a marker for oxidative
+
+stress) in low-density fipoproteins as compared to individuals with the (CjC) genotype. The. authors
+reason that Individuals with the T allele are more prone to the oxidative stress generated by free-
+radicals as a result of their lower GPX1 activity.
+
+© Bead more about 1510504: Pedia
+
+SNPs Involved
+
+£51050450(C;C)
+
+UCP
+
+Normal rate of age-
+related muscle
+catabolism, normal
+lifespan, may achieve
+better weight loss on a
+high protein/tow
+carbohydrate diet
+
+Uncoupling protein 3 (UCP3) is a mitochondrial protein involved In fatty acid and energy metabolism,
+as well as the formation of reactive oxygen species. UCP3. expressed primarily in skeletal muscle,
+may play a role in sarcopenia, or the age-related decline in muscle mass and strength.
+
+‘This genotype, rs1800849(C;C), has been associated with normal rate of age-related
+muscle catabolism and normal tifespan, may achieve better weight loss on a high
+protein/low carbohydrate diet,
+
+There are common polymorphisms in the UCP3 gene, which codes for the uncoupling protein 3. The
+variant form (T) of the rs1800849 polymorphism (also known as -S5C>T), located in the promoter
+region of the gene, is thought to Increase gene expression which may result In more UCP3 protein
+being produced.
+
+Researchers tested the hand grip strength of 432 individuals aged 65 to 105 years old. Participants
+with the It h. red ti il +
+
+The authors propose that higher UCP3 levels act to slow down age-related muscle decline and thus
+play a role in longevity.
+
+Researchers studying longevity examined various UCP gene variants in 598 individuals (ages 64 to
+
+105 years of age). They found that subjects with the allele. of this polymarnbism were Over
+fencesented in the longast-lived group. The authors conclude that increased UCP3 protein
+
+production may favor the maintenance of muscle mass and strength, which may impact healthy
+aging.
+Some research has linked this polymorphism to the risk for obesity however, studies have yielded
+
+somewhat conflicting results, possibly due to ethnic differences. in a 9-month weight loss study,
+investigators randomly assigned 283 obese individuals to receive a hypocaloric diet (either high
+
+protein/low carbohydrate or a standard diet). individuals with the {¢z6) aenatype experienced
+
+r rameters when on a high protein, ligt as compared to the
+standard diet.
+
++ Read more about 151500849 on SNPadia
+
+SNPs Involved
+
+¥s1800849(C;C)
+
+APOAL
+
+E6821)
+
+Normal risk for metabolic
+syndrome and
+dyslipidemia, plasma
+lipids may be less
+responsive to dietary fat
+
+Apolipoprotein Al (apoAl) is a membrane protein that is an integral component of high-density
+cholesterol (HDL-C) particles. Apolipoprotein Al promotes the flow of cholesterol and other lipids
+from the inside to the outside of cells, participating in the reverse cholesterol transport process, in
+which cholesterol flows out of cells and Is transported to the liver for recycling.
+
+This genotype, r5670(G;G), has been associated with a normal risk for metabolic
+syndrome and dyslipidemia, plasma lipids may be less responsive to dietary fat.
+
+There are common polymorphisms in the APOAI gene, which codes for apolipoprotein Al, The
+variant form (A) of the 15670 polymorphism (also known as -75 G>A) Is located in the promoter
+region of the gene and may increase transcription.
+
+Dietary intake of essential fatty acids may affect APOAI gene expression
+
+In a dietary intervention study, 50 men and women were fed a saturated fat-rich diet for 28 days,
+followed by a monounsaturated fatty acid-rich (MUFA) diet for 35 days, and finally a polyunsaturated
+tatty acid (PUFA) diet for 35 days, Researchers observed that women with the A all
+
+In another dietary intervention study, investigators fed 50 men a low-fat diet for 25 days, followed by
+a. MUFA-rich diet for 28 days and measured lipoprotein concentrations after each diet phase,
+
+Investigators observed that man carrying the A allele exhibited increased plasma LDL-cholesterol
+
+ter consuming 3 MUF, while they saw no increase in men with the 6;G)
+genotype.
+
+Investigators analyzed the dietary patterns of 755 men and 822 women, and categorized them
+
+CFD-2025-53478.., Page.284:0f 1238
+
+---PAGE BREAK---
+
+immune response. Individuals with the (A;G) ge ,, exhibit one-tenth the level of MBL protein as
+compared to those with the (G;G) genotype. Individuals with the (A;A) genotype had undetectable
+MBL plasma levels. A deficient level of MBL protein may be a critical factor In determining the
+susceptibility to SARS1 during the initial phase of Infection before the production of antibodies.
+
+Researchers replicated these findings in a study Including 4 case-control populations (n = 932
+
+patients with SARS1 and 982 control subjects). Subjects with low senim MBL levels were atareater
+disk of S48S-CoV-1 intectign as compared to individuals with the (G;G) genotype. Again, no
+
+association was found between this polymorphism and disease severity. The authors suggest that a
+deficiency In MBL may be a factor influencing the susceptibllity to SARS-CoV-1 infection.
+
+‘The adaptive immune response involves pathogen recognition and the production of specific
+antibodies. However, this process takes time, often several days. The innate immune response Is
+vital during the early phase of infection before the production of sufficient antibodies. The capabillty
+of an individual's innate immune response may partly explain the variable response to the SARS-
+Cov-l virus.
+
+© Read more shout 131800450 on SNPedia
+
+SNPs Involved
+
+131800450(G;G}
+
+PPAR gamma
+
+fs1801282(C;C)
+
+Normal risk for obesity
+and type 2 diabetes In
+response to a diet high in
+saturated fat and low in
+mono: and
+polyunsaturated fats.
+
+Peroxisome proliterator-activated receptor gamma (PPAR-y or PPARG) Is a master regulator of fatty
+acid storage and glucose metabolism. PPARG Is found in adipose tissue, the colon and In immune
+cells called macrophages. PPARG serves as a transcription factor and activates a variety of genes
+that stimulate lipid uptake and adipogenesis by fat cells, insulin sensitivity in muscle tissue and
+gluconeogenesis in the liver.
+
+This genotype, rs2802282(C;C), has been associated with normal risk for obesity and
+type 2 dlabetas in rasponse to a diet high in saturated fat and low In mono- and
+polyunsaturated fats.
+
+There are common polymorphisms in the PPARG gene, which codes for peroxisome proliferator-
+activated receptor gamma, The variant form (G) of the rs1801282 polymorphism is located In the
+coding reglon of the gene.
+
+The (C;C) genotype is associated with normal fat metabolism, however, individuals with the €;G) or
+(GG) genotype may be affected by the types of fat they eat. When individuals with thei@:G1 or
+
+tele ek for gbesity and type 2 diabetes increased. However, if these individuals consume a diet
+higher in mono- and polyunsaturated fats and lower In saturated fats, thelr risk for obesity and type
+
+2 diabetes is normal.
+
++ Read more about 31801282 on SNPedia
+
+SNPs Involved
+
+$1801282(C:C)
+
+uce2
+
+£5659366(C;C)
+
+Normai risk for certain
+chronic inflammatory
+conditions
+
+Mitochandrial uncoupling protein 2 (UCP2) Is 8 protein found in the inner mitochondrial membrane
+that is important in regulating Inflammation by controlling reactive oxygen species. UCP2 also plays
+a role In the transfer of anlons and protons between the inner and outer mitochondrial membranes.
+
+This genotype, rs659366(C;C), has been associated with:a normal risk for certain chronic
+Inflammatory conditions.
+
+There are common polymorphisms in the UCP2 gene, which codes for themitochondrial uncoupling
+protein 2. The variant form (T) of the rs659366 polymorphism (also known as -866G >A), located In
+the promoter region of the gene. is thought to increase gene expression, resulting in mote UCP2
+prateln being produced.
+
+Ina case-control study (4.625 patients and 2,841 healthy controls) Soe line was asociated ts
+
+systemic ly tos,
+
+Crohn's disease, and ulcerative colitis. This finding agrees with animal research, in which mice with 2
+
+disrupted UCP2 gene were more susceptible to inflammatory disease. The authors propose that the
+T allele, which leads to higher expression of UCP2, may provide some protection against chronic
+Inflammatory conditions,
+
+In a study of 950 non-diabetic individuals, researchers observed that subjects carrying theTaliale
+
+‘hndJonger telomeres than those with the (Cr) atnowvee. The researchers discuss how carriers of
+
+the T allele may experience reduced oxidative stress as a result of the Increased UCP2 expression In
+the mitochondria, which may protect telomeres from shortening.
+
+* Bead mors shout 4659366 on SNPedis
+
+‘SNPs Involved
+
+15659366(C;C)
+
+GPX1
+
+Typical ability to combat
+oxidative stress
+
+Glutathione peroxidase 1 (GPX2) is an enzyme that plays an antioxidant role in protecting cells fram
+oxidative damage. GPX contributes to the detoxification of hydrogen peroxide and lipid peroxides,
+harmful compounds which are produced from environmental exposure or generated by metabolism,
+‘The trace element selenium Is an essential component of the GPX1 enzyme structure, and if
+selenium intake Is low, enzyme activity may be submaximal.
+
+CFD=2025-53478 , Page 285 of 1238
+
+---PAGE BREAK---
+
+genotype were two-fold more likely to be in the langilived group than those with the (A;G) or (G;G)
+genotypes. When the researchers repeated this experiment in centenarians (298 years old), the
+(A;A) genotype was associated with longevity at near significant levels. The authors propose that
+the A allele upregulates the SIRTI enzyme facilitating more efficient teloiere maintenance, which
+may have implications for longevity,
+
+A recent study illustrated the interlinked relationship between telomeres and sirtuins, In a mouse
+model of liver disease, researchers knocked out the telomerase gene.and observed that sirtuin
+expression decreased, When they added an NAD+ precursor (a compound known to stimulate
+sirtuins) sirtuins, particularly SIRT1, increased, and telomeres stabilized, Researchers hypothesize
+
+that compromised telomeres reduce the expression of sirtwns In @ feedforward lan which results in
+
+further telomere shortening, possibly contributing to disease progression.
+
+Exercise and fasting
+The cofactor nicotinamide adenine dinucleotide (NAD+) regulates the activity of sirtuin enzymes.
+During exercise and fasting, cellular NAD+ levels rise and activate the expression of sirtuin genes.
+An increase in sirtuln enzyme activity can delay the processes of aging.
+
+Supplemental nicotinamide riboside (NR), a precursor to NAD+, has been shown to ralse white blood
+cell NAD+ levels in humans although more research is needed to determine if NAD+ levels increase
+
+in other tissues. Read more about the NAD+ precursors nicotinamide riboside INA} and nicotinamide
+‘monenucleatide (NMI,
+
+© Road more shout 7896008 on SNPedia
+
+SNPs Involved
+
+187896005(A;G)
+
+WKORCE 159923231(C;C)
+
+Normal vitamin k
+recycling and reduced
+warfarin sensitivity
+
+Vitamin K epoxide reductase comiplex subunit 1 (VKORC1) is an enzyme involved in vitamin K
+recycling. VKORC1 catalyzes the reduction of vitamin K epoxide into the active torm of vitamin K,
+the rate-limiting step. Vitamin K serves as a cofactor for several enzymes invoived in blood clotting,
+for example, factors Il, Vil, IX, and X, Warfarin {also known as Coumadin‘) is an anticoagulant used
+to reduce the risk of stroke, excessive blood clotting, and various coronary conditions. Warfarin
+
+Inhibits the VKORC1 enzyme and results In reduced vitamin K recycling and less blood clotting.
+interindividual variability occurs in how people respond to warfarin. and dosing is complex. A
+delicate balance exists as too much anticoagulation: can cause hemorrhaging, and not enough may
+
+promote blood clots. Theréfore, patients on warfarin are monitored closely by their physicians.
+
+This genotype, rs9923231{C;C), has heen associated with normal vitamin K recycling and
+reduced warfarin sensitivity.
+
+There aie common polymorphisms in the VKORCI gene. which codes for the vitamin K epoxide
+reductase complex subunit 1, The variant form (T) of the rs9923231 polymorphism (also known as -
+1639G>A), located in the promoter region of the gene, may decrease gene expression and result in
+fess erizyme being produced.
+
+A meta-analysis of 19 studies (n=4,621) examined the role of this polymorphism in the warfarin
+
+dosage requirement. The researchers observed that the C allele was associated with # hinher daily
+‘warfarin requirement, As'compared to individuals with the (TT) genotype. subjects with the (C;T)
+genotype required a 50 percent higher warfarin dose and those with the (C;C) genotype needed
+twice the dosage.
+
+In a genome-wide association study (GWAS) involving 1,053 Swedish subjects. the Tallala was
+i fariss sensitivity, Researchers confirmed this association in an additional 588
+
+Individuals, The authors describe that thls correlation is sufficiently strong, prompting the FOA to
+
+recommend that physicians consider this polymorphism when starting patients on warfarin.
+
+Several pther factors, ac oles Jonnortant for determining warfarin dogage including age, sex, diet,
+
+medications. disease state, BMI, and ethnicity.
+
+© Read mor
+
+SNPs Involved
+
+¥59923231(C;C)
+
+MBL £51890450(6:6)
+
+Associated with
+decreased susceptibility
+to sars-covel infection
+
+Mannose-binding lectin (MBL) 1s a protein in the blood that plays a critical role in the innate immune
+response and is considered to be a first-line host defense against pathogens, Repeating mannose
+and N-acetylglucosamine sugar motifs are found on the surfaces of bacterial and fungal cells and
+viruses, but not on mammalian cells, The SARS-CoV-1 S protein, belleved to play a critical role in
+infection, also exhibits these repeating mannose-units, The MBL protein binds to an invader via
+these motifs activating the complement system and initiating opsonophagocytosis {a process that
+signals the immune system to engulf and destroy a pathogen).
+
+This genotype, rs1800450(G;G), has been associated with decreased susceptibility to
+
+SARS-CoV-1 infection.
+
+There are common polymorphisms in the MBL2 gene, which codes for the mannose-binding lectin
+protein, The variant form (A) of the 51800450 polymorphism (also known as Gly54Asp), located in
+the exonic region of the gene, leads to an altered protein structure which degrades more rapidly.
+resulting in lower plasma concentrations of the MBL protein.
+
+In a study of 352 SARS] patients and 392 healthy control subjects, individuals with the A allele had
+‘Lbigher tisk of becoming infected with the SARS-CoV-1 virus as compared to those with the (G;G)
+
+genotype. However, researchers did not {ind an association between the A allele and disease
+severity. The authors suggest that this polymorphism may play a role in activating the innate
+
+CFD-2025-53478 _, Page.286 of 1238
+
+---PAGE BREAK---
+
+This genotype, rs2229616(G;G), has been «.+...uted with normal risk for obesity, type 2
+diabetes and coronary artery disease.
+
+The MC4R gene contains loss-of-function variants, some of which are associated with severe early-
+onset obesity, while others are associated with more typical forms of obesity. There are
+polymorphisms in the MC4R gene, which codes for the melanocortin-4 receptor. The variant form (A)
+of the 152229616 polymorphism (also known as V103!), is known as a gain-of-function variant, which
+is thought to result in the production of more MC4R protein and may provide some protection from
+obesity regardless of lifestyle.
+
+ina recent genetic assoclation meta: ranaiyis tevelving 452,300 individuals of European descent, the
+
+Slabetes and coronary artery distaze “approeimately 6% (n=28,161) of the study population had a
+
+gain-of-function polymorphism in the MC4R gene. Individuals with two copies of an MC4R gain-of-
+function variant weighed 2.5 kg less and had a 50 percent reduced risk of both coronary artery
+disease and type 2 diabetes. The authors demonstrated that this polymorphism favored a beta-
+arrestin signaling pathway rather than a cAMP pathway. They propose a mechanism by which this
+polymorphism may be Involved in protection from obesity and obesity-related diseases. Due to the
+beneficial aspects of this variant, the MC4R/beta-arrestin signaling pathway is being targeted by
+pharmaceutical companies for obesity drug development.
+
++ Bead.more about 152229616 on SNPedia:
+
+SNPs Involved
+
+'52229616(G;G)
+
+PPMLK
+
+te440581A:Ab
+
+Normal circulating beaas
+and normal risk for type
+2 diabetes on high fat
+diet
+
+PP2C domaln-containing protein phosphatase 1K (PPM1K) is a mitochondrial enzyme Involved in the
+metabolism of branched-chain amino acids (BCAA). Recent research suggests that high levels of
+circulating BCAAs may be linked to a future risk of insulin resistance and type 2 diabetes.
+
+This genotype, rs1440581(A;A), has been associated with normal circulating BCAAs and
+normal risk for type 2 diabetes.
+
+There are common polymorphisms near the PPM1X gene, which codes for the PP2C domain-
+containing protein phosphatase 1K. The variant form (A) of the rs1440582 polymorphisrn, Is located
+in the Intronic region of the gene,
+
+In a genome-wide association study (GWAS) involving 8,330 individuals, the 4G allele was associated
+
+with 2 higher ratio of branched-chain amino acids (BCAA) to aromatic aming acids (AAA) in the blood.
+
+This biomarker, known as Fisher's ratio has been linked to future risk for type 2 diabetes.
+
+In the POUNDS LOST trial, a two-year long dletary intervention study, researchers randomly
+assigned 734 overweight individuals to one of four hypocaloric diets which varied in the amount of
+carbohydrate, protein and fat content, After six months, individuals with the G allele lost jess. weight
+at as campared to
+Individuals without the G allele, Individuals with thea allele fost more weight and exhibited
+improved insulin resistance when on a high-fat diet compared to a low-fat diet. The authors suggest
+that G allele carriers may show fewer benefits from a high-fat diet due to higher circulating levels of
+BCAAs, While these findings that G allele carriers respond differently to a hypocatoric high-fat diet
+than individuals without the G allele are interesting, the authors state that more research is needed
+to understand the mechanism involved.
+
+In a 10-week welght loss study, Individuals (n=757) followed a hypocatoric diet which varied in
+
+macronutrient content, Participants with the A allele on the hiah-fat diet experienced a greater
+
+‘fedluction in insitid, HOMAJR. and HOMA-B as compared to Subjects on a low-fat diet. The authors
+Suggest that individuals with the (G;G) genotype may benefit from a low-fat, high carbohydrate diet
+
+while those with the A allele may be more suited to a high-fat, low carbohydrate diet for
+Improvements In glucose metabolism.
+
+* Read more about 1440581 on SNPedia
+* These alleles have been adjusted for consistency with SNP orientation. Read more about
+
+‘Sgrientation.
+
+SNPs Involved
+
+151440581(A;A)
+
+SiRTL
+
+1$7896005(A;G)
+
+Normal lifespan
+
+Sirtuin](SIRT2) is a member of the sirtuin protein family. Sirtuins regulate a variety of metabolic
+Processes, including the release of insulin, mobilization of lipids, response to stress, and modulation
+of lifespan. Sirtuins are also involved in telomere maintenance pathways, Telomeres are specific
+repeated sequences of nucleotides added to the ends of chromosomes to protect them from
+degradation and prevent them from binding to other chromosomes. Telomeres shorten with age,
+and their length is associated with metabolic health,
+
+This genotype, rs7896005(A;G), has been associated with normal lifespan.
+
+There are common polymorphisms In the SIATI gene, which codes for the sirtuin1 enzyme, The
+157896005 polymorphism is located in the intron region of the gene and may affect gene splicing,
+
+Researchers studying SIRT and its involvement in telomere maintenance (n = 224 nonagenarians
+{90 to 103 years old) and 293 young controls (21 to 59 years old) observed that the A allele was
+associated with longer telomeres. investigators observed that the A allele was more coimmon in the
+Jono-lived group than in the vounuer individuals, Specifically, they found that subjects with the (A;A)
+
+CFD. 2025-53478 Page 287 of 1238... _
+
+---PAGE BREAK---
+
+‘There are common polymorphisms in the genomic region containing a cluster of olfactory genes
+including the OR6A2 gene. The variant form (C) of the rs72921001 polymorphism Is located in the
+intronic region.
+
+In a genome-wide association study (n==14,604) and a replication cohort (n=11851), participants
+stated whether they liked the taste of cilantro or if they thought it tasted like soap. Investigators
+
+observed that the ¢ allele was more prevalent in individuals disliking cilantro or perceiving a soapy
+
+taste.
+
++ Read more about 1572921002 on SNPedia
+
+‘SNPs Involved
+
+£$72921001(A;A)
+
+vitamin D
+binding
+protein
+
+{S204UG:G)
+
+No genetic risk for
+vitamin d defictency
+
+GC Vitamin D binding protein is a member of the albumin family Involved in the storage and
+transport of vitamin D throughout the body. The GC gene encodes for the vitamin D binding protein
+which affects the delivery of 25-hydroxyvitamin D (precursor to vitamin D hormone) and activated
+vitamin D (1,25-dihydroxyvitamin D) to target organs, as well as the clearance of vitamin D
+metabolites from circulation,
+
+This genotype, rs7041(G;G), has been associated with low vitamin D levels.
+
+There are common polymorphisms in the GC gene, which codes for the vitamin D binding protein.
+The variant form (T) of the rs7041 polymorphism, located in the coding region of the gene, Is
+thought to result in a protein that binds less efficiently to vitamin D,
+
+The (G;G) genotype is not associated with an increased risk of vitamin D deficiency, However,
+individuals with the (7:7) or (G;T) genotype may have an increased risk of poor vitamin D status.
+Genetically low vitamin D tevels have been associated with reduced longevity and higher ailecause
+
+Ingrtality. In addition, people with a genetic predisposition to low vitamin D levels have been shown
+
+to have a two-fold i risk for sult as a consequence of low 25-hydroxyvitamin D
+
+levels,
+
+‘Agcording to the endocrine saciety, blood levels of 25-hydroxyvitamin D below 20 ng/mL are
+
+considered deficient, while levels less than 30 ng/ml. are considered inadequate. individuals having
+levels between 30-60 ng/mL are considered adequate. Meta-analyses have shown that people with
+
+Regardless of an individual's genotype for this particular SNP, a 25-hydroxyvitai
+available from most health care providers, can provide insight into how to optimize vitamin D status.
+
+* Read more about 157041 on SNPeidia
+
+SNPs Involved
+
+1s7041(G;G)
+
+YFAP2B
+
+1s987237(A:A)
+
+Normal risk for obesity
+and waist circumference,
+alters response to diet
+
+Transcription Factor AP-2 Beta (TFAP2B) is a protein invoived in the expression of genes associated
+with cell division and apoptosis (programmed cell death). TFAP2B functions by activating some genes
+and repressing other genes.
+
+This genotype, rs987237(A;A), has been associated with normat risk for obesity and walst
+circumference.
+
+There are common polymorphisms In the 7FAP2B gene, which codes for transcription factor AP-2
+beta. The variant form (G) of the rs987237 polymorphism is located in the Intronic region of the
+gene.
+
+In a genome-wide association study (GWAS) Involving 249,796individuals, the G allele was
+
+In a randomized controlled study, 771 obese adults followed a hypocatoric diet containing either low-
+fat (LF, 20-25%) or high-fat (HF, 40-45%) for ten weeks. Researchers observed that individuals with
+
+the (A:A} aenotyoe lost more welaht on the LF dietwhile those with the (G;G) genotype lost more
+
+weight on the HF diet.
+
+In a weight maintenance study (n=742) investigators observed that individuals with the{A:A)_
+inteln wei ter hy tein gist whereas carriers of the G allele regained
+
+more weight (1.84kg per G allele) on a high protein diet compared to a normal protein diet, Based
+on these results, researchers reason that this polymorphism interacts with a diet’s macronutrient
+content, but they are uncertain of the mechanism,
+
+* 101 it $9872 Pedi.
+
+SNPs Involved
+
+13987237(A;A)
+
+MCAR
+
+Normal risk for obesity,
+type 2 diabetes and
+coronary artery disease
+
+CFD-2025-53478 , Page 288 of 1238
+
+Melanocortin-4 receptor (MC4R) is a G-protein-coupled receptor expressed in the hypothalamus
+region of the brain, where it is thought to play a role in appetite control, satiety and regulation of
+food intake. G-protein coupled receptors are Important for transmitting signals from outside the cell
+to inside the cell based on environmental conditions such as nutrient availability. Some researchers
+believe MC4R Is a candidate gene for obesity, Upon eating, leptin levels increase leading to MC4R
+increases and appetite suppression.
+
+---PAGE BREAK---
+
+prescribed to treat alcohol abuse, mimics the ef... .. <his genotype, By inactivating ALDH2,
+Antabuse causes acetaldehyde to build up in the blood when alcohol is ingested, producing
+unpleasant effects.
+
+Individuals with the (A;G) genotype may tolerate some alcohol intake but are not fully able to
+metabolize it and may experience unfavorable outcomes. In a study of 44 Japanese alcoholic
+patients, researchers observed more ace ei oe in
+
+Individuals with tte (4:6) genotyne than those with the 1G:@) genotype who consumed the same
+
+amount of alcohol.
+
+© Bead more about 167) on SNPodis
+
+‘SNPs Involved
+
+15671(G;G)
+
+ADRBI
+
+1s4994(T.7)
+
+Normal ability to lose
+weight
+
+Beta-3 adrenergic receptor (ADRB3) plays a role in the sympathetic nervous system, acting to bind
+catecholamines such as epinephrine, ADRB3 Is expressed on the surface of fat cells and the bladder
+and is thought to be involved in energy expenditure, possibly via lipolysis and thermogenesis.
+Studies in rodents link ADRB3 to lipolysis in white adipose tissue (WAT) during fasting and to
+thermogenesis in brown adipose tissue (BAT) during cold exposure. However, these associations
+have only been preliminarily established in humans,
+
+This genotype, rs4994(T:T) Is associated with a normal abllity to lose weight.
+
+There are common polymorphisms in the ADRB3-gene, which codes for the B3-adrenergic receptor.
+The variant form (C) of the ts4994 polymorphism (also known as Trp64Arg), Is a missense mutation
+in the coding region of the gene that may decrease the affinity of the receptor for its target.
+Although not definitive, several researchers have associated this polymorphism with obesity. in
+meta-analysis involving 9,000 individuals, subjects carrying the C allele had @ higher BM than.
+Individuals with the f1:T) genotype,
+
+In a study of 329 Saudi individuals, those with the ¢ allele hag hiaher weiaht and BMI as. compared
+to individuals with the (T;T} genotype. Individuals with the € allele also exhibited higher glucose
+and insulin levels ag well as altered blood lipids. The authors propose that this polymorphism may
+act by decreasing lipolysis In fat cells (causing lipids to be retained In adipocytes rather than being
+burned for energy) which may explain the connection to obesity and dyslipidemia,
+
++ Bead more about 154994 on SNPedia
+
+‘SNPs Involved
+
+rs4994(T:T)
+
+DRD2
+
+ORGA
+
+£e1800497(C;0)
+
+1572921001{A;A)
+
+Normal food reward upon
+eating
+
+Dopamine receptor D2 (DRD2) is a dopamine binding site found in the brain. Dopamine is a
+neurotransmitter that Is released In the dorsal striatum region of the brain, a region associated with
+food reward,in response to eating. Dopamine binds to the DRD2 receptor therebyreducing feelings
+of hunger and increasing satiety.
+
+This genotype, rs1800497(C;C} Is assoclated with normal food reward upon eating.
+
+There are common polymorphisms in the ANKK2 gene, which may Interact with the nearby
+Dopamine receptor D2 (0A02) gene. The variant form, (T), of the r51800497 polymorphism (also
+
+known as TaalA), may be associated with Igwer DRO2 receptor density in the brain,
+
+Investigators used functional magnetic resonance imaging (fMRI) to observe the brains of subjects
+
+as they tasted palatable foods (chocolate milkshake) compared to tasteless solutions. They found a
+negative correlation between BM! and dopamine response to the milkshake, such that those with a
+higher BMI had a lower dopamine response. This correlation was even stronger in those with the T
+
+allele, Researchers suggested that individuals with the T.allele may experience less pleasure from
+
+fond dup to a decreased number of dopamine receptors and may compensate by overeating,
+
+Subjects were followed for one year to test whether this association resulted in weight gain. The
+results demonstrated that carriers of the T allele who had exhibited lower food reward response in
+the brain had gained more weight than those without the T allele.
+
+Other effects
+
+This SNP may have a variety of other potentially interesting effects, including improved ability to
+learn from errors, greater susceptibility to addictions such as smoking, alcohol and opiates and
+neuropsychiatric disorders and recovery ability from traumatic brain injury. You can read more
+about these effects on SNPedia.
+
+* Read more about 151900497 on SNPedia
+
+‘SNPs Involved
+
+£51800497(C;C)
+
+Unlikely to dislike cilantro
+
+one CED=2025-
+
+Olfactory receptor 6A2 {OR6A2 Is a transmembrane signaling protein Involved in the detection of
+odors, It is invalved in the detection of aldehydes, for example, decanal and (E)-2-decenal which are
+found in cilantro (coriander!, Cilantro, an herb used in the culinary traditions of various cultures is
+strongly disliked by some individuals.
+
+This genotype, rs72921001(A;A), has been associated with being unlikely to dislike
+cilantro.
+
+53478 , Page 289 of,.1238
+
+i
+|
+|
+i
+
+---PAGE BREAK---
+
+Normal! suitability to a
+diet high in complex
+carbohydrates
+
+Perilipin-1 (PLIN1) is a member of a family of proteins involved in the storage and breakdown of
+lipids in adipocytes (fat celts).
+
+This genotype, rs894160(G;G), has been associated with a normal suitability to a diet
+high In complex carbohydrates.
+
+There are common polymorphisms in the PLIVZ gene, which codes for the perilipin-1 protein. The
+variant form (A) of the rs894160 polymorphism (also known as 11482G>A) Is located in the intronic
+region of the gene.
+
+Investigators analyzed the dietary intake of 920 individuals of Puerto Rican descent. Researchers
+
+observed that amongst subjects. who consumed =144q/d of complex carbohydrates Individuals
+
+However, amongst subjects consuming <144g/d of complex carbohydrates, subjects with the A
+altele had larger waist circumferences than Individuals with the (GG) genotype, Researchers did not
+observe a nutrient-genotype relationship for simple sugars or total carbohydrate content. The
+authors suggest that A allele carriers are somewhat protected from adiposity by a higher complex
+carbohydrate intake, however, a low complex carbohydrate intake may be less desirable for these
+individuals.
+
+Individuals (n=970) recorded thelr habitual dietary intake and researchers catégorlzéd the data into
+the following groups, low saturated fat (<11.5%) versus high saturated fat (= 11.5%).and low
+carbohydrate intake (<50.5%) versus high carbohydrate intake (250.5%). When carbohydrate intake.
+
+had higher insulin levels and HOMA-(R:1a biomarker. of
+
+‘arhohivdrate intake jas high, Researchers observed that women with thea allele who consumed a
+high saturated fat to carbohydrate ratio had higher insulin levels and HOMA-IR. However, when
+saturated fat to carbohydrate ratio was low, this was not observed, There was no Interaction
+between saturated fat to carbohydrate ratio and the (G;G) genotype. The authors speculate that
+either a high saturated fat intake or a low carbohydrate intake may be detrimental for carriers of the
+A allele of this polymorphism.
+
+In another study, obese individuals consumed a hypocatoric diet (1200 kcal/d) for one year,
+Researchers observed that participants with the A allele had a lower weight and BMI at baseline
+than subjects with the (G;G) genotype. However, after one year on the diet, individuals with the
+
+i! a ri ificant weight Joss while individuals carrying the A allele did not.
+The authors theorize that the A allele may be associated with difficulty losing weight on a calorie~
+restricted diet. Moreover, the hypocatoric diet used in this study provided a relatively low
+percentage of carbohydrates which Is In accordance with other studles that propose that Individuals
+with the A allele lose weight more readily with higher carbohydrate content.
+
+« Read more spout 15895160 on SNPedia
+
+SNPs Involved
+
+£3894160(G;G)
+
+Normal hdi-c levels
+
+Hepatic lipase (HL) is an enzyme produced by the liver that plays a role In Iipoproteln metabolism. tt
+is involved in regulating HDL cholesterol (HDL-C) levels. When HL enzyme activity is high, HDL-C
+levels are lower. Low levels of HDL-C have traditionally been with an increased risk for
+cardiovascular disease, due to the role of HDL-C in reverse cholesterol transport. Although this
+polymorphism Is associated with increased HDL-C levels, studies correlating this SNP with protection
+from heart disease have been inconclusive.
+
+There are common polymorphisms in the L/PC gene, which codes for hepatic lipase, The varlant form
+(A) of the 152070895 polymorphism (also known as -250G>A), located in the promoter region of
+the gene, Is associated with decreased enzyme activity,
+
+This genotype, rs2070895(G;G), has been associated with normal HDL-C levels,
+
+In a study of 16,156 Danish individuals, the A allele associated with higher fasting serum HDL-C
+
+levels. Individuals with the (A;A) genotype, who reported exercising vingrously, had a further
+Increase in HDLC as compared to (G;G) Individuals.
+
++ Read more about-rs2070895 on SNPedia
+
+SNPs Involved
+
+¥2070895(G;G)
+
+PUNL £589415016;6)
+upc 182070895(G;G)
+ALDH2 ¥s671(G;G)
+
+Normal sensitivity to
+alcohol (non-flushing),
+normal risk for
+esophageal cancer with
+alcohol consumption
+
+Aldehyde dehydrogenase-2 (ALDH2) is a mitochondrial enzyme that plays a role in the metabolism
+of alcohol and other compounds such as acrolein found in cigarette smoke: In the liver, alcohol is
+metabolized into acetaldehyde {a potential carcinogen) by alcohol dehydrogenase and then Into
+non-toxic acetic acid (vinegar) by aldehyde dehydrogenase-2.
+
+This genotype, rs671(G;G) is associated with normal sensitivity to alcehol {non-flushing)
+and normal risk for esophageal cancer with alcohol consumption,
+
+There are common polymorphisms In the ALDH2 gene, which codes for the enzyme aldehyde
+dehydrogenase-2, The variant form (A) of the rs671 polymorphism, is a loss of function mutation
+resulting in a protein with no enzymatic activity, Acetaldehyde is more-toxic than alcohol and can
+build up causing facial redness, nausea, and hangover symptoms in the absence of a functional
+ALDH2 enzyme. Ethnicity is a factor with this polymorphism which is found primarily in individuals of
+East Asian descent,
+
+Individuals with the (A;A) genotype have no ALDH2 enzyme activity and typically experience such
+
+adverse reactions to alcohol that they tend to avoid it altogether. Disulfiram (Antabuse), a drug
+
+CFD-2025-53478__... Page 290. of -1238
+
+---PAGE BREAK---
+
+Patient: Seyler-La Pointe, Nadia Birth Date: Feb 12,2010
+
+Address: 820 Caroline Street
+Kamloops BC V2B SN1
+
+Orlando Passerin
+
+Dr. Orlando Passerin Primary Care
+3-517 Tranquille Rd
+
+Phone: 778-586-7916 Kamloops BC V2B 3H3
+
+Phone: 7784716488 Fax: 7784716490
+
+Note details: Type: General SOAP Note Date: May 26, 2025 Author: Passerin, Orlando
+
+Note Date: Mon May 26, 2025
+Reason for Visit: Behavior and medication concerns.
+
+Plan Summary
+
+Adjust Risperidone and Seroquel to. be administered as needed only:
+Continue Sertraline 100.mg PO QDAY.
+
+Patient's father looking to book appointment with Dr. Ocana, child psychiatry.
+
+History of Presenting Illness
+
+Christopher, a 41-year-old male, presents to discuss medication management and progress for his daughter, Nadia, who has a history
+of autism, behavioral issues. Nadia was started on Risperidone 0.25mg PO BID PRN initially for behavior concerns. It was then
+adjusted to a regular dispensed medication. Then the Risperidone was then increased to 0.25mg PO TID, then decreased back to
+Risperidone 0.25mg PO BID. Then the Risperidone was changed back to 0.25mg PO BID PRN. A review of the past years medical
+interactions through RIH seem to display increased bothersome behavior outbursts seem to occur predominantly when Nadia is with
+her mother. This is likely contributing to the difficulty Nadia's parents are having finding an acceptable treatment plan. Regarding
+treating Nadia's behavior concerns, Nadia seems to be more settled with her father and seems to-do better without Risperidone.
+This is in contrast to when Nadia is with her mother and exhibits escalating behavior concerns resulting in hospital visits. Further
+discussions need to be completed to find some common ground. Perhaps using Abilify prn would be agreeable between the parents.
+Abilify was mentioned as an alternative to Risperidone on a psychiatric consult June 20th, 2024.
+
+Nadia is also on Sertraline 100mg PO QDAY. Both parents agree that Nadia's behaviors seems to have improved on the Sertraline
+100mg PO QDAY.
+Nadia has also been prescribed Seroquel 6.25mg -25mg PO BID PRN that has been discontinued on May 1st, 2025
+
+Christopher reports significant improvements in Nadia's condition since discontinuing risperidone. He states that Nadia is now talking
+in sentences, no longer experiencing hallucinations, and no longer having panic attacks in public. She has shown marked
+improvement in her speech and has returned to participating in physical activities. Christopher contrasts this with her previous state,
+describing her as "a zombie" when on risperidone as she was non verbal and extremely sedentary.
+
+Christopher describes adverse effects Nadia experienced with risperidone, including self-biting, rigidity, aggression, facial grimacing,
+and contorting about an hour after administration. He also notes that Nadia's behavior in public has greatly improved. Previously,
+when on risperidone, she would cling to his arm in stores, cover her eyes, and avoid looking at people's faces. Now, Christopher
+reports that Nadia is able to go in and out of stores independently and make purchases on her own.
+
+Regarding current medication, Christopher states that Nadia is only taking sertraline 100 mg daily. He mentions that the last time
+Nadia took Seroquel was when her mother last administered it, and the last risperidone dose was following the previous consultation
+with myself, on April 30th, 2025.
+
+Assessment
+1. Psychiatric Symptoms Management for daughter (Nadia):
++ Continue sertraline 100 mg PO daily
+- Discontinue regular use of risperidone and perhaps consider alternatives such as Abilify to be used as a PRN.
+- Continue discussions with child psychiatry to find an agreeable as-needed medication for acute. behavioral issues
+
+2. Medication Side Effects:
+- Monitor for return of menstruation, as amenorrhea for at least 2 months has been reported
+
+- Observe for continued improvement in speech, behavior, and social functioning
+
+PatientVu Page t of 3
+
+CFD-2025-53478 Page 291 of 1238
+
+---PAGE BREAK---
+
+Patient: Seyler-La Pointe, Nadia sirth Date: Feb 12,2010 Pre... Orlando Passerin
+
+Address: 820 Caroline Street Clinic: Dr. Orlando. Passerin Primary Care
+Kamloops BC V2B 5N1 Address: 3-517 Tranquille Rd
+Phone: 778-586-7916 Kamloops BC V2B 3H3
+
+Phone: 7784716488 9 Fax: 7784716490
+
+Note details: _ Type: General SOAP Note Date: May 26, 2025 __ Author: Passerin, Orlando
+
+3. Behavioral Improvements:
+- Note significant improvements since discontinuing risperidone:
+- Novel speech production
+- Absence of hallucinations and panic
+- Increased exercise tolerance
+- Improved social functioning
+
+4, Previous Medication Issues:
+- Risperidone associated with adverse effects:
++ Self-injurious behavior
+- Aggression
+- Facial grimacing
+- Muscle rigidity
+~ Heightened anxiety in public spaces
+
+5. Follow-up:
++ Christopher has been encouraged to call Dr. Ocana (child psychiatry) in Kelowna for ongoing medication efficacy and potential
+side effects
+- If a referral is needed we will be happy to send one
+Diagnoses include:
+i :
+
+299.0 AUTISTIC DISORDER
+
+Script Review
+
+General Medications
+
+Vitamin 1000 tu
+
+: 1000 1U 10.D. 90 Mar 05, 2025 Jun 02, 2025
+Daily
+
+Scheduled Appointments:
+
+Or: Orlando
+Or. Orlando
+P . Mon May 26, 2025 } 11:00 AM 15 Passerin Primary Follow Up - Other
+asserin
+Care
+Plan _
+: ea
+speridone and Seroquel to be administered as needed only.
+Continue Sertraline 100 mg'PO QDAY.
+Patient's father looking to book appointment with Dr, Ocana, child psychiatry.
+Follow up as needed
+Assessing Physician: OPasserin
+PatientVu Page 2 of 3
+
+asst CFD-2025-53478., Page 292. of..1238 _
+
+---PAGE BREAK---
+
+Patient: Seyler-La Pointe, Nadia Birth Date: Feb 12,2010 ssw. er Orlando Passerin
+
+Address: 820 Caroline Street Clinic: Or. Orlando Passerin Primary Care
+Kamloops 8C V2B SN1. Address: 3-517 Tranquille Rd
+
+Phone: 778-586-7916 Kamloops BC V2B 3H3
+
+Phone: 7784716488 Fax: 7784716490
+
+Note details: Type: General SOAP Note _ Date: May 26, 2025 _Author: Passerin, Orlando
+
+Documentation Done/Transcribed By: Sara Scott
+
+This note was transcribed live and it has not been proofread for clarity and accuracy by the assessing physician. The assessing
+
+physician reserves the right to amend the report for medical accuracy
+This note was assisted by Al. It may lack full context, and inferences or conclusions should be verified.
+
+PatientVu
+
+CFD-2025-53478_, Page 293 of 1238
+
+Page 3 of 3
+
+---PAGE BREAK---
+
+Comprehensive Analysis Report: Nadia Seyler-
+LaPointe (Past Year)
+
+Analysis Period: Approx. May 2024 - May 2025
+
+1. Introduction
+
+This report provides an extremely detailed analysis of Nadia SeylerLaPointe’s
+health, behavior, feelings, and experiences over the past year, focusing on
+the complex interplay between her medication regimen (sertraline, risperidone,
+quetiapine/Seroquel), significant dosing inconsistencies, her pharmacogenetic
+profile, environmental factors (contrasting home environments), and dietary
+patterns.
+
+The primary goal is to synthesize available information—including genetic data,
+
+medication history, reported symptoms (hallucinations, severely worsened teeth
+trigger), parental observations, and scientific literature—into a data-driven
+narrative. This report aims to provide Nadia’s parents and physicians with
+factual insights to inform discussions and collaborative decisions regarding her
+ongoing care.
+
+Data Sources: * Parental reports and observations provided in conversations.
+* Previous pharmacogenetic analyses based on Nadia’s 23andMe data (CYP2D6,
+CYP3A4). * Medication details (drugs, doses, schedules, inconsistencies). *
+Information regarding environmental and dietary conditions. * Publicly avail-
+able scientific literature, pharmacogenetic databases (PharmGKB), and clinical
+guidelines (CPIC).
+
+Disclaimer: This report is for informational and educational purposes only.
+It synthesizes available data and provides analysis based on established phar-
+macogenetic principles and reported clinical context. It is not a substitute for
+professional medical advice, diagnosis, or treatment. All clinical decisions, includ-
+ing medication adjustments, must be made by qualified healthcare professionals
+in consultation with Nadia’s parents, considering her full clinical picture. No
+changes to medication should be made based solely on this report.
+
+2. Timeline of Key Events (Approx. May 2024 - May 2025)
+
+Note: Exact dates for some events require clinical clarification.
+
+CFD-2025-53478 Page 294 of 1238
+
+---PAGE BREAK---
+
+Time
+Period Medications EnvironBieht Key Symptoms & Events
+
+May « Risperidone
+2024 0.25mg TID
+
+- (Missed ~25% at
+Nov Mom’s)
+
+2024
+
+. Alternating Alternating
+
+Sero- Base-
+
+quel line:
+
+25mg His-
+
+nightly tory
+
+(4x/week, of
+
+Mom’s autism-
+
+ONLY) like
+symp-
+toms,
+non-
+verbal
+until
+12,
+hy-
+per-
+acu-
+sis.
+Gen-
+eral
+state
+needs
+detail.
+
+DecembesSertraline
+
+2024 100mg daily
+
+ADDED
+
+« Risperidone 0.25mg TID (Missed ~25% at Mom's) « Seroquel 25mg nightly
+(4x/week, Mom’s ONLY) | Alternating | Alternating | » Start of 3-drug com-
+bination. High potential for Sertraline-Risperidone interaction (CYP2D6). |
+| Jan 2025 - Mid-Apr 2025 | « Sertraline 100mg daily (Missed ~25% at
+Mom’s) « Risperidone 0.25mg TID (Missed ~25% at Mom’s) « Seroquel 25mg
+nightly (4x/week, Mom’s ONLY) | Alternating | Alternating | « Hallucinations
+started (Date unknown). » Teeth trigger issue worsened significantly
+(““way way worse”) (Date unknown). « Hypertensive crisis, Hospital stay,
+Psychotic break (after Img Risperidone) occurred (Dates unknown). » Watched
+movie “Smile” (Date unknown). + Developed significant fear state, triggered
+
+« CFD=2025-53478.»..Page:.295 of 1238
+
+---PAGE BREAK---
+
+by teeth. « Reported side effects: Locking up (likely EPS), hallucinations,
+fear state. ¢ Peak period of pharmacological instability due to interactions,
+inconsistent dosing, environmental/dietary shifts. | | Mid-April 2025 | «
+Risperidone STOPPED + Seroquel STOPPED « Sertraline 100mg daily
+(Now presumably consistent) | Dad’s House (Stable) | Consistent (Specialized)
+| « Transition to Sertraline monotherapy. Potential withdrawal from Risperi-
+done/Seroquel. Shift to stable environment/diet. | | Mid-Apr 2025 - Present
+(May 2025) | + Sertraline 100mg daily (Consistent) | Dad’s House (Stable) |
+Consistent (Specialized) | « Sertraline monotherapy period. Effects dictated by
+Sertraline + CYP2C19 status (Unknown). Potential for improvement or ongoing
+Sertraline side effects. |
+
+3. Detailed Medication Analysis: Effects, Inconsistencies,
+and Interactions
+
+This section delves into how each medication likely affected Nadia, considering
+her genetics and the crucial factor of inconsistent administration.
+
+3.1. Sertraline (Zoloft)
+
+¢ Introduction (Dec 2024): Added at 100mg daily. This dose is often
+reached gradually; starting at 100mg could increase initial side effect risk.
+
+« Metabolism: Primarily via CYP2C19 (Nadia’s status Unknown), secon-
+darily via CYP2D6 (Nadia is IM). If Nadia is a CYP2C19 Poor Metabolizer
+(PM), 100mg is likely too high, leading to elevated levels [1, 2].
+
+¢ Inconsistency (~25% Missed at Mom’s): Missing doses 1-2 times
+weekly disrupts steady-state levels. This can cause:
+
+— Reduced Efficacy: Undermining potential benefits for anxiety /mood.
+
+— Withdrawal Symptoms: Dizziness, fatigue, irritability, anxiety, “brain
+zaps” upon missing doses [3].
+
+— Fluctuating Side Effects: Side effects might feel worse when restarting.
+
+¢ CYP2D6 Inhibition: Sertraline moderately inhibits CYP2D6 [1]. This
+is critical for its interaction with Risperidone.
+« Likely Impact on Nadia’s Feelings/Experiences:
+
+— Initial Period (Dec 2024 onwards): Potential for increased anxiety,
+agitation, or feeling “activated” or restless, especially if the dose was
+effectively high for her metabolism. Might have felt nervous or had
+trouble sleeping.
+
+— Ongoing (Jan-Apr 2025): The inconsistency likely contributed to
+feeling unstable. She might have experienced days of feeling with-
+drawn or irritable due to missed doses, followed by days with more
+pronounced side effects (e.g., nausea, headache, perhaps heightened
+anxiety) when doses were resumed. This unpredictability could be
+confusing and distressing.
+
+CFD-2025-53478 , Page 296 of 1238
+
+---PAGE BREAK---
+
+3.2. Risperidone (Risperdal)
+
+« Baseline Use (Pre-Dec 2024): 0.25mg TID. As a CYP2D6 IM, Nadia
+likely had higher-than-average levels even before Sertraline [4, 5].
+
+¢ Interaction with Sertraline (Dec 2024 - Mid-Apr 2025): Sertraline’s
+inhibition of CYP2D6 likely caused a major increase in Risperidone
+levels, potentially mimicking a CYP2D6 Poor Metabolizer state [6]. This
+dramatically increases side effect risk.
+
+« Inconsistency (~25% Missed at Mom’s): Missing ~2 doses/week
+created significant fluctuations on top of already high levels.
+
+— Withdrawal/Rebound: Could cause rebound agitation or symptom
+worsening on missed days.
+
+— Peak Effects: Side effects likely felt much worse when doses were
+resumed after being missed.
+
+« Link to Severe Symptoms:
+
+— Hallucinations: Strongly associated with the elevated Risperidone
+levels caused by the interaction [7]. Nadia likely felt frightened,
+confused, and disconnected from reality during these episodes.
+
+— “Locking Up” (EPS): Extrapyramidal symptoms like dystonia (muscle
+stiffness/spasms) or akathisia (intense restlessness) are dose-dependent
+side effects of Risperidone, significantly more likely with high levels
+[7]. This would feel physically painful, distressing, and uncontrollable.
+
+~— Psychotic Break (after 1mg dose): A higher dose given when levels
+were already likely toxic due to the interaction could easily precipitate
+such a severe reaction.
+
+« Likely Impact on Nadia’s Feelings/Experiences:
+
+— Physical Discomfort: Likely felt significant sedation, dizziness, muscle
+stiffness, and uncontrollable restlessness (akathisia).
+
+— Emotional Distress: Fear and confusion from hallucinations, frustra-
+tion and panic from EPS.
+
+— Cognitive Effects: Difficulty thinking clearly, feeling “foggy”.
+
+— Instability: The fluctuating levels likely made her feel unpredictable
+and out of control.
+
+3.3. Quetiapine (Seroquel)
+
+« Use Pattern (Pre-Dec 2024 - Mid-Apr 2025): 25mg nightly, ONLY
+at Mom’s (4x/week). Used off-label for sleep.
+« Metabolism: Primarily via CYP3A4 (Nadia is Normal). Low dose,
+unlikely major impact from CYP2D6 IM status.
+« Inconsistency (Intermittent Use): Taking it only 4 nights/week is
+problematic:
+— Variable Sedation: Likely caused drowsiness/grogginess only on morn-
+ings after taking it.
+— Rebound Insomnia/Anziety: May have had trouble sleeping or felt
+more anxious on the 3 nights off.
+
+tenn = z. Page. .297. of .1238
+
+---PAGE BREAK---
+
+— Undermining Sleep Regulation: Prevents the body from establishing
+a consistent sleep-wake cycle.
+« Interactions: Added to the sedative load on nights taken. Contributed
+to cumulative QTc prolongation risk [8].
+« Likely Impact on Nadia’s Feelings/Experiences:
+— Unpredictable Energy Levels: Feeling groggy some mornings, poten-
+tially more alert or anxious on others.
+~ Poor Sleep Quality: Overall sleep likely remained disrupted due to
+inconsistency.
+— General Instability: Contributed to the overall lack of physiological
+consistency.
+
+3.4. Combined Interaction Summary (Dec 2024 - Mid-Apr 2025)
+
+The period when all three drugs were used, coupled with inconsistent dos-
+ing, created a highly toxic and unstable pharmacological environment. The
+Sertraline-Risperidone interaction via CYP2D6 was likely the most dam-
+aging, leading to Risperidone overexposure and severe side effects (hallucinations,
+EPS). Additive sedation, QTc risk, and serotonin syndrome risk were also present.
+Nadia likely felt chronically unwell, oscillating between sedation, agitation, fear,
+confusion, and physical discomfort, significantly impacting her behavior and
+ability to cope.
+
+4. Analysis of Hallucinations and Teeth Trigger Issue
+4.1. Hallucinations
+
+¢ Timing: Onset reported after Sertraline addition (Dec 2024), correlating
+with the period of likely Risperidone overexposure.
+
+« Mechanism: Most likely a direct side effect of toxic Risperidone levels
+caused by the Sertraline-CYP2D6 interaction [7].
+
+« Nadia’s Experience: Likely involved frightening and confusing sensory
+experiences (visual or auditory), leading to fear, disorientation, withdrawal,
+or agitated behaviors.
+
+4,2. Teeth Trigger Issue
+
+« Timing: Existed previously but worsened dramatically (“way way worse”)
+during the combination therapy period (Dec 2024 - Mid-Apr 2025).
+« Mechanism: Likely multi-factorial, severely exacerbated by medication
+side effects:
+— Elevated Risperidone: Akathisia (intense restlessness) or heightened
+anxiety/paranoia could amplify the fear response to the trigger [7].
+- Sertraline Effects: Potential for increased anxiety/activation, lowering
+the threshold for reacting to the trigger [3].
+— Reduced Coping Capacity: Overall sedation, confusion, and physical
+discomfort from the drug combination likely reduced Nadia’s ability
+
+an
+
+CFD-2025-53478_, Page 298 of 1238
+
+---PAGE BREAK---
+
+to manage the trigger.
+
+— Psychological Component: The fear associated with the “Smile” movie
+provided the initial trigger, but the medication state likely transformed
+it from a manageable fear into an overwhelming, debilitating phobia.
+
+¢ Failure of Treatment: The medications, particularly the Sertraline-
+Risperidone combination, paradoxically worsened the very anxiety/fear
+they might have been intended (in part) to treat, by inducing severe side
+effects that. latched onto the existing trigger.
+
+« Nadia’s Experience: Encountering the trigger likely induced overwhelm-
+ing panic and terror. She might have felt trapped in a state of intense fear
+with physical manifestatious (racing heart, difficulty breathing) coupled
+with potential medication side effects like restlessness or stiffness, making
+escape feel impossible. This would manifest as extreme distress behaviors
+(screaming, fleeing, avoidance).
+
+5. Analysis of Environmental and Dietary Impacts
+
+5.1. Environmental Contrast
+
+« Mom’s House (High-Stress): This environment acted as a chronic stres-
+sor, likely increasing Nadia’s baseline anxiety and reducing her resilience.
+The chaos directly contributed to medication inconsistency. The combined
+effect was likely synergistic: stress worsened medication tolerance, and
+medication side effects/fluctuations reduced her ability to cope with stress.
+
+— Nadia’s Likely Feelings: More anxious, overwhelmed, hypervigilant,
+unsafe.
+
+« Dad’s House (Stable): Provided a crucial buffer. Predictability and
+calm reduce baseline stress, potentially improving medication tolerance
+(though not eliminating interaction effects) and allowing for consistent
+administration.
+
+~- Nadia’s Likely Feelings: Calmer, safer, more regulated (relative to
+the other environment).
+
+¢ Impact of Alternating: The constant switching prevented adaptation
+and likely caused significant dysregulation during transitions, making it
+hard to pinpoint causes for behavior changes.
+
+5.2. Dietary Contrast
+
+* Mom’s House (Inconsistent /Standard): Likely contributed to inflam-
+mation, gut dysbiosis, blood sugar swings, and potential nutrient gaps,
+potentially worsening mood, behavior, and medication tolerance.
+
+— Nadia’s Likely Feelings: More irritable, fatigued, potentially experi-
+encing physical discomfort from gut issues.
+
++ Dad’s House (Consistent/Specialized): Aimed to reduce inflam-
+mation, support gut health, stabilize blood sugar, and provide targeted
+nutrients (e.g., natural folate, healthy fats), potentially improving baseline
+well-being and resilience.
+
+CED=-2025-53478..,..Page..299.o0f +1238
+
+---PAGE BREAK---
+
+— Nadia’s Likely Feelings: More stable energy levels, potentially better
+mood and focus (relative to the other diet).
+
+» Impact of Alternating: Similar to the environment, switching diets
+
+prevented physiological adaptation. Gut health, inflammation levels, and
+
+nutrient status would fluctuate, potentially impacting neurotransmitter
+
+function and medication effects unpredictably.
+
+5.3. Combined Environmental/Dietary Impact
+
+The periods spent at Mom’s house represented a convergence of negative factors:
+high stress, poor diet, and inconsistent medication with dangerous interactions.
+This combination likely significantly amplified symptom severity and side effects.
+Conversely, periods at Dad’s house offered relative stability, potentially mitigating
+some harm but unable to fully counteract the underlying pharmacological issues
+present until mid-April 2025.
+
+6. Overall Synthesis & Impact on Nadia (Dec 2024 - Mid-
+Apr 2025)
+
+During the peak combination therapy period, Nadia was likely experiencing a
+cascade of negative effects: * Internal State: Feeling physically unwell (sedated,
+stiff, restless), mentally confused (foggy, disoriented), emotionally volatile (anx-
+ious, fearful, irritable), and potentially terrified (hallucinations, intense trigger
+reactions). * Behavioral Manifestations: Increased withdrawal, fear-based
+reactions, agitation, “locking up” (EPS), vocalizations, crying, potentially aggres-
+sion as a response to overwhelming distress, alongside possible periods of extreme
+sedation or lethargy. * Contributing Factors: The Sertraline-Risperidone
+interaction was likely the primary driver of severe side effects, exacerbated by
+inconsistent dosing, intermittent Seroquel, high environmental stress, and a
+non-supportive diet.
+
+7. Recommendations for Discussion with Clinicians
+
+These recommendations are based on the analysis and aim to inform collaborative
+care decisions:
+
+1. Medication Review & Simplification:
+
+« Acknowledge Past Harm: Recognize that the previous combi-
+nation, especially given the Sertraline-Risperidone interaction and
+inconsistent dosing, likely caused significant harm and severe side
+effects (hallucinations, EPS, worsened teeth trigger).
+
+« Evaluate Sertraline Monotherapy: Assess the ongoing neces-
+sity and efficacy of Sertraline. Strongly recommend CYP2C19
+genetic testing to determine if the 100mg dose is appropriate or
+potentially excessive [1, 2]. Monitor closely for efficacy and side effects
+(anxiety, agitation, GI issues).
+
+CFD-2025-53478 , Page 300 of 1238
+
+---PAGE BREAK---
+
+« Avoid Reintroducing Problematic Meds: Given the severe past
+reactions, extreme caution is warranted regarding any potential rein-
+troduction of Risperidone or Seroquel. If antipsychotic medication
+is deemed absolutely necessary in the future, consider agents with
+different metabolic pathways (not primarily CYP2D6) and start at
+extremely low doses with slow titration and close monitoring [4, 5].
+
+« Address Sleep: If sleep remains an issue, explore non-
+pharmacological strategies first. If medication is needed, avoid
+antipsychotics like Seroquel solely for sleep. Consider options with
+lower risk profiles after discussion with the physician (e.g., continue
+exploring effective nelatonin strategies as previously discussed).
+
+2. Environmental Consistency & Support:
+
+¢ Maintain Stability: Recognize the profound benefit of the current
+stable environment at Dad's house. Continued consistency is crucial
+for Nadia’s regulation and recovery.
+
+« Future Planning (If Mom Re-engages): If shared care resumes,
+establishing strict consistency across both homes regarding routines,
+stress reduction strategies, and especially medication adminis-
+tration is paramount. This may require professional support (e.g.,
+
+family therapy, case management) to implement.
+
+3. Dietary Consistency:
+
+¢« Maintain Specialized Diet: Continue the consistent, DNA-
+informed Mediterranean-style diet that supports Nadia’s needs
+(GFCF, healthy fats, natural folate, etc.).
+
+« Cross-Home Consistency: If shared care resumes, ensuring dietary
+adherence in both homes is vital to avoid physiological disruption.
+
+4. Addressing Trauma & Triggers:
+
+« Acknowledge Medication Impact: Recognize that the teeth trig-
+ger was severely exacerbated by the medication side effects, While
+the origin might be psychological, the intensity was likely pharmaco-
+logically driven.
+
+¢ Therapeutic Support: Engage appropriate therapeutic support
+(e.g., trauma-informed therapy, potentially EMDR if appropriate and
+tolerated, occupational therapy) to help Nadia process the frightening
+experiences (hallucinations, psychotic break, intense fear reactions)
+and work on desensitization to the teeth trigger now that the exacer-
+bating medications are removed. Progress may be more possible in a
+stable pharmacological state.
+
+« Monitor Trigger Severity: Observe carefully whether the intensity
+of the reaction to the teeth trigger lessens over time now that she is
+off Risperidone/Seroquel.
+
+5. Open Communication & Monitoring:
+
+« Share This Report: Provide this report to all involved clinicians
+(prescribing physician, therapist, pediatrician) to ensure everyone has
+the same understanding of the likely contributing factors.
+
+« Detailed Monitoring: Continue detailed logging of Nadia’s mood,
+
+we  CED= 2025253478... Page, 301: 0f).1238
+
+---PAGE BREAK---
+
+behavior, sleep, side effects, and any reactions to triggers to track
+progress and inform ongoing care.
+
+8. References
+
+1.
+
+Clinical Pharmacogenetics Implementation Consortium (CPIC). CPIO®
+Guideline for CYP2D6, CYP2C19, CYP2B6, SLC6A4, and HTR2A Geno-
+types and Serotonin Reuptake Inhibitor Antidepressants. Updated April
+2023. Available at: cpicpgx.org.
+
+. PharmGKB. Annotation of CPIC Guideline for sertraline and CYP2B6,
+
+CYP2C19. Available at: pharmgkb.org.
+
+Fava M, et al. A Double-Blind Study of Sertraline, Fluoxetine, and Placebo
+in Major Depressive Disorder. J Clin Psychiatry. 1995.
+
+Clinical Pharmacogenetics Implementation Consortium (CPIC). CPIO®
+Guideline for CYP2D6 and Risperidone. Updated March 2017. Available
+at: cpicpgx.org.
+
+PharmGKB. Annotation of DPWG Guideline for risperidone and CYP2D6.
+Available at; pharmgkb.org.
+
+Drug Interaction Databases (e.g., Lexi-Comp, Micromedex, Drugs.com
+- accessed May 2025). Search terms: sertraline, risperidone, CYP2D6
+interaction.
+
+Risperidone Prescribing Information. (Consult specific version for detailed
+side effect. profiles).
+
+Drug Interaction Databases (e.g., Lexi-Comp, Micromedex, Drugs.com -
+accessed May 2025). Search terms: sertraline, risperidone, quetiapine, QTc
+
+prolongation, sedation.
+
+(Additional specific citations for points on environmental stress, diet impact,
+withdrawal syndromes can be added from relevant psychiatric and nutritional
+literature if required for formal submission)
+
+CFD-2025-53478 , Page 302 of 1238
+
+---PAGE BREAK---
+
+Notice of Intent to Seek Full Custody of
+Nadia Seyler-La Pointe and Withholding
+Due to Safety Concerns
+
+Dear Natasha,
+
+This letter serves as formal notice of my intent to seek full custody of our daughter, Nadia
+Seyler-La Pointe, and to temporarily withhold her from your care due to significant safety
+concerns, as permitted under the Family Law Act, SBC 2011, c 25, s. 37, which prioritizes
+the best interests of the child, including their safety, health, and well-being. The following
+
+outlines the legal justifications for this decision, supported by documented evidence and
+Nadia’s expressed preferences.
+
+Legal Justifications for Withholding and Seeking Full
+Custody
+
+1. Risk of Harm Due to Allegations of Abuse (Family Law Act, s. 37(2)(b), s. 38)
+
+Nadia's statements on July 31, 2025-August 3, 2025, raise serious concerns about
+her safety in your caré. On July 31, 2025, at 9:51 PM, Nadia stated, "Jason was
+angry, |peed, Mom was embatrassed, home not peaceful," and requested a 10-day
+
+stay at my home, indicating distress in your household (video evidence available).
+On August 3, 2025, she clarified past incidents involving Jason, confirming
+
+"spanking" and "seeing his penis" (video evidence available). These allegations,
+combined with your failure to address them directly (August 1, 2025, email: "lam
+notin a relationship, Jason wasn’t here"), suggest a risk of emotional or physical
+harm. The Family Law Act, s. 38, identifies exposure to family violence, including
+emotional abuse, as a factor in custody decisions. Nadia's reports of a "not
+peaceful" environment and specific incidents with Jason necessitate immediate
+action to protect her, justifying withholding her from your care until these concerns
+are investigated by the appropriate authorities.
+
+CFD-2025-53478 , Page 303 of 1238
+
+---PAGE BREAK---
+
+2. Neglect Through Failure to Follow Medically Necessary Diet (Family Law Act, s.
+37(2)(g))
+
+Since 2018, Nadia’s genetic testing (23andMe and whole genome sequencing)
+confirmed an MTHFR gene mutation, requiring a gluten-free, casein-free, tyramine-
+free, synthetic folate free, Mediterranean diet to prevent behavioral regression and
+health issues, including speech difficulties and hypertensive crises. You
+acknowledged this diet’s necessity in 2018 (under Dr. Anita Bratt’s guidance) and in
+2021 but have consistently failed to comply, as evidenced by Nadia’s reports of
+consuming chips, cereal, ice cream, and pizza pockets at your home (July 31, 2025,
+conversation) despite years of repeated warnings. This dietary neglect has led to
+observable regression, including reduced speech, increased OCD behaviors, and
+teeth compulsions since June 8, 2025. The Family LawAct, s. 37(2)(g), considers the
+ability to meet the child’s health needs in custody decisions. Your failure to adhere
+to Nadia’s medically necessary diet constitutes neglect, endangering her health
+and development, and supports my application for full custody.
+
+. Unauthorized Administration of Medication (Family Law Act, s. 37(2)(f))
+
+September 2024, you acquired and administered Seroquel to Nadia without my
+consent or knowledge, failing to provide clear instructions or a diagnosis when
+asked (Sept 2024 email: "As a prn"). Previously, you used risperidone, despite my
+explicit objections (2024-present e-mails/texts). These medications, linked to side
+effects like facial grimacing and rigid behavior (noted in my letter to hospital, July
+26, 2024), have contributed to Nadia’s hallucinations and regression. The Family
+Law Act, 8. 37(2)(f), emphasizes the capacity to make decisions in the child’s best
+interests. Your unilateral medical decisions, ignoring my input as a joint guardian,
+demonstrate a disregard for Nadia’s well-being, justifying a change in custody.
+
+. Minimization of Nadia’s Communication Abilities and Expressed Preferences
+(Family Law Act, s. 37(2)(i))
+
+On July 31, 2025, Nadia explicitly requested a 10-day stay at my home, stating your
+home is "not peaceful" (video evidence). Her ability to articulate preferences aligns
+with her progress in my care, where she engages in educational activities, and self-
+regulates using coping strategies, (noted March 15, 2025, and July 31, 2025). Your
+
+CFD-2025-53478.,. Page 304 of.1238
+
+---PAGE BREAK---
+
+statement on July 31, 2025, that "the results [of Nadia's statements] aren't reliable
+
+with her current communication abilities" dismisses Nadia’s capacity to express
+her needs and safety concerns, undermining her autonomy and potentially
+
+concealing credible allegations of harm. The Family Law Act, s. 37(2)(i), requires
+courts to consider a child’s views unless inappropriate, Nadia’s improving
+
+communication since May 2025, and tegressions since June 8 return to status quo
+parenting time, combined with her consistent desire to stay with me (expressed
+
+daily, August 2025), supports a custody change. Your minimization of her
+communication abilities raises serious concerns about your ability to recognize and
+respond to her emotional and developmental needs, further justifying withholding
+her from your care.
+
+. History of Limited Parenting Time and Neglect (Family Law Act, s. 37(2)(e))
+
+From September 2015 to August 2019, | was Nadia’s primary Caregiver (Monday to
+Friday, 7 AM-5 PM), managing her homeschooling, therapy, and medical needs, as
+documented in school reports, therapy records, and emails (e.g., Kleos registration,
+July 7, 2025). During this period, you prioritized work and personalrelationships
+(e.g., Stephan Lemercier aka William Keates), limiting your involvement. In 2019-
+2020, under our MOU with Shirley Selskie, you assumed primary care but failed to
+provide promised therapy or homeschooling, leading me to resume primary
+responsibility. From April to August 2023, you were largely absent, living in an RV or
+campsites, leaving Nadia in unsafe conditions (no heat, cramped quarters). The
+Family Law Act, 8. 37(2)(e), considers the history of care in custody decisions. My
+consistent role as Nadia’s primary caregiver (approximately 70-80% of the time
+since 2015), contrasted with your sporadic involvement and neglect, supports my
+application for full custody.
+
+. Inappropriate Exposure to Media and Mishandling of Triggers (Family Law Act,
+
+s. 37(2)(b))
+
+Nadia’s OCD triggers, particularly around teeth, emerged after watching Smile in
+your care (March-May 2024). Your response—forcing her to colour pages with
+progressively larger teeth, every day, multiple times per day, while not following her
+medically necessary diet—exacerbated her distress and hallucinations, as reported
+in 2024. This mishandling, combined with dietary neglect, contributed to her
+regression (e.g., cheering and booing sound ocd, teeth trigger continuing despite
+“intervention”, reduced speech since June 8, 2025). The Family Law Act, s. 37(2)(b),
+
+ener CFD-2025-53478 Page 305 of 1238
+
+---PAGE BREAK---
+
+prioritizes protecting children from emotional harm. Your actions demonstrate a
+failure to safeguard Nadia’s psychological well-being, further justifying withholding
+and seeking full custody.
+
+7. Fraudulent Claims and Unstable Living Situation (Family Law Act, s. 37(2)(g))
+
+In~August 2023, you secured housing in a battered women’s apartment by falsely
+claiming | abused you, (rape, physical assault, molestation) later admitting, “Itwas
+the only way | could get a place I’m sorry” (verbal conversation, March 2024). This
+deception, combined with your unstable living situation from April to August 2023
+(homeless, livingin an RV or campsites), raises concerns about your ability to
+provide a stable environment. The FamilyLaw Act, s. 37(2)(g), emphasizes stability
+in custody decisions. Your reliance on Nadia’s Child Disability Benefit (CDB) and
+
+Child Care Benefit (CCB) for financial support, while failing to meet her needs,
+further undermines your fitness as a guardian.
+
+8. Failure to Comply with Parenting Schedule (Family Law Act, s. 37(2)(f))
+
+On July 27, 2025, you failed to pick up Nadia at 9:00 AM as scheduled, citing fatigue
+after a hospital visit, and offering a refund for a ride(text, 5:32 AM). This no-show,
+documented on video, is part of a pattern of non-compliance with our parenting
+agreement. The Family Law Act, s. 37(2)(f), considers adherence to parenting
+responsibilities. Your repeated failure to follow the schedule undermines Nadia’s
+stability and supports a change in custody.
+
+Request for Section 211 Assessment
+
+Given the above concerns, particularly your minimization of Nadia’s communication
+abilities and failure to address her allegations, I request a court-ordered assessment under
+Family Law Act, s. 211, to evaluate your fitness as a parent, we can split costs. This
+assessment is necessary to determine whether you can provide a safe, stable environment
+for Nadia, especially in light of her allegations, dietary neglect, and unauthorized
+medication use.
+
+Making Nadia’s Diet Medically Necessary
+
+To establish Nadia’s diet as legally recognized under Family Law Act, s. 37(2)(g), | will:
+
+CED=2025-53478..., Page 306 of 1238
+
+---PAGE BREAK---
+
+¢ Submit Nadia’s genetic testing results (23andMe, whole genome sequencing) to the
+court, confirming her MTHFR mutation and dietary restrictions.
+
+e Provide Dr. Anita Bratt’s 2018-2022 reports, documenting the medical necessity of
+a gluten-free, casein-free, tyramine-free, Mediterranean diet.
+
+e Present Nadia’s regression patterns (e.g., reduced speech, OCD behaviours) when
+the diet is not followed, supported by my logs and video evidence.
+
+* Request a court-ordered medical evaluation by a geneticist or asd informed
+pediatric specialist to confirm the diet’s necessity, ensuring itis treated as
+equivalent to a severe allergy (e.g., peanuts).
+
+Next Steps
+
+i will apply for an emergency custody order and a protection order under Family Law Act, s.
+183, in Provincial Court, citing the risk of family violence and neglect. These orders may
+restrict your contact with Nadia until a full hearing.
+
+You are entitled to respond to these allegations through your lawyer. Any communication
+should be directed to mein writing, focusing solely on Nadia’s best interests.
+
+For Nadia’s safety, she will remain in my care pending a court hearing. lam committed to
+her bestinterests, providing a stable, supportive environment with consistent education,
+therapy, and medical care, as evidenced by her progress and recovery under my care.
+
+Sincerely,
+Christopher La Pointe
+
+820 Caroline Street
+
+Kamloops BC
+
+V2B 5N1
+
+E-mail: christapointex@gmail.com
+Date: August 4 2024
+
+Signature:
+
+CED=2025-53478 , Page 307 of 1238
+
+---PAGE BREAK---
+
+22/05/2025, 12:44 Mail - Chris Lapointe - Out
+
+fo Outlook
+
+Re:
+
+To
+
+From n seyler -
+Date Tue 2024-07-23 7:45 AM
+
+Chris Lapointe <Lapointe.cs@hotmail.com>
+
+Again Chris | am sorry that you have the beliefs that you do.
+
+| forgive you, and | trust we can resolve this for Nadia’s benefit in court.
+
+Natasha Seyler
+
+On Jul 23, 2024, at 6:54AM, Chris Lapolnte <Lapointe.cs@hotmail.com> wrote:
+
+I'm expressing concern over her being prescribed meds with not enough history or
+awareness of the reduced activity in her Mao-a gene and your response is to try to frame
+this as I'm refusing her treatment. I'm suing the hospital. This is straight up criminal
+negligence and medical malpractice.
+
+\'m not refusing her treatment I'm saying she’s going to react poorly to that medication
+because of Mao-a, and why haven't we tried testing her mineral levels first? Why haven't
+we tried high dose vitamin d first? Why is she going from zero to two antipsychotics a
+day? When even though she is medicated she’s still going to have the screaming issues
+because the problem isn’t autism it’s auditory processing and you're simply refusing to
+accommodate.
+
+| point out that fact that she just needs sound treatment and auditory integration therapy
+and a better focus on diet and not giving her meds that are likely causing and
+exacerbating the issue with faces (hallucinations) and | suggest she should try something
+else that we know works like listening to her needs and focusing on health.
+
+Instead of accepting that and making the appropriate changes to her room or giving her
+melatonin or addressing the sound issue you refuse and just instead give her these meds
+which are making the problem worse. She is learning now to scream and go through these
+episodes because the result is going to my house.
+
+All you would have to do is use melatonin and no blue light after sunset and do calm
+relaxation strategies before bed and make sure she can’t hear you snore or hear through
+the walls like you'd have to lay in her bed and listen to try to imagine what she’s
+experiencing.
+
+https://outlook.office.com/mail/AQMkADAWATY3ZmYAZS 1kY 2ISLWJIMjgtM DACLTAWCgAUAAADMDheBF5%2Fjk%2BCXSTNGFILAQEArSslw%2FcLX... 1/6
+
+s. 22
+
+CFD-2025-53478 , Page 308 of 1238
+
+---PAGE BREAK---
+
+22/05/2025, 12:44 Mail - Chris Lapointe - Outlook
+
+Then after you realize how serious this is and you address this very easy fix she will stop
+waking up in the middle of the night screaming and making you panic because you don't
+want to lose the apartment and she feeds off your panic and it escalates.
+
+{f she is tired and being given medication when she doesn’t need it the answer isn't to
+give her double... without considering the fact that she has reduced activity in her mao-a,
+I'm expressing a safety concern as her father saying hey let's pump the breaks here | think
+this medication might be making things worse and it’s actually something else and your
+answer is to go on a smear campaign and try to make this look like I'm refusing her
+treatment?
+
+That's very wrong. There are other treatments and things to rule out in my professional
+Opinion and experience with Nadia first before jumping to antipsychotics because you
+showed her the wrong movie once. What was that movie called again? Smile?
+
+You seriously need to be sharing all the facts with doctors you can’t keep telling one side
+of this. If you address the auditory processing disorder problem you'll see improvements.
+Refusing to listen to what she’s telling us and continuing to medicate her for the wrong
+problem when she shouldn't even be having those meds in the first place is going to make
+things worse.
+
+She needs auditory integration treatment and an assessment by an audiologist. And also
+an assessment by a naturopath to determine if she has any mineral deficiencies and other
+issues we could easily address before resorting to antipsychotics or meds she doesn't
+need.
+
+Have you ever been prescribed the wrong medication? | have and I've expressed over and
+over concern over this and that I don’t want that for her.
+
+I'm not wrong in this and this whole revenge gone girl plot you're playing out right now
+started happening after | called you out for lying about me abusing you so you could get
+that apartment, | called you out for other things and any time | say anything that isn’t
+flattering to you or if | say something that contradicts what you want then you react like
+this and | have plenty of history to prove it beyond a reasonable doubt.
+
+Ever since she was attacking Kathy and Kathy said she doesn’t feel safe around Nadia, so |
+asked that you fire her because | don’t want Nadia around:people that don't feel safe
+around her, ever since then you've been on this revenge kick consistently having to
+medicate Nadia and take her to the hospital when | don't. And the behaviours | see here
+when she does have them seems like it’s coached or like you showed her a scary movie
+about possession and she was acting it out | say that because these behaviours are new,
+and all you need to do is look at our conversation history over the past two months to see
+what you're doing.
+
+And all for what again? Because | told you before that she is going too long without
+seeing me? She went from seeing me 5 days a week to 2. | told you that was a problem
+and if | saw her more like 3 days she's improve and then the Kathy stuff started
+happening. | called you out on that too and said she is with her too much and doesn't
+
+https://outlook.office.com/mail/AQMKADAWAT Y3ZmYAZS1kY ZISLWJIMjgtM DACLTAWCgAuAAADmDhe BF 5% 2Fjk%2BCX5TNGFILAQEAr3sIw%2FCLX... 2/6
+
+CFD-2025-53478 , Page,.309,,0f:),1238
+
+---PAGE BREAK---
+
+22/05/2025, 12:44 Mail - Chris Lapointe - Outl
+
+want to be with her and you said | was ruining your life when all | was doing.is what any
+parent would and should do in that scenario.
+
+But ever since you've been on this revenge kick and it’s super obvious and the only reason
+| can come up with to explain it is you're upset about Kathy - she bit her while she was
+driving and | don't want Nadia dying in a car accident with someone | don't trust because
+you can't be bothered to spend time with her or the kids.
+
+That's actually what's happening. | called that out and you've been on that revenge kick
+since as well. There's a lot going on at the same time.
+
+Once again | am all for medication for Nadia if that is actually factually what she needs
+and my concerns are first heard understood and considered prior to prescribing her
+random things simply because they work for autism - I'm not disputing that I'm saying she
+needs to rule out auditory processing and a bunch of other side effect free treatment
+options first before resorting to something so serious, that's likely exacerbating the
+hallucinations and issue with faces. She probably doesn’t feel good on that, and since the
+problem is sound related drugging her up isn’t going | solve anything which is why it isn't
+working. The answer isn't to give he more it’s to try what I'm saying first and address the
+sound issue, Auditory integration therapy, sound treatment for her walls, a formal
+diagnosis - if her own words are also that your house is loud panicky and scary it tells me
+you're panicky the house is loud and it can get scary.
+
+So make it sound better you can do that by hanging blankets or building her a nest or
+giving her AirPods and avoiding tyramine containing foods have a white noise machine
+etc and get a formal diagnosis from an audiologist | know she has it because the
+symptoms she presents are exactly what auditory processing disorder is, and you're off
+telling people I'm crazy abusive and refusing treatment?
+
+I'm not joking I’m suing. Nobody asked me and | told you repeatedly she can't have that
+stuff. If they still want to give it to her despite me saying that without explaining to me
+why I’m wrong that’s malpractice and criminal negligence.
+
+Auditory processing disorder and can we please rule out other less invasive treatments like
+addressing the issue at hand before resulting to antipsychotics that'll have life altering
+affects please? I'm open if they first ask me about this and explain why I'm wrong about
+the reduced activity in her Mao-a. The irresponsible thing to do as a parent would be to
+continue giving her these meds knowing what | know. You're banking on me. being wrong
+but I'm not. Not only that the issue isn’t even autism it's giving the meds for the wrong
+condition and harming her as a result. Malpractice. Negligence.
+
+| am open to you telling me what you would like to try first before resorting to powerful
+
+antipsychotics. I've asked you several times what activities you want me to do with her in
+the community but you refuse to communicate with me unless it's one of your gone girl
+| script you've been working on for the last couple months, since firing Kathy.
+
+If | had Nadia more | could set up the appropriate services for her and take her because
+when she is triggered in public at least | can work through it with her, now the issue isn't
+that, the issue is you're interpreting that as a slight against you like I’m saying |'m better or
+htips://outlook.office. com/mail/A QMKADAWATY 3ZmYAZS1kY2ISLWJIMjgtMDACLTAWCgAUAAADmDhe8F5%2F jk% 2BCXSTNGFILAQEArSsIw%2FcLX... 3/6
+
+CFD-2025-53478 Page 310 of 1238 a
+
+---PAGE BREAK---
+
+22/05/2025, 12:44 Mail - Chris Lapointe - OutlooF
+
+she likes me more and that's not what I’m saying. | can for a fact handle Nadia out in
+public and help her calmly work through triggers which is what she needs to do you can't
+you get more anxious and worried about people judging you and that makes her worse
+and it spirals from there.
+
+This keeps happening because you won't listen you will do everything you can to not try
+what | suggest you'll try literally anything lose but if it comes from me you fight me on it
+and things get worse for her as a result. This is a pattern and there is history of this, and
+
+witnesses.
+
+Please tell me in the next email what you want to do. You need to address the audio issues
+there related to sounds and sound triggers. Otherwise she won't sleep things will get
+worse and she won't want to stay there. Giving her melatonin and not allowing her to eat
+4 hours before bed will dramatic improve her sleep and addressing what she can hear
+from her room at night will stop these issues from happening so much. Same with
+magnesium / floats.
+
+| guarantee | can take her to the float place and do a float and she won't have a meltdown.
+\f you take her she feeds off your anxiety etc and that’s why that happens and the solution
+is to get better at being out in public with her and adapt and figure out the sound related
+issues at your place and take he auditory processing seriously. That's what | have to do
+then | move on to the next thing if you aren't then his will keep happening regardless of
+
+what you give her med wise.
+
+Please rule out everything else first and try other things first. This isn't happening as fast as
+you like because I’m in between insurance companies. Once | get switched over and
+approved she can have a more dedicated psychiatrist for longer sessions which will make
+me feel more confident giving her meds should it come to that after we've tried
+everything first.
+
+Please let me know that you agree or at least have read what | said | have a vote too and |
+am not wrong about this.
+
+Thanks for your time and consideration.
+
+Chris La Pointe
+
+Get Qutlook for iOS
+
+From: n seyler
+
+Sent: Tuesday, July 23, 2024 4:33:56 AM
+
+To: Chris Lapolnte <Lapointe.cs@hotmail.com>
+Subject: Re:
+
+That's not true
+
+I'm sorry that this is the narrative you are choosing to subscribe to.
+
+https://outlook.office.com/mail/AQMKADAWAT Y3ZmYAZS 1kY 2ISLWJIMjgtMDACLTAWC gAUAAADm Dhe8F5%2Fjk%2BCXS5TNGEFILAQEAr3sIw%2FcLx...
+
+dp = = 8 Page..3110f 1238.0. |
+
+46
+
+---PAGE BREAK---
+
+22/05/2025, 12:44 Mail - Chris Lapointe - Out!
+
+I'm sorry that the only perspective that you can consider is the one you are rehearsing to
+yourself.
+
+Luckily we have court to help us resolve things.
+Take care Chris
+
+Natasha Seyler
+
+On Jul 22, 2024, at 8:13PM, Chris Lapolnte <Lapointe.cs@hotmail.com>
+wrote:
+
+This is for the records:
+<Screenshot 2024-07-22 200135.png>
+
+| have told you before about Nadia's medical needs. She needs to have a gluten
+free, casein free, no tyramine containing food diet, mediterranean, based on
+her genetic reports. This isn't conjecture or opinion, it's fact. She has reduced
+
+activity in her MAO-A gene, fact.
+
+I've told you repeatedly for years about the MAO-A gene and haven't been able
+to prove it until recently with Al.
+
+I've sent you screenshots talking about how the ativan/rispiridone would
+negatively impact someone with reduced activity in her MAO-A and despite
+presenting you with those facts, you chose to give her those medications
+anyways.
+
+That is criminal negligence, by definition. | am informing you for your records.
+
+12 hours overnight at a hospital is not long enough to determine what she
+needs medication wise, and, | did not give my consent.
+
+lam all for medical treatment and psychiatric treatment/psychological services
+that make sense. | have been in therapy long enough to know how this works.
+She needs to spend a lot more time with someone assessing her in order to
+determine what she actually needs because what | believe is happening is you
+are trying to give her medication for autism when she needs treatment for
+auditory processing disorder, again, as I've been trying to explain to you for
+years.
+
+| do not feel Nadia is safe under your care or supervision, or lack thereof. |
+request that you seek immediate psychological treatment to determine your
+fitness as a parent, as | am very concerned with your mental health as of late,
+particularly in regards to your addiction to ativan and inability to follow
+instruction in regards to what's best for Nadia's health, diet, and daily routine.
+
+Nadia has told me today that she wants to be at my house 6 days per week, 1
+
+hitps://outlook. office.com/mail/AQMKADAWATY 3ZmYAZS 1kY 2ISLWJIMjgtMDACLTAWC gAuAAADmDhe8F5%2 Fjk%2BCXSTN6FILAQEAr3sIw%2F cLX...
+
+CFD-2025-53478 Page 312 of 1238
+
+516
+
+---PAGE BREAK---
+
+s. 22
+
+22/05/2025, 12:44
+
+Mail - Chris Lapointe - Outlook
+
+day per week at your place. She said that she doesn't want to be at your place
+because it's scary, it feels panicky, and its too loud. When | was talking with her
+about what to do if she panics again or has anxiety/meltdown (discussing
+healthy choices vs unhealthy choices like biting/screaming) | said what should
+you do next time this happens and first thing she said was 'run away’ meaning
+run away from your house.
+
+1am very concerned and its even more concerning because you aren't listening
+to a word | say, and appear to be more interested in revenge out of a sense of
+malice and ill-will than care and concern for Nadia's best interests.
+
+Chris La Pointe.
+
+From: n seyler
+
+Sent: July 22, 2024 1:14 PM
+
+To: Nadia <lapointe.cs@hotmail.com>
+Subject: Fwd:
+
+Natasha Seyler
+
+Begin forwarded message:
+
+From: n seyler
+Date: July 22, 2024 at 1:10:07 PM PDT
+To: Chris La Pointe <christopherlapointe@hotmail.com>
+
+Hey, you asked me to send an email about what | want.
+| don’t really have more to say,
+but | would like to receive her on Monday at 12:30 as usual.
+
+Natasha Seyler
+
+https //outlook. office.com/mail/AQMKADAWATY3ZMYAZS 1kY 2ISLWJIMjg(MDACLTAwCgAuAAADmDhe8F5%2Fjk%2BCXSTNGFILAQEAr3s|w%2FCLX...
+
+CFD-2025-53478. ,;,Page*313:,.0f 1238
+
+6/6
+
+---PAGE BREAK---
+
+22/05/2025, 12:38 Mail - Chris Lapointe - Out
+
+fom Qutlook
+
+Re: Fwd:
+
+From Chris Lapointe <Lapointe.cs@hotmail.com>
+Date Mon 2024-07-22 8:13 PM
+
+To nseyler +; Megan Udala <drmeganudala@gmail.com>; c sl
+<christopherlapointe@hotmail.com>
+
+This is for the records:
+Criminal negligence
+219 (1) Every one is criminally negligent who
+(a) in doing anything, or
+(b) in omitting to do anything that it is his duty to do,
+shows wanton or reckless disregard for the lives or safety of other persons.
+Definition of duty
+
+(2) For the purposes of this section, duty means a duty imposed by law.
+RS., c. C-34, 8. 202
+
+| have told you before about Nadia's medical needs. She needs to have a gluten free, casein free, no
+tyramine containing food diet, mediterranean, based on her genetic reports. This isn't conjecture or
+opinion, it's fact. She has reduced activity in her MAO-A gene, fact.
+
+I've told you repeatedly for years about the MAO-A gene and haven't been able to prove it until recently
+with Al.
+
+I've sent you screenshots talking about how the ativan/rispiridone would negatively impact someone
+with reduced activity in her MAQ-A and despite presenting you with those facts, you chose to-give her
+those medications anyways.
+
+That is criminal negligence, by definition. | am informing you for your records.
+
+12 hours overnight at a hospital is not long enough to determine what she needs medication wise, and, |
+did not give my consent.
+
+lam all for medical treatment and psychiatric treatment/psychological services that make sense. | have
+been in therapy long enough to know how this works. She needs to spend a lot more time with someone
+assessing her in order to determine what she actually needs because what | believe is happening is you
+are trying to give her medication for autism when she needs treatment for auditory processing disorder,
+
+again, as I've been trying to explain to you for years.
+
+https://outlook. office.com/mail/AQMKADAWATY3ZmYAZS1 KY 2/5LWJIMjgtMDACLTAWCgAuAAADmDhe8F5%2Fjk%2BCXS5TNGFILAQEArSsIw%2FCLX... 1/2
+
+CFD-2025-53478 , Page 314 of 1238
+
+---PAGE BREAK---
+
+s. 22
+
+od
+
+22/05/2025, 12:38 e Mail - Chris Lapointe - oe)
+
+| do not feel Nadia is safe under your care or supervision, or lack thereof. | request that you seek
+immediate psychological treatment to determine your fitness as a parent, as |am very concerned with
+your mental health as of late, particularly in regards to your addiction to ativan and inability to follow
+
+instruction in regards to what's best for Nadia's health, diet, and daily routine.
+
+Nadia has told me today that she wants to be at my house 6 days per week, 1 day per week at your
+place. She said that she doesn't want to be at your place because it's scary, it feels panicky, and its too
+loud. When | was talking with her about what to do if she panics again or has anxiety/meltdown
+(discussing healthy choices vs unhealthy choices like biting/screaming) | said what should you do next
+time this happens and first thing she said was 'run away' meaning run away from your house.
+
+lam very concerned and its even more concerning because you aren't listening to a word | say, and
+appear to be more interested in revenge out of a sense of malice and ill-will than care and concern for
+
+Nadia's best interests.
+
+Chris La Pointe.
+
+From: n seyler: >
+Sent: July 22, 2024 1:14 PM
+
+To: Nadia <lapointe.cs@hotmail.com>
+Subject: Fwd:
+
+Natasha Seyler
+
+Begin forwarded message:
+
+From: n seyler <
+Date: July 22, 2024 at 1:10:07 PM PDT
+To: Chris La Pointe <christopherlapointe@hotmail.com>
+
+Hey, you asked me to send an email about what | want.
+| don't really have more to say,
+but | would like to receive her on Monday at 12:30 as usual.
+
+Natasha Seyler
+
+https://outlook. office.com/mail/AQMKADAWATY3ZmYAZS1k¥2ISLWJIMjgtM DACLTAWCgAUAAADmDhe8F5%2F jk%2BCXSTNGFILAQEArSslw%2FcLX...
+
+: is wal = = age: 315. 0f 91238.
+
+2/2
+
+---PAGE BREAK---
+
+Ss. 22
+
+22/05/2025, 13:21 Mail - Chris Lapointe - Out!
+
+104 Outlook
+
+Fw: Prosopometamorphopsia
+
+From Chris Lapointe <Lapointe.cs@hotmail.com>
+Date Sun 2024-07-28 5:50 PM
+To —ashaleen.mcfadden@gov.be.ca <ashaleen.mcfadden@gov.bc.ca>
+
+Found this researching, | think this may be what Nadia is experiencing with the faces. No idea who to
+bring her to to:diagnose this / rule it out or not.
+
+From: Chris Lapolnte <Lapointe.cs@hotmail.com>
+Sent: July 28, 2024 5:37 PM
+
+To: Natasha Seyler <
+
+Subject: Prosopometamorphopsia
+
+Found a possible clue to the faces thing..
+From wiki: Prosopometamorphopsia
+
+Prosopometamorphopsia (sometimes known as "demon-face syndrome"[1][2]) is a visual disorder
+characterized by altered perceptions of faces. In the perception of a person with the disorder, facial
+features are distorted in a variety of ways including drooping, swelling, discoloration, and shifts of
+position.
+
+Prosopometamorphopsia is distinct from prosopagnosia, which is characterised by the inability to
+recognise faces.
+
+About 75 cases of prosopometamorphopsia have been reported in scientific literature.[3] In about half
+of the reported cases, features on both sides of the face appear distorted.
+
+In the other half of cases, distortions are restricted to one side of the face (left or right) and this
+condition is called hemi-prosopometamorphopsia.
+
+Presentation
+
+(edit)
+
+Sint.
+
+Generally, faces tend to appear distorted to a person who is affected by this condition.[4] Those who
+suffer from this condition are able to recognise faces normally but perceive them as strangely disfigured.
+These facial hallucinations are usually described as ugly, and have prominent eyes and teeth.[5] Some
+have described the faces as having a cartoon-like quality. Faces have been known to be perceived as
+contorted and as having displaced features.[6] For example, one patient described a person's face as
+having a nose deviated to the side, the mouth lying at a diagonal and one eyebrow being higher than the
+other.{6] Prosopometamorphopsia may either involve perceptions of the whole face or only one side of
+
+the face (usually after right hemisphere damage).(7]
+
+https://outlook.office.com/mail/AQMKADAWATY3ZmYAZS1 kKY2I5LWWJIMjgtM DACLTAWC gAUAAADmDhe8F5%2Fjk%2BCXSTNGFILAQEArSsIW%2FcLX... 1/3
+
+CFD-2025-53478_,. Page 316 of 1238
+
+---PAGE BREAK---
+
+2205/2025, 13:21 Mail - Chris Lapointe - Outlook
+
+Causes
+edit]
+The definitive cause for prosopometamorphopsia is still unknown. However, several potential theories
+
+have been expressed in the literature in this area. Generally, this condition has been associated with
+
+damage or abnormalities in various brain areas (temporal, occipital, parietal, and frontal lobes):[4] The
+development of prosopometamorphopsia has been recorded to be a manifestation of epilepsy in some
+
+cases.[4] Hyperactivity in the core or distributed face areas (without lesions) may be connected to
+causation.
+
+Functional imaging studies in humans have identified an area in the fusiform gyrus which is selectively
+activated by stimulation when exposed to faces called the fusiform face area (FFA).[5] Another area
+known to be activated by face stimuli is the superior temporal-sulcus (STS). This region is particularly
+active when having to process facial expressions, especially the expressive features related to the eyes.
+Therefore, it has been suggested that the prominent eyes (which is a typical feature in the facial
+perceptions) in the distortions recorded is more in accordance with increased activity (which would
+cause an overrepresentation of the eyes) within the STS rather than the fusiform face area.[5]
+
+Other studies, however, have found that stimulation of the posterior and mid-fusiform face selective
+regions in a patient with medication-resistant epilepsy resulted in perceptions consistent with that of
+facial metamorphoses (patient noted that the experimenter's face started to droop).[(4] This study found
+that the perceived distortions correlated with signal changes in the patient's FFA, and not in the STS.
+
+Diagnosis
+{edit]
+
+Classification
+
+(edit)
+
+Prosopometamorphopsia is considered a face hallucination and is included under the umbrella of
+complex visual hallucinations.[{8] Unlike other forms of hallucinations such as peduncular hallucinosis or
+Charles Bonnet syndrome, prosopometamorphopsia does not predominate at a particular time of day; it
+is a constant experience.[8] However, patients with Charles Bonnet syndrome have noted descriptions of
+prosopometamorphopsia.[6] This form of perceptual distortion along with others such as macropsia and
+micropsia (alteration of perceived object size) and palinopia (spatial and temporal varieties and
+polyopia) are classified under the category termed metamorphopsia.[9] These facial distortions can
+occur to either hallucinated perceptions or true (non-hallucinated) perceptions. [6] It is attributed to
+structural brain changes or functional disorders like epilepsy, migraine or eye diseases. [10]
+
+Treatment
+
+edit
+
+Antidepressants such as citalopram and the antipsychotic quetiapine have been recorded as unable to
+facilitate improvements for these symptoms.[10] Valproic.acid was initially used to treat the woman who
+hallucinated the dragon-like faces and this alleviated her symptoms entirely, however, she went on to
+
+develop auditory hallucinations as a side effect.[10] She was subsequently prescribed
+rivastigmine instead which reduced the auditory hallucinations and reduced her visual symptoms.
+
+The 75-year-old woman in the previous study was treated with intravenous heparin infusion and
+coumadization over a period of 10 days which enabled the alleviation of her visual symptoms almost
+
+https://outlook. office.com/mail/AQMKADAWATY 3ZmYAZS 1kY 2ISLWJIMjgtMDACLTAWCgAuAAADmDhe8F5%2Fjk%2BCXS5TNGFILAQEAr3sIw%2FcLX...
+
+CED=2025°53478..,.. Page.317 of 1238
+
+2/3
+
+---PAGE BREAK---
+
+22/05/2025, 13:21 Mail - Chris Lapolnte - Out!
+entirely.[7] The type of treatment may vary depending on the cause of the facial distortions.
+
+Case studies |
+[edit]
+
+One study reported a 24-year-old woman who developed prosopometamorphopsia after a childbirth.
+[9] Initially she developed severe migraines and blurred vision mainly in her right visual hemifield and
+was in a confused state. The visual disturbances persisted long after the migraine had subsided several
+hours later. She described the left half of people's faces as "out of place" and would see these
+distortions irrespective of whether the faces were familiar or unknown. However, she was able to
+visualise the faces of familiar people in her mind without the distortions. She also did not report
+perceiving distortions in stimuli other than faces and demonstrated the same patterns a year after the i
+first assessments. It was discovered that this woman had a left_ hemisphere lesion which resulted in
+distortions of the left half of the faces to which she was exposed. The unilateral aspect of the defect
+suggests that the early stages of face processing occurs in parallel mechanisms across both hemispheres |
+and the right hemisphere then integrates the information that results in a unitary face representation.(9]
+
+Another study examined a 75-year-old woman who suffered from a sudden onset of nausea, dizziness
+and blurred vision.{7] The central part of faces, especially the nose and mouth, were described as being
+out of shape. She claimed that noses looked narrow and lengthened toward the mouth which looked
+small and rounded regardless of whether the faces were familiar to her or not. She was found not to
+
+have any other impairments in her visuoperceptual performances, nor did she have any cognitive or
+psychiatric impairments. A T2-weighted brain MRI revealed an infarction in the right medial
+temporooccipital lobe including the parahippocampal gyrus (complement of the FFA).
+
+A 52-year-old woman suffered from a lifelong history of seeing faces morph into dragon-like faces and
+reported hallucinating similar faces several times a day.[10] Initially she would recognise the actual faces
+but after a while they would become black, grew long pointy ears and.a protruding snout, displayed
+reptile-like skin and had large protruding eyes in bright colours. She would see these faces coming
+towards her several times in a day from objects like electric sockets. She has also had these
+hallucinations in the dark. She had previously suffered from recurrent headaches, passage hallucinations
+(to see movements in the corner of the eyes) and zoopsia (she saw large ants crawling over her hands).
+An MRI of the brain showed minor white-matter abnormalities near the lentiform nucleus and in the
+semioval center. The visual perceptions she had experienced were attributed to unusual
+electrophysiological activity in the regions of the brain that are specialised for face and colour in the
+ventral occipito-temporal cortex.[10]
+
+A 44-year-old woman reported to have begun seeing facial distortions.[4] She perceived that people's
+faces would change to look more like caricatures of them and her perception worsened over time. She
+had a history of epilepsy in childhood and had suffered a concussion several years before having this
+condition, though no medical evidence of seizure was found during distortions. She reported that
+occasionally she would experience a pixelated vision, like television static and mentioned that these
+symptoms occurred several times a week with each event lasting from a few minutes to a few hours.
+
+https://outlook.office.com/mail/AQMKADAWATY3ZmYAZS1 kY2ISLWJIMjgtMDACLTAWCgAUAAADmDhe8F5%2F]k%2BCXSTNGFILAQEArSsIw%2FcLX... 3/3
+
+L CFD=2025-53478 ,..Page 318 of 1238 eae snasmasasiill os
+
+---PAGE BREAK---
+
+22/05/2025, 13:08 Mail - Chris Lapolnte - Out!
+
+fo Outlook
+
+Fw: Nadia Nightmare report
+
+From Chris Lapointe <Lapointe.cs@hotmail.com>
+Date Tue 2025-05-06 12:21 PM
+To _ nicki.wolfenden@gov.bc.ca <nicki.wolfenden@gov.bc.ca>
+
+From: Chris Lapointe <Lapointe.cs@hotmail.com>
+Sent: July 27, 2024 11:29 AM
+
+To: Natasha Seyler
+
+Subject: Nadia Nightmare report
+
+Last night at 258am | laid back down to go to sleep on the couch - sleeping there so I can hear if she
+needs me, she's in my bed with the privacy dividers at the end of the bed, she doesn't like sleeping in
+her room here because I've slept in there before to listen to what she could hear and they just walk
+around all the time and make noise til like 11-12 so it's probably super loud for her and distracting.
+
+Anyway | woke up to hearing her singing, like in a positive/operatic way (part of why I think she has
+synesthesia)
+
+When she went to sleep she asked for her light, which has the pink/blue aurora streams that go on the
+walls/ceiling, it was off because it shuts off automatically so | assumed she either wanted the light back
+on, wanted my attention for a drink, or had a nightmare.
+
+Got her a drink, turned her night light back on, knocked on the dividers, came in sat beside her she was
+sitting up, suspected it was a dream, asked did you have a dream? She said yes didn't ask if it was good
+or bad just told her it's ok its just a dream lay down close your eyes and coached her through 10 deep
+breaths, she laid down closed her eyes and breathed as | rubbed her back, then stood up and coached
+her to name things she can hear, feel, ‘I'm here I'm safe' mantra then she drifted off to sleep.
+
+About 30 mins - 1 hr later she woke up again, she was making playful noises/giggling/rustling around but
+she didn't scream or anything like that just reporting I'm pretty sure she's having either vivid dreams or
+nightmares, but | also am looking for that like a hawk so | could be biased.
+
+She woke up at 6am showered, did her hair then laid down on the couch and said she wanted to sleep
+again. She went to sleep (I turned the lights back off) and she just woke up around 1030-1045am, which
+isn't normal for here.
+
+Normally (without meds) it's 830pm melatonin (3mg) she's out by 9, sometimes 930 depends on when
+she woke up/exercise etc, and she'll sleep through the whole night without waking up unless I'm snoring
+loud or something then she'll say ‘please stop' at her lowest volume and that's always enough to make |
+me wake up and adjust, which always means | have to wait for her to fall asleep first if | can then once |
+
+know she's asleep again | go back to sleep otherwise I'll keep her up. But normally she sleeps through
+
+the whole night and we can get up and go outside for a walk/run do meditation then the rest of the day
+
+https:/outlook. office.com/mail/AQMKADAWAT Y3ZmYAZS1kY2ISLVWJIMjgt{MDACLTAwCgAuAAADmDhe 8F 5% 2Fjk%2BCXSTNGFILAQEAr3sIw%2FeLX... 1/2
+
+CFD-2025-53478 , Page 319 of 1238
+
+---PAGE BREAK---
+
+22/05/2025, 13:08 Mail - Chris Lapointe - Outlook
+
+is fine but with these meds everything is being thrown off. There's new behaviours (which | think are
+side effects) and nobody is listening to me.
+
+So today I'm reducing the dose to % I'm gonna try that til monday. | want to report to whoever
+prescribed this stuff for her the side effects | think I'm noticing, also yesterday 3 separate times during
+the crowd cheering behaviour after we got back from the library she was sticking her tongue out'as far
+as she could.and that made me think of the side effect | read about that said involuntary / worm like
+movements with the tongue but I don't know if that's what it was just out of character weird sticking her
+tongue out behaviour.
+
+Could you please let me know when you're available for me to come pick up the meds? And what
+pharmacy you got them from? Also do you need me to buy you a pill splitter for your house? | need to
+get one for here so | can pick one up for you.
+
+Any questions please feel free to ask, just trying to report as much as | can. 1mg is far too much twice
+per day. Even .5 twice per day is far too much, imo.
+
+Chris
+
+https://outlook. office.com/mail/AQMKADAWATY 3ZMYAZS1kY 2ISLWJIMjgtM DACLTAWCgAUAAADmDhe8F5% 2Fjk%2BCXSTNEFILAQEArSsIW%2FCLX... 2/2
+
+st fo iy CFD-2025-53478_, Page 320 of 1238
+
+---PAGE BREAK---
+
+Ss. 22
+
+22/05/2025, 13:11 Mail - Chris Lapotnte - Outlc
+
+Lo Outlook
+
+Re: Re:
+
+From Chris Lapointe <Lapointe.cs@hotmail.com>
+Date Sat 2024-07-27 5:22 PM
+
+To nseyler
+
+| understand what a prn is but | don't understand what we're giving her these meds for, why, the
+diagnosis that's being addressed or anything like that. Are we treating psychosis? Are we treating
+schizophrenia? Do we even know?
+
+What behaviours am | looking for that should indicate to me it's time to give her the seroquel? Because |
+thought the rispiridone was the prn, now it's something we give twice a day. Did they say what to look
+out for like in terms of side effects? Both of these meds say to watch for facial grimacing, and she does
+that a lot, and a lot of the side effects like rigid behaviour and what not indicate to discontinue use if
+
+that presents so I'm confused and just need some clarity here please.
+
+| wasn't there you were so | need you to brief me please.
+
+Thanks
+
+From: n seyler
+
+Sent: July 27, 2024 4:43 PM
+
+To: Chris Lapolnte <Lapointe.cs@hotmail.com>
+Subject: Re:
+
+Asaprn
+
+Natasha Seyler
+
+On Jul 27, 2024, at 4:09 PM, Chris Lapolnte <Lapointe.cs@hotmail.com> wrote:
+
+Hey is there any instructions for the seroquel? | read the pamphlet and the label on the
+bottle and it says give as needed, what does as needed look like? Give it to her when....?
+
+Get Qutlogk for iOS
+
+https://outlook.office.com/mail/AQMKADAWATY3ZmYAZS1KkY 215LWUIMjgtMDACL TAWC gAuAAADmDhe8F 5% 2Fjk%2BCXSTNGFILAQEAr3s\w%2F cLX...
+
+CFD-2025-53478 , Page 321 of 1238
+
+an
+
+---PAGE BREAK---
+
+22/05/2025, 13:25 Mail - Chris Lapointe - Outl
+
+oF Outlook
+
+Fw:
+
+From Chris Lapolnte <Lapointe.cs@hotmail.com>
+Date Wed 2025-04-30 3:37 PM
+To info@icdo.ca <info@icdo.ca>; sara@icdo.ca <sara@icdo.ca>
+
+this is one of the earliest e-mails of me trying to figure out what she's experiencing, she makes these
+characters on the sims by stretching their mouths up like demons and making sharp pointed facial
+features/cheekbones etc and then started being terrified, one night she was playing sims and came over,
+snuggled up to me, then started contorting/her eyes went black she was hissing/growling it was like
+right out of a demonic possession movie and she wasn't acting or exaggerating, they blamed me for that
+but that was because of overmedicating her combined with not following the dietary restrictions and
+environment like you said. But this is what she's seeing when she looks at faces/people/teeth. Just
+wanted to send for your awareness.
+
+Thanks for meeting right away with me Dr Passeren
+Chris
+
+From: Chris Lapointe
+
+Sent: Sunday, July 28, 2024 6:29 PM
+To: Natasha Seyler
+
+Subject:
+
+Demon face syndrome pictures (fox8.com), When Nadia makes Sims characters she always makes their
+faces strange and I've always wondered why, but they remind me of these.
+
+this
+
+https://outlook.office.com/mail/AQMKADAWATY 3ZmYAZS1kY2I5LWWJIMjgtMDACLTAWCgAuAAADmDhe8F5%2F]k%2BCXSTNGFILAQEAr3sIWw%2F cLX...
+
+...CFD-2025-53478 ,. Page 322 of 1238
+
+1
+
+---PAGE BREAK---
+
+2210572026. 13:12 Mail - Chris Lapointe - Out!
+
+Outlook
+
+Fw: Just a report
+
+From Chris Lapolnte <Lapointe.cs@hotmail.com>
+Date Tue 2025-05-06 12:20 PM
+
+To _ nicki.wolfenden@gov.bc.ca <nicki.wolfenden@gov.bc.ca>
+
+From: Chris Lapolnte <Lapointe.cs@hotmail.com>
+Sent: July 28, 2024 2:07 PM
+
+To: Natasha Seyler <
+
+Subject: Just a report
+
+Hi,
+
+Figured I'd send a report because there were no incidents. This morning she had both meds at 6am, i
+she's been sleeping a lot, but | think that's probably a good thing. Very reluctant and cautious about
+these meds but I'm gonna try to flip my ideology and just give it a chance.
+
+Anyway after lunch she asked to watch in the night garden, found it on a free app called Tubi which has
+free movies/tv shows. Normally she won't even play video games or watch anything for fear of seeing a |
+face | think.
+
+Left for a walk after the show and went to the water/beach. Sat there for a bit and talked/relaxed then
+went to the store and walked back home.
+
+For the duration of the walk she was very picky about which ways we went, and which ways we didn't
+go. Any time we had an opportunity to go a different direction (ne s w, or right or left straight etc) she'd
+pick the route that wouldn't make her see a face.
+
+When we first left the house J tried to go left instead of right just to see what she'd do and she wouldn't,
+said go this way and pointed so that's where we went.
+
+On the way to the store a bus drove passed us and there were faces on a billboard on the back of the
+bus, she turned to me and smiled really hard and turned my face to hers so she could see her reflection
+in my glasses, but after that she was fine. She feels like 50% less tense.
+
+Got back to the house without getting disregulated, and she didn't go for the iPad right away which she |
+often does lately after we go to/from your place or other places like if we run down a different path
+she's never been on before and shé sees a face or something. But this outing was a win.
+
+! was reading about the rispiridone like how long it last and | think since we're giving it to her twice a day
+maybe it would be smart to space it out 11 hours apart. | remember how Rhonda Patrick was talking
+about time restricted feeding and how if you eat outside a 12 hour window (including
+meds/supplements) you'll gain weight no matter what you do. So since these meds are going to increase
+
+https://outlook. office.com/mail/AQMKADAwAT Y 3ZmYAZS 1kY 2ISLWJIMjgtMDACLTAWCgAUAAADmDhe8F 5% 2Fjk%2BCXSTNGFILAQEArSsIw%2FcLX... 1/2
+
+Page 323 of 1238
+
+---PAGE BREAK---
+
+22/05/2025, 13:12 Mail - Chris Lapointe - Outlool
+
+the chances of weight gain maybe we should try to make sure she eats within a 12 hour window and
+takes her meds within a 12 hour window (where possible) Obviously if its the middle of the night and
+you need to use the seroquel use it, it'll take about 30 mins-45 mins to work and she'll want to sleep.
+
+So this morning | gave her the rispiridone at 6am, so 11 hrs after would be 5, so I'll try to make sure she
+finishes eating/get her rispiridone at 5 and won't have seroquel for the rest of the day unless she's
+disregulated/triggered. This morning | gave her the two meds because she woke up at 5am, everything
+was fine, she finished showering and was sitting on the couch with me, | opened my phone to show her
+something she saw a face while | was looking, she coughed twice into her hand while moving toward her
+iPad and started the crowd cheering loop and was getting tense so said lets shut it off when | had a
+chance and! put my arm around her and she cuddled with me and got tense but then cried so | gave her
+
+the meds.
+
+https://outlook.office:com/mail/AQMKADAWATY 3ZmYAZS1kY 2ISLWJIMjgt{MDACLTAWCgAuAAADmDhe8F5%2Fjk%2BCX5TNGFILAQEAr3sIw%2F LX...
+
+CED=2 is Page.324. of 1238...
+
+2/2

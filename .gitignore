@@ -16,5 +16,7 @@ dist/
 
 # OS
 .DS_Store
-data/raw/
+data/raw/*
+!data/raw/foi
+!data/raw/foi/**
 *.json
