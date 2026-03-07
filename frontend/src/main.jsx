@@ -9,6 +9,7 @@ import ContradictionEngine from './pages/ContradictionEngine.jsx'
 import CaseTimeline from './pages/CaseTimeline.jsx'
 import TrialDashboard from './pages/TrialDashboard.jsx'
 import WitnessProfiles from './pages/WitnessProfiles.jsx'
+import HearingChecklist from './pages/HearingChecklist.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 
 createRoot(document.getElementById('root')).render(
@@ -24,6 +25,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/contradictions" element={<ContradictionEngine />} />
           <Route path="/timeline" element={<CaseTimeline />} />
           <Route path="/witnesses" element={<WitnessProfiles />} />
+          <Route path="/checklist" element={<HearingChecklist />} />
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>
