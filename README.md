@@ -208,3 +208,31 @@ the-mcfd-files/
 ├── Makefile
 └── README.md
 ```
+
+---
+
+## Trial Prep Features
+
+Added in Sessions 17–20 (2026-03-07). Trial date: **May 19–21, 2026**.
+
+| Feature | Route | Description |
+|---------|-------|-------------|
+| Trial Dashboard | `/trial` (default `/`) | Countdown, case numbers, key witnesses, top contradictions, timeline gaps |
+| Witness Profiles | `/witnesses` | Per-witness chunk counts and full evidence excerpts from FOI/personal docs |
+| Export Package | `GET /api/export/trial-package` | ZIP with contradictions.csv, timeline.csv, witnesses.txt, brain_status.json, README.txt |
+| Trial Summary API | `GET /api/trialprep/summary` | JSON: days remaining, contradiction count, personal chunks, timeline gaps Aug 7–Sep 8 2025 |
+| Witnesses API | `GET /api/witnesses` | List all witnesses with chunk counts |
+| Witness Profile API | `GET /api/witnesses/{name}` | All matching chunks for a specific witness |
+
+### Key Witnesses
+
+- Nicki Wolfenden — Social Worker (PC 19700)
+- Tammy Newton — Team Leader (PC 19700)
+- Jordon Muileboom — Acting Team Leader (PC 19700)
+- Robyn Burnstein — Centralized Screening TL (PC 19700)
+- Cheryl Martin — Director Counsel (SC 64242)
+- Plessa Walden — Opposing Counsel (SC 064851)
+
+### Case Numbers
+
+PC 19700 · PC 19709 · SC 64242 · SC 064851

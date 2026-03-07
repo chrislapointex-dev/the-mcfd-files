@@ -7,6 +7,8 @@ import About from './pages/About.jsx'
 import PatternMapper from './pages/PatternMapper.jsx'
 import ContradictionEngine from './pages/ContradictionEngine.jsx'
 import CaseTimeline from './pages/CaseTimeline.jsx'
+import TrialDashboard from './pages/TrialDashboard.jsx'
+import WitnessProfiles from './pages/WitnessProfiles.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 
 createRoot(document.getElementById('root')).render(
@@ -14,11 +16,14 @@ createRoot(document.getElementById('root')).render(
     <ErrorBoundary>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App />} />
+          <Route path="/" element={<TrialDashboard />} />
+          <Route path="/trial" element={<TrialDashboard />} />
+          <Route path="/search" element={<App />} />
           <Route path="/about" element={<About />} />
           <Route path="/patterns" element={<PatternMapper />} />
           <Route path="/contradictions" element={<ContradictionEngine />} />
           <Route path="/timeline" element={<CaseTimeline />} />
+          <Route path="/witnesses" element={<WitnessProfiles />} />
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>

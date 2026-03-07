@@ -177,3 +177,54 @@ cd backend && DATABASE_URL=postgresql+asyncpg://mcfd:mcfd@localhost:5432/mcfd \
   --date 2025-01-01 \
   --dry-run
 ```
+
+---
+
+## SESSIONS 17–20 COMPLETE — 2026-03-07
+
+### Session 17 — Trial Prep Dashboard
+- [x] Created `backend/app/routers/trialprep.py` — GET /api/trialprep/summary
+  - Days remaining to trial (73 days as of 2026-03-07)
+  - Contradiction count, personal chunk count
+  - Top 5 contradictions
+  - Timeline gaps in critical period Aug 7–Sep 8 2025 (found: Aug 28 → Sep 2, 5 days)
+- [x] Registered trialprep router in main.py
+- [x] Created `frontend/src/pages/TrialDashboard.jsx`
+  - Countdown, case numbers, key witnesses with SEARCH buttons
+  - Top contradictions with severity badges
+  - Timeline gaps panel
+  - Export button
+- [x] Updated `frontend/src/main.jsx` — / → TrialDashboard, /trial → TrialDashboard, /search → App
+- [x] Updated `frontend/src/App.jsx` — added TRIAL + WITNESSES nav (desktop + mobile)
+
+### Session 18 — Witness Profiles
+- [x] Created `backend/app/routers/witnesses.py`
+  - GET /api/witnesses — list with chunk counts (Wolfenden: 61, Muileboom: 10, Newton: 7, Walden: 6, Burnstein: 1, Martin: 0)
+  - GET /api/witnesses/{name} — full chunk list (limit 20)
+- [x] Registered witnesses router in main.py
+- [x] Created `frontend/src/pages/WitnessProfiles.jsx`
+  - List view with chunk count badges and VIEW PROFILE button
+  - Profile view with ASK AI and ANALYZE CONTRADICTIONS links
+  - Full chunk text with source/citation badges
+- [x] Added /witnesses route to main.jsx
+
+### Session 19 — Export Package
+- [x] Created `backend/app/routers/export.py` — GET /api/export/trial-package
+  - ZIP: contradictions.csv, timeline.csv, witnesses.txt, brain_status.json, README.txt
+  - 56KB ZIP verified via curl
+- [x] Registered export router in main.py
+- [x] Added "EXPORT TRIAL PACKAGE" button to TrialDashboard
+
+### Session 20 — Final Hardening
+- [x] Python syntax checks PASS on all 3 new routers
+- [x] All 5 endpoints verified via curl
+- [x] README.md "Trial Prep Features" section appended
+- [x] tasks/todo.md SESSIONS 17-20 COMPLETE block appended
+- [x] Git committed
+
+### Verification results
+- /api/health → {"status":"ok"}
+- /api/trialprep/summary → 73 days, 3 contradictions, 597 personal chunks, 1 gap (Aug 28–Sep 2)
+- /api/witnesses → 6 witnesses, Wolfenden 61 chunks
+- /api/witnesses/Nicki Wolfenden → 20 chunks
+- /api/export/trial-package → 56KB ZIP, 5 files
