@@ -24,7 +24,7 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_db
-from ..services.claude_service import ask as claude_ask, ask_stream as claude_ask_stream, SYSTEM_PROMPT
+from ..services.claude_service import ask as claude_ask, ask_stream as claude_ask_stream, SYSTEM_PROMPT, PERSONAL_SYSTEM_PROMPT
 from r2d2.budget import ContextBudget, estimate_tokens
 from ..services.embed_service import embed_query
 from ..services.validator import validate_citations
@@ -64,6 +64,18 @@ FTS_LIMIT = 15
 SEMANTIC_LIMIT = 15
 MERGED_CAP = 20
 
+PERSONAL_SOURCES = ['foi', 'personal']
+PUBLIC_SOURCES = ['bccourts', 'rcy', 'legislation', 'news', 'canlii']
+
+
+def _sources_for_filter(source_filter: Optional[str]) -> Optional[list[str]]:
+    """Map source_filter value to a SQL sources list, or None for no filter."""
+    if source_filter == 'personal':
+        return PERSONAL_SOURCES
+    if source_filter == 'public':
+        return PUBLIC_SOURCES
+    return None  # 'all' or None → no filter
+
 
 # ── Schemas ───────────────────────────────────────────────────────────────────
 
@@ -71,6 +83,7 @@ MERGED_CAP = 20
 class AskRequest(BaseModel):
     question: str
     user_id: str = "default"
+    source_filter: Optional[str] = None
 
 
 class SourceRef(BaseModel):
@@ -94,9 +107,10 @@ class AskResponse(BaseModel):
 # ── Chunk retrieval ───────────────────────────────────────────────────────────
 
 
-async def _fetch_fts_chunks(db: AsyncSession, question: str) -> list[dict]:
+async def _fetch_fts_chunks(db: AsyncSession, question: str, sources: Optional[list[str]] = None) -> list[dict]:
     """Full-text search the chunks table."""
-    sql = text("""
+    source_clause = "AND d.source = ANY(:sources)" if sources else ""
+    sql = text(f"""
         SELECT
             c.id, c.text, c.citation, c.chunk_num,
             d.id   AS decision_id,
@@ -108,18 +122,23 @@ async def _fetch_fts_chunks(db: AsyncSession, question: str) -> list[dict]:
         FROM chunks c
         JOIN decisions d ON d.id = c.decision_id
         WHERE to_tsvector('english', c.text) @@ websearch_to_tsquery('english', :q)
+          {source_clause}
         ORDER BY rank DESC
         LIMIT :limit
     """)
-    rows = (await db.execute(sql, {"q": question, "limit": FTS_LIMIT})).all()
+    params: dict = {"q": question, "limit": FTS_LIMIT}
+    if sources:
+        params["sources"] = sources
+    rows = (await db.execute(sql, params)).all()
     return [_row_to_dict(r) for r in rows]
 
 
-async def _fetch_semantic_chunks(db: AsyncSession, question: str) -> list[dict]:
+async def _fetch_semantic_chunks(db: AsyncSession, question: str, sources: Optional[list[str]] = None) -> list[dict]:
     """Vector similarity search the chunks table."""
     try:
         query_vec = await embed_query(question)
         vec_literal = f"[{','.join(str(x) for x in query_vec)}]"
+        source_clause = "AND d.source = ANY(:sources)" if sources else ""
         sql = text(f"""
             SELECT
                 c.id, c.text, c.citation, c.chunk_num,
@@ -128,10 +147,14 @@ async def _fetch_semantic_chunks(db: AsyncSession, question: str) -> list[dict]:
             FROM chunks c
             JOIN decisions d ON d.id = c.decision_id
             WHERE c.embedding IS NOT NULL
+              {source_clause}
             ORDER BY c.embedding <=> '{vec_literal}'::vector
             LIMIT :limit
         """)
-        rows = (await db.execute(sql, {"limit": SEMANTIC_LIMIT})).all()
+        params: dict = {"limit": SEMANTIC_LIMIT}
+        if sources:
+            params["sources"] = sources
+        rows = (await db.execute(sql, params)).all()
         return [_row_to_dict(r) for r in rows]
     except Exception:
         return []
@@ -223,6 +246,9 @@ async def ask_endpoint(
     _check_api_key(x_api_key)
     _check_rate_limit(request.client.host if request.client else "unknown")
     question = body.question.strip()
+    source_filter = body.source_filter
+    sources = _sources_for_filter(source_filter)
+    context_mode = 'personal' if source_filter == 'personal' else 'public'
     mem = R2Memory(db=db, user_id=body.user_id)
 
     # 1. Load R2 context
@@ -235,18 +261,28 @@ async def ask_endpoint(
 
     # 2. FTS + semantic search in parallel, merge results
     fts_chunks, sem_chunks = await asyncio.gather(
-        _fetch_fts_chunks(db, question),
-        _fetch_semantic_chunks(db, question),
+        _fetch_fts_chunks(db, question, sources),
+        _fetch_semantic_chunks(db, question, sources),
     )
-    chunks = _merge_chunks(fts_chunks, sem_chunks)
+
+    # 2c. Burial fix: when no source_filter, prepend personal chunks to avoid burial
+    personal_boost: list[dict] = []
+    if sources is None:
+        try:
+            personal_boost = await _fetch_semantic_chunks(db, question, PERSONAL_SOURCES)
+        except Exception:
+            pass
+
+    chunks = _merge_chunks(personal_boost + fts_chunks, sem_chunks)
     chunks_after_merge = len(chunks)
 
     # 2b. Budget allocation
+    active_prompt = PERSONAL_SYSTEM_PROMPT if context_mode == 'personal' else SYSTEM_PROMPT
     budget_alloc = None
     try:
         raw_ctx = await mem.get_context(limit_per_region=10)
         memory_items = [item for items in raw_ctx.values() for item in items]
-        budget_alloc = ContextBudget().allocate(SYSTEM_PROMPT, memory_items, len(chunks))
+        budget_alloc = ContextBudget().allocate(active_prompt, memory_items, len(chunks))
         chunks = chunks[:budget_alloc["max_chunks"]]
     except Exception:
         pass
@@ -261,7 +297,7 @@ async def ask_endpoint(
         question_with_context = question
 
     # 4. Ask Claude
-    answer = await claude_ask(question=question_with_context, chunks=chunks)
+    answer = await claude_ask(question=question_with_context, chunks=chunks, context_mode=context_mode)
 
     # 4b. Validate citations
     citation_validations = None
@@ -353,6 +389,9 @@ async def ask_stream_endpoint(
     _check_api_key(x_api_key)
     _check_rate_limit(request.client.host if request.client else "unknown")
     question = body.question.strip()
+    source_filter = body.source_filter
+    sources = _sources_for_filter(source_filter)
+    context_mode = 'personal' if source_filter == 'personal' else 'public'
     mem = R2Memory(db=db, user_id=body.user_id)
 
     async def generate():
@@ -367,18 +406,28 @@ async def ask_stream_endpoint(
 
             # 2. FTS + semantic search in parallel
             fts_chunks, sem_chunks = await asyncio.gather(
-                _fetch_fts_chunks(db, question),
-                _fetch_semantic_chunks(db, question),
+                _fetch_fts_chunks(db, question, sources),
+                _fetch_semantic_chunks(db, question, sources),
             )
-            chunks = _merge_chunks(fts_chunks, sem_chunks)
+
+            # 2c. Burial fix: when no source_filter, prepend personal chunks
+            personal_boost: list[dict] = []
+            if sources is None:
+                try:
+                    personal_boost = await _fetch_semantic_chunks(db, question, PERSONAL_SOURCES)
+                except Exception:
+                    pass
+
+            chunks = _merge_chunks(personal_boost + fts_chunks, sem_chunks)
             stream_chunks_after_merge = len(chunks)
 
             # 2b. Budget allocation
+            active_prompt = PERSONAL_SYSTEM_PROMPT if context_mode == 'personal' else SYSTEM_PROMPT
             stream_budget = None
             try:
                 raw_ctx = await mem.get_context(limit_per_region=10)
                 memory_items = [item for items in raw_ctx.values() for item in items]
-                stream_budget = ContextBudget().allocate(SYSTEM_PROMPT, memory_items, len(chunks))
+                stream_budget = ContextBudget().allocate(active_prompt, memory_items, len(chunks))
                 chunks = chunks[:stream_budget["max_chunks"]]
             except Exception:
                 pass
@@ -394,7 +443,7 @@ async def ask_stream_endpoint(
 
             # 4. Stream tokens from Claude
             full_text = ""
-            async for kind, payload in claude_ask_stream(question=question_with_context, chunks=chunks):
+            async for kind, payload in claude_ask_stream(question=question_with_context, chunks=chunks, context_mode=context_mode):
                 if kind == "token":
                     yield f"data: {json.dumps({'type': 'token', 'text': payload})}\n\n"
                 elif kind == "done":

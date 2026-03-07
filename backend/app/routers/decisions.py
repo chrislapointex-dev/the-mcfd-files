@@ -5,6 +5,8 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+PERSONAL_SOURCES = ['foi', 'personal']
+
 from ..database import get_db
 from ..models import Decision
 from ..schemas import DecisionDetail, DecisionSummary, FiltersResponse, PaginatedDecisions
@@ -15,7 +17,10 @@ router = APIRouter(prefix="/api/decisions", tags=["decisions"])
 
 def _apply_filters(stmt, court, date_from, date_to, source=None):
     if source:
-        stmt = stmt.where(Decision.source == source)
+        if source == 'personal':
+            stmt = stmt.where(Decision.source.in_(PERSONAL_SOURCES))
+        else:
+            stmt = stmt.where(Decision.source == source)
     if court:
         stmt = stmt.where(Decision.court == court)
     if date_from:

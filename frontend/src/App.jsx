@@ -36,6 +36,9 @@ export default function App() {
   // Input mode: 'search' | 'semantic' | 'ask'
   const [inputMode, setInputMode] = useState('search')
 
+  // Source filter: 'all' | 'personal' | 'public'
+  const [sourceFilter, setSourceFilter] = useState('all')
+
   // Ask mode: array of { question, result } messages
   const [askMessages, setAskMessages] = useState([])
   const [askLoading, setAskLoading] = useState(false)
@@ -71,7 +74,7 @@ export default function App() {
 
   // ── Ask streaming ────────────────────────────────────────────────────────────
 
-  const triggerAsk = useCallback(async (q) => {
+  const triggerAsk = useCallback(async (q, currentSourceFilter = 'all') => {
     abortRef.current?.abort()
     const controller = new AbortController()
     abortRef.current = controller
@@ -81,10 +84,14 @@ export default function App() {
     setSelectedId(null)
 
     try {
+      const body = { question: q }
+      if (currentSourceFilter && currentSourceFilter !== 'all') {
+        body.source_filter = currentSourceFilter
+      }
       const res = await fetch('/api/ask/stream', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: q }),
+        body: JSON.stringify(body),
         signal: controller.signal,
       })
       const reader = res.body.getReader()
@@ -161,7 +168,7 @@ export default function App() {
     } else if (ask) {
       setInputMode('ask')
       setQuery(ask)
-      triggerAsk(ask)
+      triggerAsk(ask, 'all')
     }
     // Only run once on mount — intentionally no deps on searchParams
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -184,7 +191,8 @@ export default function App() {
         setSemanticLoading(true)
         setSelectedId(null)
         try {
-          const res = await fetch(`/api/search/semantic?q=${encodeURIComponent(q)}&k=20`, { signal: controller.signal })
+          const sourceParam = sourceFilter && sourceFilter !== 'all' ? `&source=${encodeURIComponent(sourceFilter)}` : ''
+          const res = await fetch(`/api/search/semantic?q=${encodeURIComponent(q)}&k=20${sourceParam}`, { signal: controller.signal })
           const data = await res.json()
           setSemanticResults(data)
         } catch (err) {
@@ -196,7 +204,7 @@ export default function App() {
       }
 
       if (inputMode === 'ask') {
-        triggerAsk(q)
+        triggerAsk(q, sourceFilter)
         return
       }
 
@@ -204,7 +212,7 @@ export default function App() {
       setPage(1)
       setSelectedId(null)
     },
-    [query, inputMode, triggerAsk]
+    [query, inputMode, triggerAsk, sourceFilter]
   )
 
   const handleClear = useCallback(() => {
@@ -291,6 +299,18 @@ export default function App() {
                 PATTERNS
               </Link>
               <Link
+                to="/contradictions"
+                className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block"
+              >
+                CONTRADICTIONS
+              </Link>
+              <Link
+                to="/timeline"
+                className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block"
+              >
+                TIMELINE
+              </Link>
+              <Link
                 to="/about"
                 className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block"
               >
@@ -325,6 +345,20 @@ export default function App() {
                       PATTERNS
                     </Link>
                     <Link
+                      to="/contradictions"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-[10px] font-mono text-slate-500 px-3 py-2.5 hover:bg-ink-700 hover:text-slate-300 transition-colors tracking-widest"
+                    >
+                      CONTRADICTIONS
+                    </Link>
+                    <Link
+                      to="/timeline"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-[10px] font-mono text-slate-500 px-3 py-2.5 hover:bg-ink-700 hover:text-slate-300 transition-colors tracking-widest"
+                    >
+                      TIMELINE
+                    </Link>
+                    <Link
                       to="/about"
                       onClick={() => setMobileMenuOpen(false)}
                       className="text-[10px] font-mono text-slate-500 px-3 py-2.5 hover:bg-ink-700 hover:text-slate-300 transition-colors tracking-widest"
@@ -342,6 +376,19 @@ export default function App() {
 
           {/* Mode toggle + search bar */}
           <div className="flex items-center gap-2">
+            {/* MY FILES toggle */}
+            <button
+              type="button"
+              onClick={() => setSourceFilter(f => f === 'personal' ? 'all' : 'personal')}
+              className={`font-mono text-[10px] tracking-widest px-2 py-1.5 rounded border flex-shrink-0 transition-colors ${
+                sourceFilter === 'personal'
+                  ? 'bg-violet-900/60 text-violet-400 border-violet-500/30'
+                  : 'bg-ink-700 text-slate-600 border-ink-500 hover:text-violet-400 hover:border-violet-500/30'
+              }`}
+            >
+              MY FILES
+            </button>
+
             {/* Three-way mode toggle */}
             <div className="flex flex-shrink-0 rounded border border-ink-500 overflow-hidden">
               {[
@@ -402,17 +449,26 @@ export default function App() {
           )
         ) : inputMode === 'ask' ? (
           askLoading || askMessages.length > 0 ? (
-            <AskPanel
-              messages={askMessages}
-              loading={askLoading}
-              onSelectDecision={handleSelect}
-              onNewConversation={handleNewConversation}
-            />
+            <>
+              {sourceFilter === 'personal' && (
+                <div className="mb-4 font-mono text-[10px] text-violet-400/70 border border-violet-500/20 bg-violet-900/10 rounded px-3 py-2 tracking-widest">
+                  SEARCHING YOUR PERSONAL CASE FILES (PC 19700 / PC 19709)
+                </div>
+              )}
+              <AskPanel
+                messages={askMessages}
+                loading={askLoading}
+                onSelectDecision={handleSelect}
+                onNewConversation={handleNewConversation}
+              />
+            </>
           ) : (
             <div className="py-24 text-center">
               <p className="font-mono text-xs text-slate-600 tracking-widest">ASK MODE ACTIVE</p>
               <p className="font-mono text-[10px] text-slate-700 mt-2">
-                Ask any question about BC court decisions involving MCFD.
+                {sourceFilter === 'personal'
+                  ? 'Searching personal case files (PC 19700 / PC 19709).'
+                  : 'Ask any question about BC court decisions involving MCFD.'}
               </p>
             </div>
           )

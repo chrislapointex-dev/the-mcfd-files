@@ -40,6 +40,20 @@ say so clearly — do not speculate or use outside knowledge. \
 Be concise and precise. Use plain language.\
 """
 
+PERSONAL_SYSTEM_PROMPT = """\
+You are analyzing documents from Christopher LaPointe's personal legal case files. \
+These are BC child protection proceedings PC 19700, PC 19709, SC 64242, SC 064851.
+
+Answer precisely and cite the exact document name and page range for every claim. \
+Use [Source: citation] immediately after each factual statement. \
+Do not speculate. If the document does not contain the answer, say so.\
+"""
+
+_PROMPTS = {
+    'personal': PERSONAL_SYSTEM_PROMPT,
+    'public': SYSTEM_PROMPT,
+}
+
 
 def _build_context(chunks: list[dict]) -> str:
     """Format document chunks into a numbered context block."""
@@ -57,7 +71,7 @@ def _build_context(chunks: list[dict]) -> str:
     return "\n---\n".join(parts)
 
 
-async def ask_stream(question: str, chunks: list[dict]):
+async def ask_stream(question: str, chunks: list[dict], context_mode: str = 'public'):
     """Stream Claude's answer token-by-token.
 
     Yields:
@@ -70,13 +84,14 @@ async def ask_stream(question: str, chunks: list[dict]):
 
     context = _build_context(chunks)
     user_message = f"Documents:\n\n{context}\n\nQuestion: {question}"
+    system_prompt = _PROMPTS.get(context_mode, SYSTEM_PROMPT)
 
     client = _get_client()
     full_text = ""
     async with client.messages.stream(
         model=os.getenv("CLAUDE_MODEL", "claude-sonnet-4-6"),
         max_tokens=1024,
-        system=SYSTEM_PROMPT,
+        system=system_prompt,
         messages=[{"role": "user", "content": user_message}],
     ) as stream:
         async for text in stream.text_stream:
@@ -86,7 +101,7 @@ async def ask_stream(question: str, chunks: list[dict]):
     yield ("done", full_text)
 
 
-async def ask(question: str, chunks: list[dict]) -> str:
+async def ask(question: str, chunks: list[dict], context_mode: str = 'public') -> str:
     """Ask Claude a question grounded in the provided document chunks.
 
     Args:
@@ -101,12 +116,13 @@ async def ask(question: str, chunks: list[dict]) -> str:
 
     context = _build_context(chunks)
     user_message = f"Documents:\n\n{context}\n\nQuestion: {question}"
+    system_prompt = _PROMPTS.get(context_mode, SYSTEM_PROMPT)
 
     client = _get_client()
     response = await client.messages.create(
         model=os.getenv("CLAUDE_MODEL", "claude-sonnet-4-6"),
         max_tokens=1024,
-        system=SYSTEM_PROMPT,
+        system=system_prompt,
         messages=[{"role": "user", "content": user_message}],
     )
 

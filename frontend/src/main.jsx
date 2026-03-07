@@ -5,6 +5,8 @@ import './index.css'
 import App from './App.jsx'
 import About from './pages/About.jsx'
 import PatternMapper from './pages/PatternMapper.jsx'
+import ContradictionEngine from './pages/ContradictionEngine.jsx'
+import CaseTimeline from './pages/CaseTimeline.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 
 createRoot(document.getElementById('root')).render(
@@ -15,6 +17,8 @@ createRoot(document.getElementById('root')).render(
           <Route path="/" element={<App />} />
           <Route path="/about" element={<About />} />
           <Route path="/patterns" element={<PatternMapper />} />
+          <Route path="/contradictions" element={<ContradictionEngine />} />
+          <Route path="/timeline" element={<CaseTimeline />} />
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>

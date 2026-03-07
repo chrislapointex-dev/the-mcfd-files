@@ -115,3 +115,20 @@ class Chunk(Base):
 
     def __repr__(self) -> str:
         return f"<Chunk decision={self.decision_id} #{self.chunk_num}>"
+
+
+class Contradiction(Base):
+    __tablename__ = "contradictions"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    claim: Mapped[str] = mapped_column(Text, nullable=False)
+    evidence: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    source_doc: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    page_ref: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    severity: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+
+    def __repr__(self) -> str:
+        return f"<Contradiction {self.id}: {self.severity}>"

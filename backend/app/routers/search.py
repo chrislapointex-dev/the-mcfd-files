@@ -35,9 +35,16 @@ async def semantic_search(
     query_vec = await embed_query(q)
     vec_literal = f"[{','.join(str(x) for x in query_vec)}]"
 
+    PERSONAL_SOURCES = ['foi', 'personal']
+
     # Inline the vector literal — it's model output (all floats), safe to embed.
     # asyncpg chokes on :param::vector due to the double-colon, so we inline instead.
-    source_filter = "AND d.source = :source" if source else ""
+    if source == 'personal':
+        source_filter = "AND d.source = ANY(:sources)"
+    elif source:
+        source_filter = "AND d.source = :source"
+    else:
+        source_filter = ""
 
     sql = text(f"""
         SELECT
@@ -62,17 +69,27 @@ async def semantic_search(
     """)
 
     params: dict = {"threshold": threshold, "k": k}
-    if source:
+    if source == 'personal':
+        params["sources"] = PERSONAL_SOURCES
+    elif source:
         params["source"] = source
 
     rows = (await db.execute(sql, params)).all()
 
-    results = [
-        SemanticChunk(
+    # When no source filter, apply 1.15x boost to personal/FOI results and re-sort
+    PERSONAL_BOOST_SOURCES = {'foi', 'personal'}
+    boost = source is None
+
+    results = []
+    for r in rows:
+        raw_score = float(r.score)
+        if boost and r.source in PERSONAL_BOOST_SOURCES:
+            raw_score = raw_score * 1.15
+        results.append(SemanticChunk(
             chunk_id=r.chunk_id,
             chunk_num=r.chunk_num,
             text=r.text,
-            score=round(float(r.score), 4),
+            score=round(raw_score, 4),
             decision_id=r.decision_id,
             citation=r.citation,
             title=r.title,
@@ -80,8 +97,9 @@ async def semantic_search(
             date=r.date,
             court=r.court,
             url=r.url,
-        )
-        for r in rows
-    ]
+        ))
+
+    if boost:
+        results.sort(key=lambda c: c.score, reverse=True)
 
     return SemanticSearchResponse(query=q, total=len(results), results=results)

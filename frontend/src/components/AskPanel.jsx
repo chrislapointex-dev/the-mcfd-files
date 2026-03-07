@@ -1,4 +1,20 @@
 import { useRef, useEffect } from 'react'
+
+const PERSONAL_SOURCES = new Set(['foi', 'personal'])
+
+function SourceTypeBadge({ source }) {
+  if (!source) return null
+  const [label, color] = PERSONAL_SOURCES.has(source)
+    ? ['MY FILE', 'text-violet-400 border-violet-500/30']
+    : source === 'rcy'
+      ? ['RCY', 'text-teal-400 border-teal-500/30']
+      : ['COURT', 'text-amber-500/70 border-amber-500/30']
+  return (
+    <span className={`font-mono text-[9px] border px-1 py-0.5 rounded tracking-widest flex-shrink-0 ${color}`}>
+      {label}
+    </span>
+  )
+}
 import ReactMarkdown from 'react-markdown'
 import DiagnosticsPanel from './DiagnosticsPanel'
 
@@ -137,6 +153,7 @@ export default function AskPanel({ messages, loading, onSelectDecision, onNewCon
                         onClick={() => onSelectDecision(src.decision_id)}
                         className="w-full text-left flex items-start gap-3 border border-ink-600 hover:border-amber-500/30 rounded px-3 py-2.5 bg-ink-800 hover:bg-ink-700 transition-colors group"
                       >
+                        <SourceTypeBadge source={src.source} />
                         <span className="font-mono text-[10px] text-amber-500/70 group-hover:text-amber-400 transition-colors mt-0.5 flex-shrink-0">
                           [{src.citation}]
                         </span>

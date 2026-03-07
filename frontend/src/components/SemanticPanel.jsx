@@ -1,5 +1,21 @@
 import { useState, useMemo } from 'react'
 
+const PERSONAL_SOURCES = new Set(['foi', 'personal'])
+
+function SourceBadge({ source }) {
+  if (!source) return null
+  const color = PERSONAL_SOURCES.has(source)
+    ? 'text-violet-400/70 border-violet-500/20'
+    : source === 'rcy'
+      ? 'text-teal-400/70 border-teal-500/20'
+      : 'text-amber-400/50 border-amber-500/20'
+  return (
+    <span className={`font-mono text-[9px] border px-1 py-0.5 rounded tracking-widest uppercase ${color}`}>
+      {source}
+    </span>
+  )
+}
+
 function ScoreBadge({ score }) {
   const pct = Math.round(score * 100)
   const color =
@@ -91,6 +107,7 @@ export default function SemanticPanel({ query, results, loading, onSelectDecisio
             >
               <div className="flex items-center gap-3 mb-2">
                 <ScoreBadge score={best.score} />
+                <SourceBadge source={best.source} />
                 <span className="font-mono text-[10px] text-amber-500/70 group-hover:text-amber-400 transition-colors">
                   {best.citation || `Decision #${decision_id}`}
                 </span>

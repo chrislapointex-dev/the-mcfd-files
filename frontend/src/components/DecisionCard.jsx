@@ -7,9 +7,22 @@ function courtAbbr(court) {
   return court?.split(' ').map(w => w[0]).join('') ?? null
 }
 
+const PERSONAL_SOURCES = new Set(['foi', 'personal'])
+
 export default function DecisionCard({ decision, onClick, index }) {
   const isRcy = decision.source === 'rcy'
-  const abbr = isRcy ? 'RCY' : courtAbbr(decision.court)
+  const isPersonal = PERSONAL_SOURCES.has(decision.source)
+  const abbr = isRcy ? 'RCY' : isPersonal ? decision.source.toUpperCase() : courtAbbr(decision.court)
+
+  const accentBar = isPersonal
+    ? 'bg-violet-700 group-hover:bg-violet-400 group-focus:bg-violet-400'
+    : isRcy
+      ? 'bg-teal-700 group-hover:bg-teal-400 group-focus:bg-teal-400'
+      : 'bg-ink-500 group-hover:bg-amber-500 group-focus:bg-amber-500'
+
+  const citationColor = isPersonal ? 'text-violet-400/80' : isRcy ? 'text-teal-500/80' : 'text-amber-500/80'
+  const badgeColor = isPersonal ? 'text-violet-500 border-violet-900' : isRcy ? 'text-teal-600 border-teal-900' : 'text-slate-600 border-ink-500'
+  const viewColor = isPersonal ? 'text-violet-400' : isRcy ? 'text-teal-400' : 'text-amber-500'
 
   return (
     <div
@@ -20,20 +33,20 @@ export default function DecisionCard({ decision, onClick, index }) {
       className="group flex cursor-pointer animate-fade-up focus:outline-none"
       style={{ animationDelay: `${Math.min(index * 35, 350)}ms` }}
     >
-      {/* Accent bar — teal for RCY, amber for court decisions */}
-      <div className={`w-[3px] flex-shrink-0 rounded-l transition-colors ${isRcy ? 'bg-teal-700 group-hover:bg-teal-400 group-focus:bg-teal-400' : 'bg-ink-500 group-hover:bg-amber-500 group-focus:bg-amber-500'}`} />
+      {/* Accent bar — violet for personal, teal for RCY, amber for court decisions */}
+      <div className={`w-[3px] flex-shrink-0 rounded-l transition-colors ${accentBar}`} />
 
       {/* Body */}
       <div className="flex-1 bg-ink-800 group-hover:bg-ink-700 group-focus:bg-ink-700 border border-l-0 border-ink-600 group-hover:border-ink-500 rounded-r-lg px-5 py-4 transition-all">
 
         {/* Top: citation/source tag + badge + date */}
         <div className="flex items-start justify-between gap-4 mb-2">
-          <span className={`font-mono text-[11px] tracking-wider leading-none mt-0.5 ${isRcy ? 'text-teal-500/80' : 'text-amber-500/80'}`}>
-            {isRcy ? 'RCY REPORT' : (decision.citation ?? '—')}
+          <span className={`font-mono text-[11px] tracking-wider leading-none mt-0.5 ${citationColor}`}>
+            {isPersonal ? 'MY FILE' : isRcy ? 'RCY REPORT' : (decision.citation ?? '—')}
           </span>
           <div className="flex items-center gap-2.5 flex-shrink-0">
             {abbr && (
-              <span className={`font-mono text-[10px] border px-1.5 py-0.5 rounded tracking-widest uppercase ${isRcy ? 'text-teal-600 border-teal-900' : 'text-slate-600 border-ink-500'}`}>
+              <span className={`font-mono text-[10px] border px-1.5 py-0.5 rounded tracking-widest uppercase ${badgeColor}`}>
                 {abbr}
               </span>
             )}
@@ -63,7 +76,7 @@ export default function DecisionCard({ decision, onClick, index }) {
           <span className="font-mono text-[10px] text-slate-700 uppercase tracking-widest">
             {decision.source}
           </span>
-          <span className={`font-mono text-[11px] tracking-widest opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity ${isRcy ? 'text-teal-400' : 'text-amber-500'}`}>
+          <span className={`font-mono text-[11px] tracking-widest opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity ${viewColor}`}>
             VIEW FILE →
           </span>
         </div>

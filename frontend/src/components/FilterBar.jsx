@@ -7,6 +7,25 @@ const inputCls =
 const SOURCE_LABELS = {
   bccourts: 'COURT DECISIONS',
   rcy: 'RCY REPORTS',
+  foi: 'MY FILES',
+  personal: 'MY FILES',
+}
+
+const PERSONAL_SOURCES = new Set(['foi', 'personal'])
+
+// Tab entries for the source filter bar.
+// 'foi' and 'personal' both collapse into a single 'personal' virtual tab.
+function buildSourceTabs(sources) {
+  const tabs = [{ value: '', label: 'ALL' }]
+  let hasPersonal = false
+  for (const s of sources) {
+    if (PERSONAL_SOURCES.has(s)) {
+      if (!hasPersonal) { tabs.push({ value: 'personal', label: 'MY FILES' }); hasPersonal = true }
+    } else {
+      tabs.push({ value: s, label: SOURCE_LABELS[s] ?? s.toUpperCase() })
+    }
+  }
+  return tabs
 }
 
 export default function FilterBar({
@@ -23,13 +42,14 @@ export default function FilterBar({
 }) {
   const set = (field, val) => onChange({ ...filters, [field]: val })
   const hasFilters = filters.source || filters.court || filters.dateFrom || filters.dateTo
+  const isPersonal = filters.source === 'personal'
 
   return (
     <div>
       {/* Source tabs — shown in search mode when multiple sources exist */}
       {isSearch && sources.length > 1 && (
         <div className="flex items-center gap-1 pt-4 pb-3 border-b border-ink-700">
-          {[{ value: '', label: 'ALL' }, ...sources.map(s => ({ value: s, label: SOURCE_LABELS[s] ?? s.toUpperCase() }))].map(({ value, label }) => {
+          {buildSourceTabs(sources).map(({ value, label }) => {
             const active = filters.source === value
             return (
               <button
@@ -39,7 +59,9 @@ export default function FilterBar({
                   active
                     ? value === 'rcy'
                       ? 'bg-teal-900/60 text-teal-400 border border-teal-700/60'
-                      : 'bg-amber-500/10 text-amber-400 border border-amber-500/30'
+                      : value === 'personal'
+                        ? 'bg-violet-900/60 text-violet-400 border border-violet-500/30'
+                        : 'bg-amber-500/10 text-amber-400 border border-amber-500/30'
                     : 'text-slate-600 hover:text-slate-400 border border-transparent'
                 }`}
               >
@@ -79,14 +101,14 @@ export default function FilterBar({
             className={selectCls}
           >
             <option value="">ALL SOURCES</option>
-            {sources.map(s => (
-              <option key={s} value={s}>{SOURCE_LABELS[s] ?? s.toUpperCase()}</option>
+            {buildSourceTabs(sources).filter(t => t.value !== '').map(t => (
+              <option key={t.value} value={t.value}>{t.label}</option>
             ))}
           </select>
         )}
 
-        {/* Court filter — only show when not filtered to rcy (no courts) */}
-        {filters.source !== 'rcy' && (
+        {/* Court filter — hide for rcy and personal (no courts) */}
+        {filters.source !== 'rcy' && !isPersonal && (
           <select
             value={filters.court}
             onChange={e => set('court', e.target.value)}
