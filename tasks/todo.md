@@ -314,3 +314,100 @@ cd backend && DATABASE_URL=postgresql+asyncpg://mcfd:mcfd@localhost:5432/mcfd \
 
 SESSIONS 25–27 COMPLETE — PLATFORM FEATURE-COMPLETE FOR TRIAL
 Platform has: Trial Dashboard + Contradiction Engine + Timeline + Witnesses + Checklist + Complaints + Export + ASK/Search
+
+## SESSIONS 25-27 RE-RUN COMPLETE — 2026-03-07
+
+### Changes from re-run (corrections to prior implementation)
+- GET /api/checklist changed from flat list → grouped dict {CATEGORY: [items]}
+- PATCH /api/checklist/{id} unified endpoint (was separate /toggle + /notes)
+- 7 seed item texts corrected to match spec:
+  - "playable + clipped" → "playable and clipped"
+  - "not already served" → "not voluntarily attending"
+  - "Confirm attendance or arrange testimony" → DELETED
+  - All 4 LOGISTICS items corrected to spec text
+- HearingChecklist.jsx and TrialDashboard.jsx updated for new API shape
+
+### Final endpoint sweep results
+
+| Endpoint | Result |
+|----------|--------|
+| /api/health | ok |
+| /api/trialprep/summary | days_remaining: 73 |
+| /api/checklist | 21 items (EVIDENCE:6, FILINGS:5, WITNESSES:5, LOGISTICS:5) |
+| /api/complaints | 6 complaints (OIPC, CRA, BC Ombudsperson, RCMP, RCY, Health Canada) |
+| /api/contradictions | 13 |
+| /api/witnesses | 6 |
+
+PLATFORM FEATURE-COMPLETE FOR TRIAL — 73 days remaining
+
+## SESSION 28 — DOCUMENTS LOADED — 2026-03-07
+
+### Files found and loaded (34 files → 29 decisions loaded, 5 skipped)
+
+**Text files loaded (13):**
+| File | Label | Chars |
+|------|-------|-------|
+| chris-mcfd-report-apr-11-2025.txt | MCFD Report Chris Apr 11 2025 | 4698 |
+| email-false-f1-claims-oct-27-2025.txt | Email False F1 Claims Oct 27 2025 | 5807 |
+| email-request-clarification-mcfd-sep-18-2025.txt | Email Request Clarification MCFD Sep 18 2025 | 2418 |
+| foi-findings-update.txt | FOI Findings Update 2026 | 9414 |
+| tammy-newton-letter-sep-24-2025.txt | Tammy Newton Response Letter Sep 24 2025 | 5213 |
+| sexual-assault-disclosure-aug-1-2025.txt | Disclosure Transcript Aug 1 2025 | 5778 |
+| ptc-nicki-wolfenden.txt | Witness Profile N. Wolfenden | loaded |
+| ptc-tammy-newton.txt | Witness Profile T. Newton | loaded |
+| ptc-burnstein.txt | Witness Profile R. Burnstein | loaded |
+| ptc-jordon-muileboom.txt | Witness Profile J. Muileboom | loaded |
+| ptc-plessa-walden.txt | Witness Profile P. Walden | loaded |
+| ptc-cheryl-martin.txt | Witness Profile C. Martin | loaded |
+| ptc-court-files.txt | Court Files Summary PTC | loaded |
+
+**PDF files loaded (16):**
+| File | Label | Chars |
+|------|-------|-------|
+| exhibit-a-25-contradictions.pdf | Exhibit A 25 Contradictions | 14254 |
+| lapointe-response-sep-24-2025.pdf | LaPointe Response Sep 24 2025 | 5250 |
+| court-plan-of-care-dec-23-2025.pdf | Court Plan of Care Dec 23 2025 | 12701 |
+| form-31-notice-app-64242-nov-24-2025.pdf | Form 31 Notice of Application 64242 Nov 24 2025 | 699 |
+| form-32-nov-24-2025.pdf | Form 32 LaPointe v Wolfenden MCFD Nov 24 2025 | 699 |
+| form-66-wolfenden-director-nov-24-2025.pdf | Form 66 LaPointe v Wolfenden Director Nov 24 2025 | 699 |
+| form-7-wolfenden-form66-nov-24-2025.pdf | Form 7 Affidavit Wolfenden Form 66 Nov 24 2025 | 3055 |
+| form-7-newton-19709-nov-17-2025.pdf | Form 7 Affidavit Newton 19709 Nov 17 2025 | 10713 |
+| form-7-mcfd-19709-oct-7-2025.pdf | Form 7 Affidavit MCFD 19709 Oct 7 2025 | 95381 |
+| form109-wolfenden-nov-24-2025.pdf | Form 109 Affidavit Wolfenden MCFD Nov 24 2025 | 699 |
+| gmail-misconduct-newton.pdf | Gmail Misconduct Tammy Newton MCFD | 10342 |
+| gmail-oipc-inv-f-26-00220.pdf | Gmail OIPC INV-F-26-00220 CFD-2025-53478 | 9210 |
+| h-notice-intent-full-custody.pdf | Notice of Intent Full Custody Nadia | 10211 |
+| i-f1-mcfd-aug-12-2025.pdf | F1 MCFD Form Aug 12 2025 | 25264 |
+| legend-lapointe-mcfd.pdf | Legend LaPointe v MCFD | 8482 |
+| mcfd-newton-letter-sep-24-2025.pdf | MCFD Newton Comprehensive Response Sep 24 2025 | 48585 |
+| nadia-analysis-report.pdf | Nadia Comprehensive Analysis Report 2024-2025 | 19528 |
+| timeline-lapointe-mcfd.pdf | Timeline LaPointe v MCFD | 5662 |
+
+**Skipped (scanned image PDFs — text extraction yielded < 100 chars):**
+- form-a-circumstances-removal-aug-12-2025.pdf (KLC Form A)
+- seyler-application-protection-order-aug-5-2025.pdf
+- court-final.pdf (Desktop)
+
+**Also skipped (metadata/not case content):**
+- FOI_FINDINGS_UPDATE (1).md — duplicate
+- G Sexual_Assault_Disclosure_Transcript.txt.txt — identical to loaded version
+- Form 7 Affidavit of Christopher S. La Pointe v MCFD (duplicate of Oct 7 version)
+- H Notice (1).pdf and H Notice (2).pdf — duplicates
+- nadia_comprehensive_analysis_report 2024 to 2025.pdf — duplicate
+- README_Caryma_LaPointe_v_MCFD.pdf — metadata only
+- MCFD_FILES_MAC_SETUP_GUIDE.md — setup doc
+- FOI_LOAD_PROMPT.md — setup instructions
+
+**protect-the-child brain:** 7 files loaded (6 witness profiles + court_files.md)
+
+### Final counts
+- personal_chunks: 720 (was 597, +123)
+- total_chunks: 26824
+- total_decisions: 1529
+- new decisions loaded: 29
+- chunker: 123 chunks inserted across 29 decisions
+- embedder: 123 embeddings at 46 chunks/s
+
+### ASK verification
+Query: "Summarize all evidence of pre-planned removal" (source_filter: personal)
+Result: Cited "FOI Findings Update 2026" — newly loaded document. Working.
