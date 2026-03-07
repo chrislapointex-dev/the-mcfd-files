@@ -67,6 +67,17 @@ MERGED_CAP = 20
 PERSONAL_SOURCES = ['foi', 'personal']
 PUBLIC_SOURCES = ['bccourts', 'rcy', 'legislation', 'news', 'canlii']
 
+BOOST_NAMES = ["Wolfenden", "Newton", "Muileboom", "Burnstein",
+               "Walden", "Martin", "Nadia", "CFD-2025-53478"]
+
+
+def _detect_boost_name(question: str) -> Optional[str]:
+    q_lower = question.lower()
+    for name in BOOST_NAMES:
+        if name.lower() in q_lower:
+            return name
+    return None
+
 
 def _sources_for_filter(source_filter: Optional[str]) -> Optional[list[str]]:
     """Map source_filter value to a SQL sources list, or None for no filter."""
@@ -273,7 +284,17 @@ async def ask_endpoint(
         except Exception:
             pass
 
-    chunks = _merge_chunks(personal_boost + fts_chunks, sem_chunks)
+    # Name boost: if a witness/key name is in the question, prepend FTS hits for that name
+    name_boost: list[dict] = []
+    detected_name = _detect_boost_name(question)
+    if detected_name:
+        try:
+            name_boost = await _fetch_fts_chunks(db, detected_name, PERSONAL_SOURCES)
+            name_boost = name_boost[:5]
+        except Exception:
+            pass
+
+    chunks = _merge_chunks(name_boost + personal_boost + fts_chunks, sem_chunks)
     chunks_after_merge = len(chunks)
 
     # 2b. Budget allocation
@@ -418,7 +439,17 @@ async def ask_stream_endpoint(
                 except Exception:
                     pass
 
-            chunks = _merge_chunks(personal_boost + fts_chunks, sem_chunks)
+            # Name boost: if a witness/key name is in the question, prepend FTS hits for that name
+            name_boost: list[dict] = []
+            detected_name = _detect_boost_name(question)
+            if detected_name:
+                try:
+                    name_boost = await _fetch_fts_chunks(db, detected_name, PERSONAL_SOURCES)
+                    name_boost = name_boost[:5]
+                except Exception:
+                    pass
+
+            chunks = _merge_chunks(name_boost + personal_boost + fts_chunks, sem_chunks)
             stream_chunks_after_merge = len(chunks)
 
             # 2b. Budget allocation

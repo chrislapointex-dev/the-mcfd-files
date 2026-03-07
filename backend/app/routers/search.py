@@ -103,3 +103,37 @@ async def semantic_search(
         results.sort(key=lambda c: c.score, reverse=True)
 
     return SemanticSearchResponse(query=q, total=len(results), results=results)
+
+
+@router.get("/keyword")
+async def keyword_search(
+    q: str = Query(..., min_length=1),
+    source: Optional[str] = None,
+    db: AsyncSession = Depends(get_db),
+):
+    PERSONAL_SOURCES = ['foi', 'personal']
+    source_clause = ""
+    params: dict = {"q": f"%{q}%", "limit": 50}
+    if source == 'personal':
+        source_clause = "AND d.source = ANY(:sources)"
+        params["sources"] = PERSONAL_SOURCES
+    elif source:
+        source_clause = "AND d.source = :source"
+        params["source"] = source
+
+    sql = text(f"""
+        SELECT c.id AS chunk_id, c.text, c.citation, d.source, d.title, d.id AS decision_id
+        FROM chunks c
+        JOIN decisions d ON d.id = c.decision_id
+        WHERE lower(c.text) LIKE lower(:q)
+          {source_clause}
+        ORDER BY c.id
+        LIMIT :limit
+    """)
+    rows = (await db.execute(sql, params)).all()
+    results = [
+        {"chunk_id": r.chunk_id, "text": r.text, "source": r.source,
+         "citation": r.citation or r.title or "", "decision_id": r.decision_id}
+        for r in rows
+    ]
+    return {"query": q, "total": len(results), "results": results}

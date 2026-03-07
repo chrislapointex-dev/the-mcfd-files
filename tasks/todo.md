@@ -228,3 +228,52 @@ cd backend && DATABASE_URL=postgresql+asyncpg://mcfd:mcfd@localhost:5432/mcfd \
 - /api/witnesses → 6 witnesses, Wolfenden 61 chunks
 - /api/witnesses/Nicki Wolfenden → 20 chunks
 - /api/export/trial-package → 56KB ZIP, 5 files
+
+---
+
+## SESSIONS 21–24 COMPLETE — 2026-03-07
+
+### Session 21 — Seed Known Contradictions
+- [x] Created `backend/app/loaders/seed_contradictions.py`
+  - 10 known contradictions seeded (idempotent — safe to re-run)
+  - DB now has 13 total contradictions (3 existing + 10 seeded)
+  - Severity breakdown: 8 DIRECT, 2 PARTIAL
+
+### Session 22 — ASK Name-Boost + Keyword Search
+- [x] `backend/app/routers/ask.py` — added BOOST_NAMES list + _detect_boost_name()
+  - Name boost fires in both ask_endpoint and ask_stream_endpoint
+  - Prepends up to 5 FTS hits for detected witness name before personal_boost
+  - Names: Wolfenden, Newton, Muileboom, Burnstein, Walden, Martin, Nadia, CFD-2025-53478
+- [x] `backend/app/routers/search.py` — added GET /api/search/keyword
+  - LIKE-based keyword search on chunks.text
+  - Optional source filter (personal = foi+personal sources)
+  - Returns chunk_id, text, source, citation, decision_id
+
+### Session 23 — Mobile/Print Polish
+- [x] Created `frontend/src/components/TrialBanner.jsx`
+  - Fetches /api/trialprep/summary on mount
+  - Only renders if days_remaining < 30 (currently 73 — hidden)
+- [x] `frontend/src/pages/TrialDashboard.jsx`
+  - Countdown: text-7xl → text-6xl sm:text-8xl (mobile responsive)
+  - Added PRINT TRIAL SUMMARY button (print:hidden)
+  - Header nav: print:hidden
+  - TrialBanner wired below top accent line
+- [x] `frontend/src/pages/WitnessProfiles.jsx`
+  - COPY button per chunk card (copies source + citation + text)
+  - TrialBanner wired below top accent line
+- [x] `frontend/src/pages/ContradictionEngine.jsx`
+  - COPY button per result item and per history item
+  - TrialBanner wired below top accent line
+
+### Session 24 — Final Hardening
+- [x] Python syntax checks PASS (seed_contradictions, ask, search)
+- [x] /api/health → ok
+- [x] /api/contradictions → 13 results
+- [x] /api/search/keyword?q=Burnstein&source=personal → 3 results
+- [x] Git committed and pushed
+
+### Verification results
+- contradiction count: 13 (3 existing + 10 seeded)
+- keyword search: /api/search/keyword?q=Burnstein&source=personal → 3 chunks
+- name boost: fires for Wolfenden/Newton/Muileboom/Burnstein/Walden/Martin/Nadia in ASK mode
+- TrialBanner: wired in Trial/Witnesses/Contradictions pages, hidden until < 30 days

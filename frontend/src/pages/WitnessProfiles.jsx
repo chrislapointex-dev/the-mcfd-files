@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import TrialBanner from '../components/TrialBanner'
 
 const SOURCE_COLORS = {
   foi:      'text-amber-400 border-amber-500/40 bg-amber-900/20',
@@ -42,6 +43,7 @@ export default function WitnessProfiles() {
   return (
     <div className="min-h-screen bg-ink-900 font-sans text-slate-200">
       <div className="h-px bg-gradient-to-r from-transparent via-violet-500/60 to-transparent" />
+      <div className="max-w-4xl mx-auto px-4 pt-3"><TrialBanner /></div>
 
       <header className="sticky top-0 z-20 border-b border-ink-600 bg-ink-900/90 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
@@ -116,13 +118,23 @@ export default function WitnessProfiles() {
                 </p>
                 {selected.chunks.map((chunk) => (
                   <div key={chunk.chunk_id} className="border border-ink-700 bg-ink-800 rounded-lg p-4 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <span className={`font-mono text-[9px] px-1.5 py-0.5 rounded border tracking-widest ${SOURCE_COLORS[chunk.source] ?? 'text-slate-500 border-slate-600'}`}>
-                        {chunk.source?.toUpperCase()}
-                      </span>
-                      {chunk.citation && (
-                        <span className="font-mono text-[9px] text-slate-600 truncate">{chunk.citation}</span>
-                      )}
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className={`font-mono text-[9px] px-1.5 py-0.5 rounded border tracking-widest flex-shrink-0 ${SOURCE_COLORS[chunk.source] ?? 'text-slate-500 border-slate-600'}`}>
+                          {chunk.source?.toUpperCase()}
+                        </span>
+                        {chunk.citation && (
+                          <span className="font-mono text-[9px] text-slate-600 truncate">{chunk.citation}</span>
+                        )}
+                      </div>
+                      <button
+                        onClick={() => navigator.clipboard.writeText(
+                          `Source: ${chunk.source} | ${chunk.citation}\n\n${chunk.text}`
+                        )}
+                        className="font-mono text-[9px] text-ink-400 border border-ink-600 px-1.5 py-0.5 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors flex-shrink-0"
+                      >
+                        COPY
+                      </button>
                     </div>
                     <p className="font-mono text-xs text-slate-300 leading-relaxed whitespace-pre-line">
                       {chunk.text}

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import TrialBanner from '../components/TrialBanner'
 
 const SEVERITY_STYLE = {
   DIRECT: 'text-red-400 border-red-500/40 bg-red-900/20',
@@ -77,6 +78,7 @@ export default function ContradictionEngine() {
   return (
     <div className="min-h-screen bg-ink-900 font-sans text-slate-200">
       <div className="h-px bg-gradient-to-r from-transparent via-amber-500/60 to-transparent" />
+      <div className="max-w-4xl mx-auto px-4 pt-3"><TrialBanner /></div>
 
       <header className="sticky top-0 z-20 border-b border-ink-600 bg-ink-900/90 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center gap-4">
@@ -175,7 +177,17 @@ export default function ContradictionEngine() {
                   <div key={i} className="bg-ink-800 border border-ink-600 rounded-lg p-4 space-y-2">
                     <div className="flex items-start justify-between gap-3">
                       <p className="text-sm text-slate-300 leading-relaxed flex-1">{c.claim}</p>
-                      <SeverityBadge severity={c.severity} />
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        <SeverityBadge severity={c.severity} />
+                        <button
+                          onClick={() => navigator.clipboard.writeText(
+                            `CLAIM: ${c.claim}\nEVIDENCE: ${c.evidence || '—'}\nSOURCE: ${c.source_doc || '—'}\nSEVERITY: ${c.severity}`
+                          )}
+                          className="font-mono text-[9px] text-ink-400 border border-ink-600 px-1.5 py-0.5 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors"
+                        >
+                          COPY
+                        </button>
+                      </div>
                     </div>
                     {c.evidence && (
                       <div className="border-l-2 border-ink-500 pl-3">
@@ -211,9 +223,19 @@ export default function ContradictionEngine() {
                       <p className="font-mono text-[10px] text-slate-600 mt-0.5 truncate">{c.source_doc}</p>
                     )}
                   </div>
-                  <span className="font-mono text-[10px] text-slate-700 flex-shrink-0">
-                    {c.created_at?.slice(0, 10)}
-                  </span>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <button
+                      onClick={() => navigator.clipboard.writeText(
+                        `CLAIM: ${c.claim}\nEVIDENCE: ${c.evidence || '—'}\nSOURCE: ${c.source_doc || '—'}\nSEVERITY: ${c.severity}`
+                      )}
+                      className="font-mono text-[9px] text-ink-400 border border-ink-600 px-1.5 py-0.5 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors"
+                    >
+                      COPY
+                    </button>
+                    <span className="font-mono text-[10px] text-slate-700">
+                      {c.created_at?.slice(0, 10)}
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>

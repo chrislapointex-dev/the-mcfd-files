@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import TrialBanner from '../components/TrialBanner'
 
 const SEVERITY_COLORS = {
   DIRECT:  'text-red-400 border-red-500/40 bg-red-900/20',
@@ -34,9 +35,10 @@ export default function TrialDashboard() {
     <div className="min-h-screen bg-ink-900 font-sans text-slate-200">
       {/* Top accent line */}
       <div className="h-px bg-gradient-to-r from-transparent via-red-500/60 to-transparent" />
+      <div className="max-w-5xl mx-auto px-4 pt-3 print:hidden"><TrialBanner /></div>
 
       {/* Header */}
-      <header className="sticky top-0 z-20 border-b border-ink-600 bg-ink-900/90 backdrop-blur-sm">
+      <header className="sticky top-0 z-20 border-b border-ink-600 bg-ink-900/90 backdrop-blur-sm print:hidden">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
           <div>
             <h1 className="font-display text-3xl tracking-[0.12em] text-white leading-none">
@@ -80,7 +82,7 @@ export default function TrialDashboard() {
               {/* Countdown */}
               <div className="border border-ink-600 bg-ink-800 rounded-lg p-6">
                 <p className="font-mono text-[10px] text-slate-600 tracking-widest mb-2 uppercase">Days to Trial</p>
-                <p className={`font-display text-7xl font-bold tracking-tight leading-none ${countdownColor(data.days_remaining)}`}>
+                <p className={`font-display text-6xl sm:text-8xl font-bold tracking-tight leading-none ${countdownColor(data.days_remaining)}`}>
                   {data.days_remaining}
                 </p>
                 <p className="font-mono text-xs text-slate-500 mt-3 tracking-widest">MAY 19–21, 2026</p>
@@ -196,6 +198,12 @@ export default function TrialDashboard() {
                   className="w-full font-mono text-xs tracking-widest px-4 py-3 rounded border border-amber-500/40 text-amber-400 bg-amber-900/10 hover:bg-amber-900/20 hover:border-amber-500/60 transition-colors"
                 >
                   EXPORT TRIAL PACKAGE
+                </button>
+                <button
+                  onClick={() => window.print()}
+                  className="w-full font-mono text-xs tracking-widest px-4 py-3 rounded border border-slate-600 text-slate-400 bg-ink-900/20 hover:bg-ink-700 hover:border-slate-500 transition-colors mt-2 print:hidden"
+                >
+                  PRINT TRIAL SUMMARY
                 </button>
                 <p className="font-mono text-[9px] text-slate-700 mt-2 text-center tracking-wide">
                   Downloads ZIP with contradictions, timeline, witness profiles
