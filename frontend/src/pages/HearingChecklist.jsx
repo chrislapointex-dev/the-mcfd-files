@@ -24,7 +24,7 @@ function NotesField({ itemId, initial, onSaved }) {
   }
 
   function save(notes) {
-    fetch(`/api/checklist/${itemId}/notes`, {
+    fetch(`/api/checklist/${itemId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ notes: notes || null }),
@@ -52,7 +52,11 @@ function ChecklistRow({ item, onToggle, onNotesSaved }) {
   function handleToggle() {
     if (toggling) return
     setToggling(true)
-    fetch(`/api/checklist/${item.id}/toggle`, { method: 'PATCH' })
+    fetch(`/api/checklist/${item.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ done: !item.done }),
+    })
       .then(r => r.json())
       .then(updated => { onToggle(updated); setToggling(false) })
       .catch(() => setToggling(false))
@@ -128,7 +132,7 @@ export default function HearingChecklist() {
   useEffect(() => {
     fetch('/api/checklist')
       .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json() })
-      .then(setItems)
+      .then(grouped => setItems(Object.values(grouped).flat()))
       .catch(e => setError(e.message))
       .finally(() => setLoading(false))
   }, [])

@@ -26,8 +26,11 @@ export default function TrialDashboard() {
       .finally(() => setLoading(false))
 
     fetch('/api/checklist')
-      .then(r => r.ok ? r.json() : [])
-      .then(items => setChecklistPending(items.filter(i => !i.done).length))
+      .then(r => r.ok ? r.json() : {})
+      .then(grouped => {
+        const all = Object.values(grouped).flat()
+        setChecklistPending(all.filter(i => !i.done).length)
+      })
       .catch(() => {})
   }, [])
 

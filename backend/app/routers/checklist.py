@@ -1,6 +1,5 @@
-"""GET /api/checklist — list all checklist items ordered by category + id
-PATCH /api/checklist/{id}/toggle — flip done bool
-PATCH /api/checklist/{id}/notes  — update notes field
+"""GET /api/checklist — all items grouped by category (dict)
+PATCH /api/checklist/{id} — update done and/or notes
 """
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -14,6 +13,8 @@ from ..models import ChecklistItem
 
 router = APIRouter(prefix="/api/checklist", tags=["checklist"])
 
+CATEGORY_ORDER = ["EVIDENCE", "FILINGS", "WITNESSES", "LOGISTICS"]
+
 
 class ChecklistItemOut(BaseModel):
     id: int
@@ -25,8 +26,9 @@ class ChecklistItemOut(BaseModel):
     created_at: str
 
 
-class NotesBody(BaseModel):
-    notes: Optional[str]
+class ChecklistPatch(BaseModel):
+    done: Optional[bool] = None    # if provided, set done to this value
+    notes: Optional[str] = None    # if provided, update notes
 
 
 def _serialize(r: ChecklistItem) -> ChecklistItemOut:
@@ -41,31 +43,34 @@ def _serialize(r: ChecklistItem) -> ChecklistItemOut:
     )
 
 
-@router.get("", response_model=list[ChecklistItemOut])
+@router.get("")
 async def list_checklist(db: AsyncSession = Depends(get_db)):
+    """Return all items grouped by category."""
     rows = (await db.execute(
         select(ChecklistItem).order_by(ChecklistItem.category, ChecklistItem.id)
     )).scalars().all()
-    return [_serialize(r) for r in rows]
+
+    grouped: dict[str, list] = {cat: [] for cat in CATEGORY_ORDER}
+    for r in rows:
+        cat = r.category if r.category in grouped else r.category
+        if cat not in grouped:
+            grouped[cat] = []
+        grouped[cat].append(_serialize(r).model_dump())
+
+    # Only include categories that have items
+    return {k: v for k, v in grouped.items() if v}
 
 
-@router.patch("/{item_id}/toggle", response_model=ChecklistItemOut)
-async def toggle_item(item_id: int, db: AsyncSession = Depends(get_db)):
+@router.patch("/{item_id}", response_model=ChecklistItemOut)
+async def update_item(item_id: int, body: ChecklistPatch, db: AsyncSession = Depends(get_db)):
+    """Update done and/or notes on a checklist item."""
     row = await db.get(ChecklistItem, item_id)
     if not row:
         raise HTTPException(status_code=404, detail="Item not found")
-    row.done = not row.done
-    await db.commit()
-    await db.refresh(row)
-    return _serialize(row)
-
-
-@router.patch("/{item_id}/notes", response_model=ChecklistItemOut)
-async def update_notes(item_id: int, body: NotesBody, db: AsyncSession = Depends(get_db)):
-    row = await db.get(ChecklistItem, item_id)
-    if not row:
-        raise HTTPException(status_code=404, detail="Item not found")
-    row.notes = body.notes
+    if body.done is not None:
+        row.done = body.done
+    if body.notes is not None:
+        row.notes = body.notes
     await db.commit()
     await db.refresh(row)
     return _serialize(row)
