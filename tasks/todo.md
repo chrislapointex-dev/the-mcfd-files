@@ -277,3 +277,40 @@ cd backend && DATABASE_URL=postgresql+asyncpg://mcfd:mcfd@localhost:5432/mcfd \
 - keyword search: /api/search/keyword?q=Burnstein&source=personal → 3 chunks
 - name boost: fires for Wolfenden/Newton/Muileboom/Burnstein/Walden/Martin/Nadia in ASK mode
 - TrialBanner: wired in Trial/Witnesses/Contradictions pages, hidden until < 30 days
+
+## SESSIONS 25–27 COMPLETE — 2026-03-07
+
+### Session 25 — Hearing Prep Checklist
+- [x] ChecklistItem model appended to models.py (Boolean imported)
+- [x] backend/app/routers/checklist.py — GET /api/checklist, PATCH toggle, PATCH notes
+- [x] Registered checklist router in main.py
+- [x] backend/app/loaders/seed_checklist.py — 22 items seeded (EVIDENCE/FILINGS/WITNESSES/LOGISTICS)
+- [x] frontend/src/pages/HearingChecklist.jsx — grouped view, per-category progress bars, inline notes
+- [x] /checklist route in main.jsx
+- [x] CHECKLIST nav link in TrialDashboard (with incomplete count badge)
+
+### Session 26 — OIPC & Complaint Tracker
+- [x] Complaint model appended to models.py
+- [x] backend/app/routers/complaints.py — GET /api/complaints, PATCH update
+- [x] Registered complaints router in main.py
+- [x] backend/app/loaders/seed_complaints.py — 6 complaints seeded
+- [x] frontend/src/pages/ComplaintsTracker.jsx — table view, status badges/dropdown, inline notes, copy summary
+- [x] /complaints route in main.jsx
+- [x] COMPLAINTS nav link in TrialDashboard
+
+### Session 27 — Final Integration Test
+- [x] Python syntax checks PASS (models, checklist, complaints, seeds)
+- [x] /api/checklist → 22 items, 4 categories
+- [x] /api/complaints → 6 complaints (2 ACTIVE, 4 FILED)
+- [x] /api/trialprep/summary → days_remaining: 73, contradictions: 13
+- [x] /api/health → ok
+- [x] Git committed and pushed
+
+### Verification results
+- checklist: 22 items (EVIDENCE:6, FILINGS:5, WITNESSES:6, LOGISTICS:5)
+- complaints: 6 (OIPC INV-F-26-00220, CRA GB260151737209, BC Ombudsperson, RCMP, RCY, Health Canada)
+- trial dashboard: 73 days remaining, CHECKLIST badge shows pending count
+- all endpoints healthy
+
+SESSIONS 25–27 COMPLETE — PLATFORM FEATURE-COMPLETE FOR TRIAL
+Platform has: Trial Dashboard + Contradiction Engine + Timeline + Witnesses + Checklist + Complaints + Export + ASK/Search

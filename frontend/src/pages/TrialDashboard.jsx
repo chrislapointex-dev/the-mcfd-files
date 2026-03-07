@@ -12,6 +12,7 @@ export default function TrialDashboard() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [checklistPending, setChecklistPending] = useState(null)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -23,6 +24,11 @@ export default function TrialDashboard() {
       .then(setData)
       .catch(e => setError(e.message))
       .finally(() => setLoading(false))
+
+    fetch('/api/checklist')
+      .then(r => r.ok ? r.json() : [])
+      .then(items => setChecklistPending(items.filter(i => !i.done).length))
+      .catch(() => {})
   }, [])
 
   const countdownColor = (days) => {
@@ -55,7 +61,10 @@ export default function TrialDashboard() {
             <Link to="/contradictions" className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block">CONTRADICTIONS</Link>
             <Link to="/timeline" className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block">TIMELINE</Link>
             <Link to="/patterns" className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block">PATTERNS</Link>
-            <Link to="/checklist" className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block">CHECKLIST</Link>
+            <Link to="/checklist" className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block">
+              CHECKLIST{checklistPending !== null && checklistPending > 0 ? ` (${checklistPending})` : ''}
+            </Link>
+            <Link to="/complaints" className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block">COMPLAINTS</Link>
             <span className="text-[10px] font-mono text-amber-500/60 border border-amber-500/25 px-2 py-1 rounded tracking-widest hidden sm:block">UNREDACTED</span>
           </nav>
         </div>

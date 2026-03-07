@@ -149,3 +149,21 @@ class ChecklistItem(Base):
 
     def __repr__(self) -> str:
         return f"<ChecklistItem {self.id}: {self.category}>"
+
+
+class Complaint(Base):
+    __tablename__ = "complaints"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    body: Mapped[str] = mapped_column(String(100), nullable=False)
+    file_ref: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    filed_date: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
+    status: Mapped[str] = mapped_column(String(30), nullable=False, default="OPEN")
+    last_update: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
+    notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+
+    def __repr__(self) -> str:
+        return f"<Complaint {self.id}: {self.body} [{self.status}]>"
