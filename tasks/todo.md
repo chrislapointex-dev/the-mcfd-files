@@ -411,3 +411,36 @@ PLATFORM FEATURE-COMPLETE FOR TRIAL — 73 days remaining
 ### ASK verification
 Query: "Summarize all evidence of pre-planned removal" (source_filter: personal)
 Result: Cited "FOI Findings Update 2026" — newly loaded document. Working.
+
+## SESSION 29 — OCR SCANNED PDFs — 2026-03-07
+
+### OCR Method
+Host-side: PyMuPDF (fitz) pixmap at 3x zoom → pytesseract → .txt
+Tesseract 5.5.2 via homebrew. Container did not have tesseract.
+
+### Files OCR'd and loaded (5 decisions, 34 chunks)
+
+| File | OCR Chars | Chunks |
+|------|-----------|--------|
+| Form A Circumstances of Removal Aug 12 2025 | 23,353 | ~7 |
+| Seyler v LaPointe Application Protection Order Aug 5 2025 | 38,151 | ~11 |
+| Seyler v LaPointe PGS Law Letter Feb 10 2026 | 1,754 | ~1 |
+| Seyler v LaPointe Response to Notice to Admit | 10,609 | ~3 |
+| Seyler v LaPointe Trial Readiness Statement Feb 23 2026 | 8,749 | ~2 |
+
+### Files skipped
+- Court Final.pdf (Desktop) — 906 pages, confirmed scanned, confirmed same as FOI data already in DB (20 decisions, 581 chunks). Not re-loaded.
+
+### 3 New Seyler PDFs (found during Step 1 inventory — not in Session 28)
+- PGS Law Letter Feb 10 2026 — OCR'd and loaded
+- Response to Notice to Admit — OCR'd and loaded
+- Trial Readiness Statement Feb 23 2026 — OCR'd and loaded
+
+### Final counts
+- personal_chunks: 754 (was 720 after S28, +34 in S29)
+- total_chunks: 26858
+- total_decisions: 1534
+
+### ASK verification
+Query: "What does the Seyler protection order say?" (source_filter: personal)
+Result: Cited "Seyler v LaPointe Application Protection Order Aug 5 2025 — OCR" — OCR working.
