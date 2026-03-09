@@ -134,6 +134,29 @@ class Contradiction(Base):
         return f"<Contradiction {self.id}: {self.severity}>"
 
 
+class ContradictionEvidence(Base):
+    __tablename__ = "contradiction_evidence"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    contradiction_id: Mapped[int] = mapped_column(
+        ForeignKey("contradictions.id", ondelete="CASCADE"), nullable=False
+    )
+    chunk_id: Mapped[int] = mapped_column(
+        ForeignKey("chunks.id", ondelete="CASCADE"), nullable=False
+    )
+    similarity_score: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+
+    __table_args__ = (
+        Index("ix_ce_contradiction_id", "contradiction_id"),
+    )
+
+    def __repr__(self) -> str:
+        return f"<ContradictionEvidence contradiction={self.contradiction_id} chunk={self.chunk_id}>"
+
+
 class ChecklistItem(Base):
     __tablename__ = "checklist_items"
 

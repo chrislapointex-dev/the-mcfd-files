@@ -187,3 +187,48 @@ async def analyze_contradiction(
 
     await db.commit()
     return {"contradictions": results}
+
+
+@router.get("/{contradiction_id}/evidence")
+async def get_contradiction_evidence(
+    contradiction_id: int,
+    db: AsyncSession = Depends(get_db),
+):
+    """Return a contradiction with its semantically-linked supporting evidence chunks."""
+    # Fetch the contradiction
+    row = (await db.execute(
+        select(Contradiction).where(Contradiction.id == contradiction_id)
+    )).scalar_one_or_none()
+
+    if row is None:
+        raise HTTPException(status_code=404, detail="Contradiction not found")
+
+    # Fetch linked evidence chunks ordered by similarity score
+    sql = text("""
+        SELECT ce.chunk_id, ce.similarity_score,
+               c.text, c.citation, c.page_estimate, d.source
+        FROM contradiction_evidence ce
+        JOIN chunks c ON c.id = ce.chunk_id
+        JOIN decisions d ON d.id = c.decision_id
+        WHERE ce.contradiction_id = :cid
+        ORDER BY ce.similarity_score DESC
+    """)
+    evidence_rows = (await db.execute(sql, {"cid": contradiction_id})).all()
+
+    return {
+        "contradiction_id": row.id,
+        "claim": row.claim,
+        "evidence": row.evidence,
+        "severity": row.severity,
+        "supporting_evidence": [
+            {
+                "chunk_id": r.chunk_id,
+                "similarity_score": r.similarity_score,
+                "excerpt": (r.text or "")[:300].strip(),
+                "source": r.source,
+                "citation": r.citation,
+                "page_estimate": r.page_estimate,
+            }
+            for r in evidence_rows
+        ],
+    }

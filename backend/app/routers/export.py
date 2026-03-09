@@ -421,7 +421,7 @@ async def export_trial_report(db: AsyncSession = Depends(get_db)):
     )
 
 
-def _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, days_to_trial, today_str) -> bytes:
+def _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, days_to_trial, today_str, evidence_by_contradiction: dict = None) -> bytes:
     W, H = 595, 842        # A4 portrait
     ML, MT, MR, MB = 60, 60, 60, 50
     TW = W - ML - MR       # usable text width = 475pt
@@ -502,6 +502,15 @@ def _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, da
             src += f"  ·  p.{r.page_ref}"
         if src:
             write(f"Source:  {src}", fs=9, gap=3, color=(0.4, 0.4, 0.4))
+        ev_list = (evidence_by_contradiction or {}).get(r.id, [])
+        if ev_list:
+            write("Supporting Evidence:", fs=8, bold=True, gap=2, color=(0.2, 0.2, 0.5))
+            for ev in ev_list:
+                score = f"{ev.similarity_score:.2f}" if ev.similarity_score else "?"
+                src_label = ev.source.upper()
+                page_str = f" p.{ev.page_estimate}" if ev.page_estimate else ""
+                excerpt = (ev.text or "")[:200].strip().replace("\n", " ")
+                write(f"  [{score}] {src_label}{page_str}: \"{excerpt}\"", fs=8, gap=3, color=(0.3, 0.3, 0.3))
         state["y"] += 8
 
     # ── Medical/Genetic (stub) ────────────────────────────────────
@@ -568,7 +577,22 @@ async def export_trial_report_pdf(db: AsyncSession = Depends(get_db)):
             (SELECT COUNT(*) FROM chunks c JOIN decisions d ON d.id=c.decision_id WHERE d.source='personal') as personal_count
     """))).one()
 
-    pdf_bytes = _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, days_to_trial, today_str)
+    evidence_rows = (await db.execute(text("""
+        SELECT ce.contradiction_id, ce.similarity_score,
+               c.text, c.citation, c.page_estimate, d.source
+        FROM contradiction_evidence ce
+        JOIN chunks c ON c.id = ce.chunk_id
+        JOIN decisions d ON d.id = c.decision_id
+        ORDER BY ce.contradiction_id, ce.similarity_score DESC
+    """))).all()
+
+    evidence_by_contradiction: dict = {}
+    for r in evidence_rows:
+        ev_list = evidence_by_contradiction.setdefault(r.contradiction_id, [])
+        if len(ev_list) < 3:
+            ev_list.append(r)
+
+    pdf_bytes = _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, days_to_trial, today_str, evidence_by_contradiction)
 
     return Response(
         content=pdf_bytes,

@@ -701,3 +701,60 @@ First FOI chunk: 'FOI CFD-2025-53478 — Pages 0001-0050'
 ### Files Changed
 - `backend/app/routers/export.py` — added `GET /api/export/trial-summary` endpoint
 - `frontend/src/pages/TrialDashboard.jsx` — added JSON download button
+
+---
+
+## SESSION 32 — MARKDOWN TRIAL REPORT
+
+- [x] Add `Response` to imports in `backend/app/routers/export.py`
+- [x] Append `export_trial_report` endpoint to `backend/app/routers/export.py`
+- [x] Add Markdown download button to `frontend/src/pages/TrialDashboard.jsx`
+- [x] Verify endpoint returns valid Markdown
+- [x] Verify file size > 50KB (actual: 1.9MB)
+- [x] Verify FOI entries past 50 exist (581 total)
+
+### SESSION 32 COMPLETE — 2026-03-08
+
+- Endpoint: `GET /api/export/trial-report.md` — returns `text/markdown`, triggers download
+- File size: 1.9MB (581 FOI chunks + 21 contradictions + 338 personal chunks)
+- FOI entries: 581 (no cap — all included)
+- Contradiction blocks: 21 rendered with Statement A/B/Source
+- Medical/genetic: stub with 0 count — renders correctly
+- Frontend: EXPORT TRIAL REPORT (MARKDOWN) button added between JSON and Print buttons
+
+### Files Changed
+- `backend/app/routers/export.py` — added `Response` to imports + appended `export_trial_report` (~100 lines)
+- `frontend/src/pages/TrialDashboard.jsx` — added Markdown download button (~13 lines)
+
+## SESSION 34 — CONTRADICTION-EVIDENCE LINKING
+
+- [ ] Append SESSION 34 plan to `tasks/todo.md`
+- [ ] Append `ContradictionEvidence` model to `models.py`
+- [ ] Run async migration — verify `contradiction_evidence` table created
+- [ ] Create `backend/app/scripts/__init__.py`
+- [ ] Create `backend/app/scripts/link_contradictions.py`
+- [ ] Run linking script — verify > 0 records inserted
+- [ ] Append `GET /api/contradictions/{id}/evidence` to `contradictions.py`
+- [ ] Test evidence endpoint: `curl .../api/contradictions/1/evidence`
+- [ ] Update `_build_pdf_bytes()` signature + contradiction loop in `export.py`
+- [ ] Add evidence query + dict-build to `export_trial_report_pdf` endpoint
+- [ ] Verify PDF still generates clean and is larger than 1.677MB
+- [ ] Append SESSION 34 COMPLETE results to `tasks/todo.md`
+- [ ] `git add -A && git commit -m "feat: contradiction-evidence linking, semantic match — session 34"`
+
+### SESSION 34 COMPLETE — 2026-03-08
+
+| Test | Result |
+|------|--------|
+| Migration | ✅ `contradiction_evidence` table created |
+| Linking script | ✅ 105 records inserted (21 contradictions × 5 chunks each) |
+| Evidence endpoint | ✅ `/api/contradictions/1/evidence` — 5 chunks, scores 0.60–0.63 |
+| PDF valid | ✅ `%PDF` header confirmed |
+| PDF size | ✅ 1,730,241 bytes (> 1,677,644 previous) |
+
+**Files changed:**
+- `backend/app/models.py` — `ContradictionEvidence` model appended
+- `backend/app/scripts/__init__.py` — NEW (empty package)
+- `backend/app/scripts/link_contradictions.py` — NEW async linking script
+- `backend/app/routers/contradictions.py` — `GET /{id}/evidence` endpoint appended
+- `backend/app/routers/export.py` — evidence query + dict-build + PDF loop updated
