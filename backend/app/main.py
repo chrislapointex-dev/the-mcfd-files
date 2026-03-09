@@ -6,7 +6,7 @@ from contextlib import asynccontextmanager
 
 from .database import init_db
 from . import models  # noqa: F401 — registers Decision + Memory with Base.metadata
-from .routers import decisions, memory, search, ask, patterns, contradictions, timeline, brain, trialprep, witnesses, export, checklist, complaints
+from .routers import decisions, memory, search, ask, patterns, contradictions, timeline, brain, trialprep, witnesses, export, checklist, complaints, vault, crossexam
 from .services import embed_service
 
 
@@ -60,6 +60,8 @@ app.include_router(witnesses.router)
 app.include_router(export.router)
 app.include_router(checklist.router)
 app.include_router(complaints.router)
+app.include_router(vault.router)
+app.include_router(crossexam.router)
 
 
 @app.get("/api/health")

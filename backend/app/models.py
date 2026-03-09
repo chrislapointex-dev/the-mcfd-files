@@ -21,6 +21,7 @@ class Decision(Base):
     url: Mapped[str] = mapped_column(Text, unique=True, nullable=False)
     snippet: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     full_text: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    vault_file: Mapped[Optional[str]] = mapped_column(String(200), nullable=True)
     scraped_at: Mapped[Optional[datetime]] = mapped_column(
         DateTime(timezone=True), nullable=True
     )
@@ -212,3 +213,25 @@ class Complaint(Base):
 
     def __repr__(self) -> str:
         return f"<Complaint {self.id}: {self.body} [{self.status}]>"
+
+
+class CrossExamQuestion(Base):
+    __tablename__ = "crossexam_questions"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    contradiction_id: Mapped[int] = mapped_column(
+        ForeignKey("contradictions.id", ondelete="CASCADE"), nullable=False
+    )
+    questions_text: Mapped[str] = mapped_column(Text, nullable=False)
+    style: Mapped[str] = mapped_column(String(50), nullable=False, default="cross-examination")
+    generated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+    model_used: Mapped[str] = mapped_column(String(100), nullable=False)
+
+    __table_args__ = (
+        Index("ix_crossexam_contradiction_id", "contradiction_id"),
+    )
+
+    def __repr__(self) -> str:
+        return f"<CrossExamQuestion contradiction={self.contradiction_id}>"

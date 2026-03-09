@@ -421,7 +421,7 @@ async def export_trial_report(db: AsyncSession = Depends(get_db)):
     )
 
 
-def _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, days_to_trial, today_str, evidence_by_contradiction: dict = None) -> bytes:
+def _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, days_to_trial, today_str, evidence_by_contradiction: dict = None, crossexam_by_contradiction: dict = None) -> bytes:
     W, H = 595, 842        # A4 portrait
     ML, MT, MR, MB = 60, 60, 60, 50
     TW = W - ML - MR       # usable text width = 475pt
@@ -511,6 +511,10 @@ def _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, da
                 page_str = f" p.{ev.page_estimate}" if ev.page_estimate else ""
                 excerpt = (ev.text or "")[:200].strip().replace("\n", " ")
                 write(f"  [{score}] {src_label}{page_str}: \"{excerpt}\"", fs=8, gap=3, color=(0.3, 0.3, 0.3))
+        cq_text = (crossexam_by_contradiction or {}).get(r.id)
+        if cq_text:
+            write("Cross-Examination Questions:", fs=8, bold=True, gap=2, color=(0.1, 0.4, 0.1))
+            write(cq_text[:800], fs=8, gap=4, color=(0.2, 0.2, 0.2))
         state["y"] += 8
 
     # ── Medical/Genetic (stub) ────────────────────────────────────
@@ -592,7 +596,14 @@ async def export_trial_report_pdf(db: AsyncSession = Depends(get_db)):
         if len(ev_list) < 3:
             ev_list.append(r)
 
-    pdf_bytes = _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, days_to_trial, today_str, evidence_by_contradiction)
+    crossexam_rows = (await db.execute(text("""
+        SELECT contradiction_id, questions_text
+        FROM crossexam_questions
+    """))).all()
+
+    crossexam_by_contradiction: dict = {r.contradiction_id: r.questions_text for r in crossexam_rows}
+
+    pdf_bytes = _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, days_to_trial, today_str, evidence_by_contradiction, crossexam_by_contradiction)
 
     return Response(
         content=pdf_bytes,

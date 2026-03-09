@@ -94,6 +94,7 @@ export default function App() {
         body: JSON.stringify(body),
         signal: controller.signal,
       })
+      if (!res.ok) throw new Error(`Server error: ${res.status}`)
       const reader = res.body.getReader()
       const decoder = new TextDecoder()
       let buf = ''
@@ -317,6 +318,12 @@ export default function App() {
                 CONTRADICTIONS
               </Link>
               <Link
+                to="/crossexam"
+                className="text-[10px] font-mono text-sky-500/70 border border-sky-500/30 px-2 py-1 rounded tracking-widest hover:text-sky-400 hover:border-sky-400/50 transition-colors hidden sm:block"
+              >
+                CROSS-EXAM
+              </Link>
+              <Link
                 to="/timeline"
                 className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block"
               >
@@ -382,6 +389,13 @@ export default function App() {
                       className="text-[10px] font-mono text-slate-500 px-3 py-2.5 hover:bg-ink-700 hover:text-slate-300 transition-colors tracking-widest"
                     >
                       CONTRADICTIONS
+                    </Link>
+                    <Link
+                      to="/crossexam"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-[10px] font-mono text-sky-500/70 px-3 py-2.5 hover:bg-ink-700 hover:text-sky-400 transition-colors tracking-widest"
+                    >
+                      CROSS-EXAM
                     </Link>
                     <Link
                       to="/timeline"
