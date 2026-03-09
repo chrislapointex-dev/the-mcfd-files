@@ -134,6 +134,28 @@ class Contradiction(Base):
         return f"<Contradiction {self.id}: {self.severity}>"
 
 
+class TimelineEvent(Base):
+    __tablename__ = "timeline_events"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    event_date: Mapped[str] = mapped_column(String(20), nullable=False)
+    title: Mapped[str] = mapped_column(String(300), nullable=False)
+    description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    category: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
+    severity: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
+    source_ref: Mapped[Optional[str]] = mapped_column(String(300), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+
+    __table_args__ = (
+        Index("ix_timeline_events_date", "event_date"),
+    )
+
+    def __repr__(self) -> str:
+        return f"<TimelineEvent {self.event_date}: {self.title}>"
+
+
 class ContradictionEvidence(Base):
     __tablename__ = "contradiction_evidence"
 

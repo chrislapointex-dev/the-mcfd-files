@@ -323,6 +323,12 @@ export default function App() {
                 TIMELINE
               </Link>
               <Link
+                to="/events"
+                className="text-[10px] font-mono text-red-400 border border-red-500/40 px-2 py-1 rounded tracking-widest hover:text-red-300 hover:border-red-400/60 transition-colors hidden sm:block"
+              >
+                EVENTS
+              </Link>
+              <Link
                 to="/about"
                 className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block"
               >
@@ -383,6 +389,13 @@ export default function App() {
                       className="text-[10px] font-mono text-slate-500 px-3 py-2.5 hover:bg-ink-700 hover:text-slate-300 transition-colors tracking-widest"
                     >
                       TIMELINE
+                    </Link>
+                    <Link
+                      to="/events"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-[10px] font-mono text-red-400 px-3 py-2.5 hover:bg-ink-700 hover:text-red-300 transition-colors tracking-widest"
+                    >
+                      EVENTS
                     </Link>
                     <Link
                       to="/about"

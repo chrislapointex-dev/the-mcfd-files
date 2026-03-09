@@ -11,6 +11,7 @@ import TrialDashboard from './pages/TrialDashboard.jsx'
 import WitnessProfiles from './pages/WitnessProfiles.jsx'
 import HearingChecklist from './pages/HearingChecklist.jsx'
 import ComplaintsTracker from './pages/ComplaintsTracker.jsx'
+import EventTimeline from './pages/EventTimeline.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 
 createRoot(document.getElementById('root')).render(
@@ -28,6 +29,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/witnesses" element={<WitnessProfiles />} />
           <Route path="/checklist" element={<HearingChecklist />} />
           <Route path="/complaints" element={<ComplaintsTracker />} />
+          <Route path="/events" element={<EventTimeline />} />
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>

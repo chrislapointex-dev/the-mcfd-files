@@ -107,3 +107,25 @@ async def get_timeline(db: AsyncSession = Depends(get_db)):
     ]
 
     return {"timeline": timeline, "total_events": total}
+
+
+@router.get("/timeline/events")
+async def get_timeline_events(db: AsyncSession = Depends(get_db)):
+    """Return all seeded curated timeline events ordered by date ascending."""
+    from ..models import TimelineEvent
+    from sqlalchemy import select
+    rows = (await db.execute(
+        select(TimelineEvent).order_by(TimelineEvent.event_date.asc())
+    )).scalars().all()
+    return [
+        {
+            "id": r.id,
+            "event_date": r.event_date,
+            "title": r.title,
+            "description": r.description,
+            "category": r.category,
+            "severity": r.severity,
+            "source_ref": r.source_ref,
+        }
+        for r in rows
+    ]

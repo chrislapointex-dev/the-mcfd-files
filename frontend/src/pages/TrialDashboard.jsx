@@ -63,6 +63,7 @@ export default function TrialDashboard() {
             <Link to="/witnesses" className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block">WITNESSES</Link>
             <Link to="/contradictions" className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block">CONTRADICTIONS</Link>
             <Link to="/timeline" className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block">TIMELINE</Link>
+            <Link to="/events" className="text-[10px] font-mono text-red-400 border border-red-500/40 px-2 py-1 rounded tracking-widest hover:text-red-300 hover:border-red-400/60 transition-colors hidden sm:block">EVENTS</Link>
             <Link to="/patterns" className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block">PATTERNS</Link>
             <Link to="/checklist" className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block">
               CHECKLIST{checklistPending !== null && checklistPending > 0 ? ` (${checklistPending})` : ''}

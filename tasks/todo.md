@@ -758,3 +758,66 @@ First FOI chunk: 'FOI CFD-2025-53478 — Pages 0001-0050'
 - `backend/app/scripts/link_contradictions.py` — NEW async linking script
 - `backend/app/routers/contradictions.py` — `GET /{id}/evidence` endpoint appended
 - `backend/app/routers/export.py` — evidence query + dict-build + PDF loop updated
+
+## SESSION 35 — EVENT TIMELINE
+
+### Findings from read-first
+- `backend/app/routers/timeline.py` EXISTS — scans document chunks for dates, returns `{timeline, total_events}`. Used by `CaseTimeline.jsx` at route `/timeline`. NOT replaced.
+- `frontend/src/pages/CaseTimeline.jsx` EXISTS — displays document-extracted events. NOT replaced.
+- No `TimelineEvent` DB model exists — new table needed.
+- New endpoint: `GET /api/timeline/events` appended to existing `timeline.py` (prefix `/api`, full path `/api/timeline/events`).
+- New page: `EventTimeline.jsx` at route `/events` — does not conflict with existing `/timeline`.
+- Model style: SQLAlchemy 2.0 `Mapped`/`mapped_column` — match existing models.py pattern.
+- Migration: async (asyncpg) — match session 34 pattern.
+
+### Checklist
+- [ ] Append `TimelineEvent` model to `backend/app/models.py`
+- [ ] Run async migration — verify `timeline_events` table created
+- [ ] Create `backend/app/scripts/seed_timeline.py` (9 hardcoded events)
+- [ ] Run seed script — verify 9 events in DB
+- [ ] Append `GET /api/timeline/events` endpoint to `backend/app/routers/timeline.py`
+- [ ] Test endpoint: `curl /api/timeline/events` → 9 events in date order
+- [ ] Create `frontend/src/pages/EventTimeline.jsx` — visual vertical timeline
+- [ ] Add `/events` route to `frontend/src/main.jsx`
+- [ ] Add "EVENTS" nav link to `frontend/src/pages/TrialDashboard.jsx`
+- [ ] Add "EVENTS" nav link to `frontend/src/App.jsx` (desktop + mobile)
+- [ ] Verify frontend loads and timeline renders with colors/severity
+- [ ] Append SESSION 35 COMPLETE results to `tasks/todo.md`
+- [ ] `git commit -m "feat: event timeline — seeded, API, visual component — session 35"`
+
+### Files to touch
+| File | Change |
+|------|--------|
+| `backend/app/models.py` | Append `TimelineEvent` model |
+| `backend/app/scripts/seed_timeline.py` | NEW — 9 seeded events |
+| `backend/app/routers/timeline.py` | Append `/api/timeline/events` endpoint |
+| `frontend/src/pages/EventTimeline.jsx` | NEW — visual timeline component |
+| `frontend/src/main.jsx` | Add `/events` route |
+| `frontend/src/pages/TrialDashboard.jsx` | Add EVENTS nav link |
+| `frontend/src/App.jsx` | Add EVENTS nav link (desktop + mobile) |
+
+### SESSION 35 COMPLETE — 2026-03-08
+
+| Test | Result |
+|------|--------|
+| Migration | ✅ `timeline_events` table created |
+| Seed script | ✅ 9 events seeded |
+| `/api/timeline/events` endpoint | ✅ 9 events returned in date order |
+| EventTimeline.jsx | ✅ Created, route `/events` responds 200 |
+| Nav links | ✅ Added to TrialDashboard + App.jsx (desktop + mobile) |
+| Existing timeline untouched | ✅ `/api/timeline` and `CaseTimeline.jsx` unchanged |
+
+**Findings:**
+- Existing `timeline.py` scans document chunks for dates — kept intact
+- New endpoint `/api/timeline/events` appended to same router (no new file needed)
+- New page `EventTimeline.jsx` at `/events` — does not replace `CaseTimeline.jsx`
+- EVENTS nav link styled red (critical) to distinguish from document TIMELINE
+
+**Files changed:**
+- `backend/app/models.py` — `TimelineEvent` model appended
+- `backend/app/scripts/seed_timeline.py` — NEW (9 events, idempotent)
+- `backend/app/routers/timeline.py` — `GET /api/timeline/events` appended
+- `frontend/src/pages/EventTimeline.jsx` — NEW visual timeline component
+- `frontend/src/main.jsx` — `/events` route added
+- `frontend/src/pages/TrialDashboard.jsx` — EVENTS nav link added
+- `frontend/src/App.jsx` — EVENTS nav link added (desktop + mobile)
