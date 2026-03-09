@@ -7,6 +7,7 @@ const CATEGORY_LABELS = {
   legal: 'LEGAL',
   court: 'COURT',
   administration: 'ADMINISTRATION',
+  enforcement: 'ENFORCEMENT',
 }
 
 const CATEGORY_COLORS = {
@@ -15,10 +16,22 @@ const CATEGORY_COLORS = {
   legal: 'text-red-400 border-red-500/30',
   court: 'text-red-500 border-red-600/40',
   administration: 'text-slate-400 border-slate-600/40',
+  enforcement: 'text-orange-400 border-orange-500/30',
+}
+
+function fmt(n) {
+  return n.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
+
+function fmtB(n) {
+  if (n >= 1e9) return `$${(n / 1e9).toFixed(1)}B`
+  if (n >= 1e6) return `$${(n / 1e6).toFixed(0)}M`
+  return `$${fmt(n)}`
 }
 
 export default function CostCalculator() {
   const [data, setData] = useState(null)
+  const [scale, setScale] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -28,6 +41,13 @@ export default function CostCalculator() {
       .then(setData)
       .catch(() => setError('Failed to load cost data'))
       .finally(() => setLoading(false))
+  }, [])
+
+  useEffect(() => {
+    fetch('/api/costs/scale')
+      .then(r => r.json())
+      .then(setScale)
+      .catch(() => {/* scale section just won't render */})
   }, [])
 
   const handleExport = () => {
@@ -96,7 +116,7 @@ export default function CostCalculator() {
                 Estimated Public Cost — {data.days_in_care} Days in Care
               </p>
               <p className="font-mono text-5xl font-bold text-red-400 tracking-tight">
-                ${data.grand_total.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                ${fmt(data.grand_total)}
               </p>
               <p className="font-mono text-[10px] text-slate-600 tracking-widest mt-2">
                 {data.case_ref}
@@ -112,7 +132,7 @@ export default function CostCalculator() {
                     {CATEGORY_LABELS[cat] || cat.toUpperCase()}
                   </span>
                   <span className="font-mono text-xs text-slate-400">
-                    Subtotal: <span className="text-white font-bold">${catData.subtotal.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    Subtotal: <span className="text-white font-bold">${fmt(catData.subtotal)}</span>
                   </span>
                 </div>
 
@@ -141,7 +161,20 @@ export default function CostCalculator() {
                               </span>
                             )}
                           </p>
-                          <p className="font-mono text-[10px] text-slate-600 mt-0.5">{item.source}</p>
+                          <p className="font-mono text-[10px] text-slate-600 mt-0.5">
+                            {item.source_url ? (
+                              <a
+                                href={item.source_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-500/70 hover:text-blue-400 underline underline-offset-2"
+                              >
+                                {item.source}
+                              </a>
+                            ) : (
+                              item.source
+                            )}
+                          </p>
                         </div>
 
                         {/* Per unit */}
@@ -162,7 +195,7 @@ export default function CostCalculator() {
                         <div className="text-right flex-shrink-0 w-24">
                           <p className="font-mono text-[10px] text-slate-600 uppercase tracking-widest">Total</p>
                           <p className={`font-mono text-sm font-bold ${isBreach ? 'text-red-400' : 'text-white'}`}>
-                            {item.total === 0 ? 'ON RECORD' : `$${item.total.toLocaleString('en-CA', { minimumFractionDigits: 2 })}`}
+                            {item.total === 0 ? 'ON RECORD' : `$${fmt(item.total)}`}
                           </p>
                         </div>
                       </div>
@@ -176,9 +209,71 @@ export default function CostCalculator() {
             <div className="border border-red-500/40 bg-red-900/5 rounded px-4 py-4 flex items-center justify-between mt-6">
               <span className="font-mono text-xs text-slate-400 tracking-widest uppercase">Grand Total — {data.days_in_care} days in care</span>
               <span className="font-mono text-2xl font-bold text-red-400">
-                ${data.grand_total.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                ${fmt(data.grand_total)}
               </span>
             </div>
+
+            {/* Section A — Missing cost categories */}
+            <div className="mt-8 border border-amber-500/30 bg-amber-900/5 rounded-lg p-5">
+              <p className="font-mono text-[10px] text-amber-400 tracking-widest uppercase mb-2">
+                Missing Cost Categories — Not Yet Quantified
+              </p>
+              <p className="font-mono text-xs text-slate-400 leading-relaxed">
+                The following costs are documented but not yet quantifiable from public data:
+                psychological assessments ordered by MCFD, private investigator activity,
+                child's therapy costs, VAC benefit misclassification impact, CRA dispute costs.
+                These represent additional undisclosed public expenditure not reflected in the totals above.
+              </p>
+            </div>
+
+            {/* Section B — BC Scale Projection */}
+            {scale && (
+              <div className="mt-6 border border-red-500/30 bg-red-900/5 rounded-lg p-5">
+                <p className="font-mono text-[10px] text-red-400 tracking-widest uppercase mb-4">
+                  BC Scale Projection — Public Accountability
+                </p>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between border-b border-ink-700 pb-3">
+                    <span className="font-mono text-xs text-slate-400">This case (documented)</span>
+                    <span className="font-mono text-sm font-bold text-white">${fmt(scale.this_case.total)}</span>
+                  </div>
+                  <div className="flex items-center justify-between border-b border-ink-700 pb-3">
+                    <span className="font-mono text-xs text-slate-400">Estimated true cost (this case)</span>
+                    <span className="font-mono text-sm font-bold text-amber-400">
+                      ${fmt(scale.estimated_true_total.low)} – ${fmt(scale.estimated_true_total.high)}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between border-b border-ink-700 pb-3">
+                    <div>
+                      <span className="font-mono text-xs text-slate-400">BC provincial projection (5,000 children)</span>
+                      <span className="block font-mono text-[10px] text-slate-600 mt-0.5">
+                        Source:{' '}
+                        <a
+                          href={scale.bc_scale.source_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500/70 hover:text-blue-400 underline underline-offset-2"
+                        >
+                          {scale.bc_scale.source}
+                        </a>
+                      </span>
+                    </div>
+                    <span className="font-mono text-sm font-bold text-red-400">
+                      {fmtB(scale.bc_scale.projected_annual_low)} – {fmtB(scale.bc_scale.projected_annual_high)}/yr
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs text-slate-400">Kamloops / Thompson Nicola region</span>
+                    <span className="font-mono text-sm font-bold text-orange-400">
+                      {fmtB(scale.kamloops_region.projected_annual_low)} – {fmtB(scale.kamloops_region.projected_annual_high)}/yr
+                    </span>
+                  </div>
+                </div>
+                <p className="font-mono text-[10px] text-slate-600 italic mt-4 leading-relaxed">
+                  {scale.disclaimer}
+                </p>
+              </div>
+            )}
 
             {/* Disclaimer */}
             <p className="font-mono text-[10px] text-slate-600 italic mt-6 text-center leading-relaxed">

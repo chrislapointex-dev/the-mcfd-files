@@ -19,10 +19,11 @@ import fitz  # PyMuPDF
 
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse, Response, StreamingResponse
-from sqlalchemy import text
+from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_db
+from ..models import CostEntry
 
 router = APIRouter(prefix="/api/export", tags=["export"])
 
@@ -421,7 +422,7 @@ async def export_trial_report(db: AsyncSession = Depends(get_db)):
     )
 
 
-def _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, days_to_trial, today_str, evidence_by_contradiction: dict = None, crossexam_by_contradiction: dict = None) -> bytes:
+def _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, days_to_trial, today_str, evidence_by_contradiction: dict = None, crossexam_by_contradiction: dict = None, cost_rows=None, cost_total: float = 0.0) -> bytes:
     W, H = 595, 842        # A4 portrait
     ML, MT, MR, MB = 60, 60, 60, 50
     TW = W - ML - MR       # usable text width = 475pt
@@ -545,6 +546,50 @@ def _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, da
         write(f"Source: {src}", fs=8, gap=2, color=(0.3, 0.3, 0.3))
         write((r.text or "")[:300].strip(), fs=9, gap=8)
 
+    # ── Taxpayer Cost Summary ─────────────────────────────────────
+    if cost_rows:
+        _new_page()
+        write("TAXPAYER COST SUMMARY", fs=14, bold=True, gap=10)
+        rule()
+        write(f"Grand Total (Documented): ${cost_total:,.2f}", fs=12, bold=True, gap=6, color=(0.8, 0.1, 0.1))
+        write("Case: PC 19700 — LaPointe, Christopher  |  214 days in care", fs=9, gap=8, color=(0.4, 0.4, 0.4))
+
+        # Category subtotals
+        from collections import defaultdict
+        by_cat: dict = defaultdict(float)
+        for r in cost_rows:
+            by_cat[r.category] += (r.total or 0.0)
+        write("CATEGORY SUBTOTALS", fs=10, bold=True, gap=4)
+        for cat, subtotal in sorted(by_cat.items()):
+            write(f"  {cat.upper()}: ${subtotal:,.2f}", fs=9, gap=3)
+        state["y"] += 6
+
+        # Line items
+        rule()
+        write("LINE ITEMS", fs=10, bold=True, gap=4)
+        prev_cat = None
+        for r in cost_rows:
+            if r.category != prev_cat:
+                write(f"[ {(r.category or '').upper()} ]", fs=8, bold=True, gap=2, color=(0.3, 0.3, 0.5))
+                prev_cat = r.category
+            total_str = "ON RECORD" if r.total == 0 else f"${r.total:,.2f}"
+            write(f"  {r.line_item}", fs=8, gap=1)
+            write(f"    {total_str}  |  {r.source or ''}", fs=7, gap=4, color=(0.4, 0.4, 0.4))
+
+        # Scale projection
+        rule()
+        write("BC-WIDE SCALE PROJECTION", fs=10, bold=True, gap=4)
+        write(f"  Estimated true cost (this case): $285,000 – $420,000", fs=9, gap=3)
+        write(f"  BC provincial projection (5,000 children): $1.4B – $2.1B / year", fs=9, gap=3)
+        write(f"  Kamloops / Thompson Nicola region: $85M – $210M / year", fs=9, gap=3)
+        write(
+            "Source: BC MCFD Annual Service Plan 2024-25. "
+            "Projections based on documented per-family cost estimates. "
+            "All figures based on publicly available BC government rates and published estimates. "
+            "Actual costs may be significantly higher.",
+            fs=7, gap=6, color=(0.5, 0.5, 0.5),
+        )
+
     return doc.tobytes()
 
 
@@ -603,7 +648,12 @@ async def export_trial_report_pdf(db: AsyncSession = Depends(get_db)):
 
     crossexam_by_contradiction: dict = {r.contradiction_id: r.questions_text for r in crossexam_rows}
 
-    pdf_bytes = _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, days_to_trial, today_str, evidence_by_contradiction, crossexam_by_contradiction)
+    cost_rows = (await db.execute(
+        select(CostEntry).order_by(CostEntry.category, CostEntry.id)
+    )).scalars().all()
+    cost_total = sum(r.total or 0.0 for r in cost_rows)
+
+    pdf_bytes = _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, days_to_trial, today_str, evidence_by_contradiction, crossexam_by_contradiction, cost_rows, cost_total)
 
     return Response(
         content=pdf_bytes,

@@ -249,6 +249,7 @@ class CostEntry(Base):
     source: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
     date_range_start: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
     date_range_end: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
+    source_url: Mapped[Optional[str]] = mapped_column(String(1000), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
