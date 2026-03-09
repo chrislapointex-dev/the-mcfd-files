@@ -593,6 +593,111 @@ def _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, da
     return doc.tobytes()
 
 
+@router.get("/media-package")
+async def export_media_package(db: AsyncSession = Depends(get_db)):
+    """Return structured JSON media package for journalists and advocates."""
+    contradiction_rows = (await db.execute(text("""
+        SELECT id, claim, evidence, source_doc, severity, created_at
+        FROM contradictions
+        ORDER BY
+            CASE severity WHEN 'DIRECT' THEN 0 WHEN 'PARTIAL' THEN 1 ELSE 2 END,
+            created_at DESC
+        LIMIT 5
+    """))).all()
+
+    cost_rows = (await db.execute(
+        select(CostEntry).order_by(CostEntry.category, CostEntry.id)
+    )).scalars().all()
+
+    cost_total_row = (await db.execute(text("SELECT SUM(total) FROM cost_entries"))).one()
+    cost_total = float(cost_total_row[0] or 0.0)
+
+    timeline_rows = (await db.execute(text("""
+        SELECT id, title, event_date, severity, description
+        FROM timeline_events
+        ORDER BY
+            CASE severity WHEN 'critical' THEN 0 WHEN 'high' THEN 1 WHEN 'medium' THEN 2 ELSE 3 END,
+            event_date DESC
+        LIMIT 8
+    """))).all()
+
+    by_category: dict = {}
+    for r in cost_rows:
+        by_category.setdefault(r.category, 0.0)
+        by_category[r.category] += float(r.total or 0.0)
+
+    return JSONResponse({
+        "title": "THE MCFD FILES — Public Accountability Media Package",
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "case_ref": "PC 19700 · PC 19709 · SC 64242 · SC 064851",
+        "trial_date": TRIAL_DATE,
+        "oipc_complaint": "Filed — FOI disclosure gap: 906 pages received vs. 1,792 pages disclosed to OIPC",
+        "summary": {
+            "documented_cost": cost_total,
+            "documented_cost_formatted": f"${cost_total:,.2f}",
+            "days_in_care": 214,
+            "contradiction_count": len(contradiction_rows),
+            "foi_page_gap": {"received": 906, "disclosed_to_oipc": 1792},
+        },
+        "key_personnel": [
+            {"name": "Nicki Wolfenden", "role": "Social Worker", "file": "PC 19700"},
+            {"name": "Tammy Newton", "role": "Team Leader", "file": "PC 19700"},
+            {"name": "Jordon Muileboom", "role": "Acting Team Leader", "file": "PC 19700"},
+            {"name": "Robyn Burnstein", "role": "Centralized Screening TL", "file": "PC 19700"},
+        ],
+        "top_contradictions": [
+            {
+                "id": r.id,
+                "claim": r.claim,
+                "evidence": r.evidence,
+                "source_doc": r.source_doc,
+                "severity": r.severity,
+                "created_at": r.created_at.isoformat() if r.created_at else None,
+            }
+            for r in contradiction_rows
+        ],
+        "cost_by_category": by_category,
+        "scale_projection": {
+            "bc_children": 5000,
+            "bc_low": 1_425_000_000,
+            "bc_high": 2_100_000_000,
+            "bc_low_formatted": "$1.4B",
+            "bc_high_formatted": "$2.1B",
+            "kamloops_low": 85_000_000,
+            "kamloops_high": 210_000_000,
+            "source": "BC MCFD Annual Service Plan 2024-25",
+        },
+        "timeline_highlights": [
+            {
+                "id": r.id,
+                "title": r.title,
+                "event_date": str(r.event_date) if r.event_date else None,
+                "severity": r.severity,
+                "description": r.description,
+            }
+            for r in timeline_rows
+        ],
+        "foi_disclosure_gap": {
+            "pages_received": 906,
+            "pages_disclosed_to_oipc": 1792,
+            "shortfall": 886,
+            "oipc_complaint_filed": True,
+        },
+        "legal_basis": [
+            "Freedom of Information and Protection of Privacy Act (FOIPPA) RSBC 1996 c.165",
+            "Canadian Charter of Rights and Freedoms s.7 (life, liberty, security)",
+            "Canadian Charter of Rights and Freedoms s.8 (unreasonable search and seizure)",
+            "Canadian Charter of Rights and Freedoms s.15 (equality rights)",
+            "Child, Family and Community Service Act (CFCSA) RSBC 1996 c.46",
+        ],
+        "disclaimer": (
+            "All figures are based on publicly available BC government rates and published estimates. "
+            "FOI documents are official government records. Contradictions identified by AI-assisted review "
+            "of sworn statements and disclosed records. All claims verifiable against source documents."
+        ),
+    })
+
+
 @router.get("/trial-report.pdf")
 async def export_trial_report_pdf(db: AsyncSession = Depends(get_db)):
     """Return court-submittable PDF trial evidence report."""

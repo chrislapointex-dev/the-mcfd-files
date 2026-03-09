@@ -90,6 +90,13 @@ export default function CostCalculator() {
             >
               EXPORT JSON
             </button>
+            <a
+              href="/api/export/media-package"
+              download="mcfd-media-package.json"
+              className="text-[10px] font-mono text-slate-400 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-200 hover:border-slate-500 transition-colors"
+            >
+              MEDIA PACKAGE
+            </a>
           </div>
         </div>
       </header>

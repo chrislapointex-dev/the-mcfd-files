@@ -16,6 +16,7 @@ import CrossExamPanel from './pages/CrossExamPanel.jsx'
 import PrintView from './pages/PrintView.jsx'
 import CostCalculator from './pages/CostCalculator.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
+import PublicShare from './pages/PublicShare.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -36,6 +37,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/crossexam" element={<CrossExamPanel />} />
           <Route path="/print" element={<PrintView />} />
           <Route path="/costs" element={<CostCalculator />} />
+          <Route path="/share" element={<PublicShare />} />
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>
