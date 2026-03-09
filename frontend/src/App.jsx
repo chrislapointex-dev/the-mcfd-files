@@ -347,6 +347,12 @@ export default function App() {
               >
                 PRINT
               </Link>
+              <Link
+                to="/costs"
+                className="text-[10px] font-mono text-red-400 border border-red-500/40 px-2 py-1 rounded tracking-widest hover:text-red-300 hover:border-red-400/60 transition-colors hidden sm:block"
+              >
+                COST TRACKER
+              </Link>
               <span className="text-[10px] font-mono text-amber-500/60 border border-amber-500/25 px-2 py-1 rounded tracking-widest hidden sm:block">
                 UNREDACTED
               </span>
@@ -430,6 +436,13 @@ export default function App() {
                       className="text-[10px] font-mono text-amber-400 px-3 py-2.5 hover:bg-ink-700 hover:text-amber-300 transition-colors tracking-widest"
                     >
                       PRINT
+                    </Link>
+                    <Link
+                      to="/costs"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-[10px] font-mono text-red-400 px-3 py-2.5 hover:bg-ink-700 hover:text-red-300 transition-colors tracking-widest"
+                    >
+                      COST TRACKER
                     </Link>
                     <span className="text-[10px] font-mono text-amber-500/60 px-3 py-2.5 tracking-widest border-t border-ink-600">
                       UNREDACTED

@@ -235,3 +235,23 @@ class CrossExamQuestion(Base):
 
     def __repr__(self) -> str:
         return f"<CrossExamQuestion contradiction={self.contradiction_id}>"
+
+
+class CostEntry(Base):
+    __tablename__ = "cost_entries"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    category: Mapped[Optional[str]] = mapped_column(String(200), nullable=True)
+    line_item: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
+    amount_per_unit: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    units: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    total: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    source: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
+    date_range_start: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
+    date_range_end: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+
+    def __repr__(self) -> str:
+        return f"<CostEntry {self.id}: {self.category} — {self.line_item}>"

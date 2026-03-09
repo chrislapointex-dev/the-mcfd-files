@@ -14,6 +14,7 @@ import ComplaintsTracker from './pages/ComplaintsTracker.jsx'
 import EventTimeline from './pages/EventTimeline.jsx'
 import CrossExamPanel from './pages/CrossExamPanel.jsx'
 import PrintView from './pages/PrintView.jsx'
+import CostCalculator from './pages/CostCalculator.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 
 createRoot(document.getElementById('root')).render(
@@ -34,6 +35,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/events" element={<EventTimeline />} />
           <Route path="/crossexam" element={<CrossExamPanel />} />
           <Route path="/print" element={<PrintView />} />
+          <Route path="/costs" element={<CostCalculator />} />
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>

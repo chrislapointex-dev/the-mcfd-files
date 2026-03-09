@@ -947,3 +947,53 @@ First FOI chunk: 'FOI CFD-2025-53478 — Pages 0001-0050'
 3. `frontend/src/pages/PrintView.jsx` — NEW file (181 lines). White-background print view at `/print`. Fetches trial-summary + timeline events + all crossexam questions in parallel. Sections: header, stats table, contradictions (with severity, statements A/B, FOI evidence excerpts, cross-exam questions), timeline table, footer. Print CSS via inline `<style>` tag.
 4. `frontend/src/main.jsx` — Added `PrintView` import + `/print` route.
 5. `frontend/src/App.jsx` — Added PRINT nav link in desktop header (amber color) + mobile dropdown.
+
+---
+
+## SESSION 40 — TAXPAYER COST CALCULATOR + FOI GAP + BRAIN SYNC (2026-03-09)
+
+- [x] Add CostEntry model to `backend/app/models.py` (Mapped/mapped_column pattern)
+- [x] Create `backend/app/scripts/seed_costs.py` (9 entries, $143,146.32 grand total)
+- [x] Restart backend → cost_entries table auto-created via create_all
+- [x] Run seed_costs → verified 9 entries, grand total $143,146.32
+- [x] Create `backend/app/routers/costs.py` (GET /api/costs — grouped by category)
+- [x] Wire costs router into `backend/app/main.py`
+- [x] Verify GET /api/costs → grand total $143,146.32, 5 categories, disclaimer present
+- [x] Create `frontend/src/pages/CostCalculator.jsx` (/costs route)
+- [x] Add /costs route to `frontend/src/main.jsx`
+- [x] Add COST TRACKER nav link (red) to `frontend/src/App.jsx` desktop + mobile
+- [x] Insert FOI Gap as contradiction id=77 (22nd total) via docker exec
+  - claim: MCFD represented 1,792 pages to OIPC
+  - evidence: 906 pages received, 3 conflicting counts, missing Wolfenden email
+  - severity: DIRECT | source: CFD-2025-53478 | OIPC INV-F-26-00220
+- [x] Verify total contradictions = 22
+- [x] Re-run link_contradictions → 110 evidence records (22 × 5 chunks each)
+- [x] Generate cross-exam questions for contradiction id=77 (1,868 chars, 7 questions)
+- [x] Append sessions 36-39 + 40 to brain cortex/session-log.txt
+- [x] Update MASTER-INDEX.md (session-log.txt line updated to 2026-03-09)
+- [x] Git commit + push
+
+---
+
+## SESSION 40 REVIEW
+
+### Changes Made
+1. **CostEntry model** — appended to models.py using Mapped/mapped_column pattern (matches existing models). Fixed NameError on first attempt (Column not imported; used mapped_column instead).
+2. **seed_costs.py** — 9 entries covering supervision, placement, legal, court, administration. All with BC government source citations. Grand total $143,146.32 over 214 days.
+3. **costs.py router** — GET /api/costs returns entries, by_category dict with subtotals, grand_total, days_in_care=214, case_ref, generated_at, disclaimer.
+4. **main.py** — costs router wired in alongside existing 15 routers.
+5. **CostCalculator.jsx** — /costs page with red grand total counter ($143,146.32), tables grouped by category with color-coded badges, FOIPPA breach entry highlighted, export JSON button, disclaimer.
+6. **main.jsx + App.jsx** — /costs route + COST TRACKER nav link (red, matches EVENTS styling) added desktop + mobile.
+7. **FOI Gap contradiction id=77** — inserted directly via docker exec using correct model fields (claim/evidence/source_doc/severity, not statement_a/b as in plan draft). Linked to 5 supporting chunks. Cross-exam questions generated (7 questions + follow-up).
+8. **Brain sync** — session-log.txt appended with sessions 36-39 + 40 blocks. MASTER-INDEX.md updated.
+
+### Key Note
+The Contradiction model uses `claim`/`evidence`/`source_doc`/`severity` fields — the plan's docker exec command used `statement_a`/`statement_b` which don't exist. Adapted to correct fields.
+
+The FOI Gap contradiction auto-assigned id=77 (not 22) due to prior deletions/re-inserts from earlier sessions. Total count is still 22 contradictions in the DB.
+
+### Verification Results
+- GET /api/costs → grand_total=$143,146.32, 5 categories, 9 entries, disclaimer present ✓
+- Total contradictions: 22 ✓
+- link_contradictions: 110 records (22 × 5) ✓  
+- Cross-exam for id=77: 1,868 chars, severity=DIRECT ✓
