@@ -213,6 +213,21 @@ export default function TrialDashboard() {
                   EXPORT TRIAL PACKAGE
                 </button>
                 <button
+                  onClick={async () => {
+                    const data = await fetch('/api/export/trial-summary').then(r => r.json());
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `trial_summary_${new Date().toISOString().slice(0,10)}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                  }}
+                  className="w-full font-mono text-xs tracking-widest px-4 py-3 rounded border border-amber-500/40 text-amber-400 bg-amber-900/10 hover:bg-amber-900/20 hover:border-amber-500/60 transition-colors mt-2"
+                >
+                  EXPORT TRIAL SUMMARY (JSON)
+                </button>
+                <button
                   onClick={() => window.print()}
                   className="w-full font-mono text-xs tracking-widest px-4 py-3 rounded border border-slate-600 text-slate-400 bg-ink-900/20 hover:bg-ink-700 hover:border-slate-500 transition-colors mt-2 print:hidden"
                 >

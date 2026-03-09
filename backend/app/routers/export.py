@@ -13,10 +13,10 @@ import io
 import json
 import re
 import zipfile
-from datetime import date as date_type, datetime
+from datetime import date, date as date_type, datetime, timezone
 
 from fastapi import APIRouter, Depends
-from fastapi.responses import StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -230,3 +230,64 @@ async def export_trial_package(db: AsyncSession = Depends(get_db)):
         media_type="application/octet-stream",
         headers={"Content-Disposition": f'attachment; filename="{filename}"'},
     )
+
+
+@router.get("/trial-summary")
+async def export_trial_summary(db: AsyncSession = Depends(get_db)):
+    """Return structured JSON with trial-ready evidence for frontend download."""
+    TRIAL_DATE_OBJ = date(2026, 5, 19)
+    days_to_trial = (TRIAL_DATE_OBJ - date.today()).days
+
+    foi_sql = text("""
+        SELECT c.id, c.text, c.citation, c.page_estimate, d.title
+        FROM chunks c JOIN decisions d ON d.id = c.decision_id
+        WHERE d.source = 'foi'
+        ORDER BY c.page_estimate NULLS LAST, c.id
+    """)
+    contradictions_sql = text("""
+        SELECT id, claim, evidence, source_doc, severity
+        FROM contradictions ORDER BY id
+    """)
+    personal_sql = text("""
+        SELECT c.id, c.text, c.citation, d.title
+        FROM chunks c JOIN decisions d ON d.id = c.decision_id
+        WHERE d.source = 'personal'
+        ORDER BY c.id
+    """)
+    counts_sql = text("""
+        SELECT
+            (SELECT COUNT(*) FROM decisions) as total_decisions,
+            (SELECT COUNT(*) FROM chunks c JOIN decisions d ON d.id=c.decision_id WHERE d.source='foi') as foi_count,
+            (SELECT COUNT(*) FROM contradictions) as contradiction_count,
+            (SELECT COUNT(*) FROM chunks c JOIN decisions d ON d.id=c.decision_id WHERE d.source='personal') as personal_count
+    """)
+
+    foi_rows = (await db.execute(foi_sql)).all()
+    contradiction_rows = (await db.execute(contradictions_sql)).all()
+    personal_rows = (await db.execute(personal_sql)).all()
+    counts_row = (await db.execute(counts_sql)).one()
+
+    return JSONResponse({
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "days_to_trial": days_to_trial,
+        "trial_date": TRIAL_DATE_OBJ.isoformat(),
+        "case_files": ["PC 19700", "PC 19709", "SC 64242", "SC 064851"],
+        "foi_chunks": [
+            {"chunk_id": r.id, "text": r.text, "citation": r.citation, "title": r.title, "page_estimate": r.page_estimate}
+            for r in foi_rows
+        ],
+        "contradictions": [
+            {"id": r.id, "claim": r.claim, "evidence": r.evidence, "source_doc": r.source_doc, "severity": r.severity}
+            for r in contradiction_rows
+        ],
+        "personal_chunks": [
+            {"chunk_id": r.id, "text": r.text, "citation": r.citation, "title": r.title}
+            for r in personal_rows
+        ],
+        "summary": {
+            "foi_chunk_count": int(counts_row.foi_count),
+            "contradiction_count": int(counts_row.contradiction_count),
+            "personal_chunk_count": int(counts_row.personal_count),
+            "total_decisions": int(counts_row.total_decisions),
+        },
+    })

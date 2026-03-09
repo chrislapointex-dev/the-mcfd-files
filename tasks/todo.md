@@ -654,3 +654,50 @@ Note: The plan specified claim+evidence dedup, but inspection showed 0 exact (cl
 2. **Undocumented features**: `patterns.py` router, `PatternMapper.jsx`, `DiagnosticsPanel.jsx`, `MemoryPanel.jsx` — these exist in code but have no session log entry. Confirm they work as expected.
 3. **`/health` route returns 404**: Only `/api/health` works. Minor — not a bug, just a route naming convention.
 4. **MASTER_EVIDENCE_SUMMARY.md / KEYWORD_RESULTS.md**: Only exist in backup at `~/Projects_backup_20260305_210612/`. Not loaded into the MCFD DB — consider whether they should be.
+
+---
+
+## SESSION 31 COMPLETE — Audit Undocumented Features + Trial Export (2026-03-08)
+
+### TASK 1 — Undocumented Features Audit
+
+All four flagged components confirmed **fully wired and functional**:
+
+| Component | What It Does | Status |
+|-----------|-------------|--------|
+| `PatternMapper.jsx` | D3 force-directed graph of entity co-occurrences across decisions (judge, social_worker, etc.) | ✅ Confirmed — `/patterns` route in main.jsx, nav button in App.jsx |
+| `DiagnosticsPanel.jsx` | Collapsible debug panel showing token budget + retrieval stats for ASK mode | ✅ Confirmed — prop-passed by AskPanel.jsx |
+| `MemoryPanel.jsx` | Slide-out panel showing R2D2 memory regions (CORTEX, HIPPOCAMPUS, etc.) | ✅ Confirmed — App.jsx overlay, button-triggered |
+| `patterns.py` | 4 endpoints: entity list, entity detail, co-occurrence matrix, entity timeline | ✅ Confirmed — registered in main.py line 54 |
+
+**Live API results:**
+- `/api/patterns/entities` → 488 occurrences of "Honourable Mr" (judge) at top
+- `/api/patterns/co-occurrence?entity_type_a=social_worker&entity_type_b=judge&min_count=1` → 19 co-occurrences returned
+
+No code changes made — verification only.
+
+### TASK 2 — Trial Export Endpoint
+
+**New endpoint added:** `GET /api/export/trial-summary`
+- File: `backend/app/routers/export.py` (~52 lines added)
+- Returns structured JSON: FOI chunks, contradictions, personal chunks, summary counts
+
+**Sample output (live DB):**
+```
+FOI chunks:       581
+Contradictions:    21
+Personal chunks:  338
+Days to trial:     71
+Trial date:   2026-05-19
+Total decisions: 1536
+First FOI chunk: 'FOI CFD-2025-53478 — Pages 0001-0050'
+```
+
+**Frontend button added:** `EXPORT TRIAL SUMMARY (JSON)`
+- File: `frontend/src/pages/TrialDashboard.jsx` (12 lines added)
+- Location: Export card, between EXPORT TRIAL PACKAGE and PRINT TRIAL SUMMARY buttons
+- Amber styling matching existing buttons; fetches JSON and triggers browser download
+
+### Files Changed
+- `backend/app/routers/export.py` — added `GET /api/export/trial-summary` endpoint
+- `frontend/src/pages/TrialDashboard.jsx` — added JSON download button
