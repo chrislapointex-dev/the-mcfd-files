@@ -17,12 +17,54 @@ router = APIRouter(prefix="/api/witnesses", tags=["witnesses"])
 PERSONAL_SOURCES = ['foi', 'personal']
 
 WITNESS_LIST = [
-    {"name": "Nicki Wolfenden",  "role": "Social Worker",            "file": "PC 19700"},
-    {"name": "Tammy Newton",     "role": "Team Leader",              "file": "PC 19700"},
-    {"name": "Jordon Muileboom","role": "Acting Team Leader",        "file": "PC 19700"},
-    {"name": "Robyn Burnstein",  "role": "Centralized Screening TL", "file": "PC 19700"},
-    {"name": "Cheryl Martin",    "role": "Director Counsel",         "file": "SC 64242"},
-    {"name": "Plessa Walden",    "role": "Opposing Counsel",         "file": "SC 064851"},
+    {
+        "name": "Nicki Wolfenden",
+        "role": "Social Worker",
+        "file": "PC 19700",
+        "phone": "",
+        "email": "",
+        "notes": "Primary social worker on file. Authored the Section 13 Report and multiple CFAs. Named in formal complaint filed Sept 2, 2025. Key contradictions: initial risk assessment vs. removal justification; statements about N's presentation vs. FOI records.",
+    },
+    {
+        "name": "Tammy Newton",
+        "role": "Team Leader",
+        "file": "PC 19700",
+        "phone": "",
+        "email": "",
+        "notes": "Team Leader overseeing Wolfenden. Signed off on removal decision Aug 12, 2025. Named in formal complaint filed Sept 2, 2025. Contradictions: supervision claim vs. documented absence from key meetings.",
+    },
+    {
+        "name": "Jordon Muileboom",
+        "role": "Acting Team Leader",
+        "file": "PC 19700",
+        "phone": "",
+        "email": "",
+        "notes": "Acting TL at time of some key decisions. Involved in interim review. Contradictions: what was communicated to C vs. what was recorded internally.",
+    },
+    {
+        "name": "Robyn Burnstein",
+        "role": "Centralized Screening TL",
+        "file": "PC 19700",
+        "phone": "",
+        "email": "",
+        "notes": "Centralized Screening Team Leader. Involved in intake decisions. Contradictions: screening criteria applied vs. what was documented at referral stage.",
+    },
+    {
+        "name": "Cheryl Martin",
+        "role": "Director Counsel",
+        "file": "SC 64242",
+        "phone": "",
+        "email": "",
+        "notes": "Legal counsel for the Director of Child Welfare. Representing MCFD in SC 64242. Key role in procedural decisions and evidence disclosure.",
+    },
+    {
+        "name": "Plessa Walden",
+        "role": "Opposing Counsel",
+        "file": "SC 064851",
+        "phone": "",
+        "email": "",
+        "notes": "Opposing counsel in SC 064851. Involved in procedural motions and submissions.",
+    },
 ]
 
 # Build a lookup dict for role/file by name
@@ -92,5 +134,8 @@ async def get_witness(name: str, db: AsyncSession = Depends(get_db)):
         "name": witness["name"],
         "role": witness["role"],
         "file": witness["file"],
+        "phone": witness.get("phone", ""),
+        "email": witness.get("email", ""),
+        "notes": witness.get("notes", ""),
         "chunks": chunks,
     }

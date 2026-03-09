@@ -7,12 +7,21 @@ const SOURCE_COLORS = {
   personal: 'text-violet-400 border-violet-500/40 bg-violet-900/20',
 }
 
+const SEVERITY_COLORS = {
+  critical: 'text-red-400 border-red-500/40 bg-red-900/20',
+  high:     'text-orange-400 border-orange-500/40 bg-orange-900/20',
+  medium:   'text-yellow-400 border-yellow-500/40 bg-yellow-900/20',
+  low:      'text-slate-400 border-slate-600 bg-slate-900/20',
+}
+
 export default function WitnessProfiles() {
   const [witnesses, setWitnesses] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [selected, setSelected] = useState(null)  // { name, role, file, chunks }
+  const [selected, setSelected] = useState(null)  // { name, role, file, phone, email, notes, chunks }
   const [profileLoading, setProfileLoading] = useState(false)
+  const [relatedContradictions, setRelatedContradictions] = useState([])
+  const [relatedEvents, setRelatedEvents] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -28,11 +37,41 @@ export default function WitnessProfiles() {
 
   const handleViewProfile = async (name) => {
     setProfileLoading(true)
+    setRelatedContradictions([])
+    setRelatedEvents([])
     try {
-      const r = await fetch(`/api/witnesses/${encodeURIComponent(name)}`)
-      if (!r.ok) throw new Error(`HTTP ${r.status}`)
-      const data = await r.json()
+      const [profileRes, contraRes, eventsRes] = await Promise.all([
+        fetch(`/api/witnesses/${encodeURIComponent(name)}`),
+        fetch('/api/contradictions'),
+        fetch('/api/timeline/events'),
+      ])
+      if (!profileRes.ok) throw new Error(`HTTP ${profileRes.status}`)
+      const data = await profileRes.json()
       setSelected(data)
+
+      if (contraRes.ok) {
+        const contras = await contraRes.json()
+        const nameLower = name.toLowerCase()
+        const related = contras.filter(c =>
+          (c.claim || '').toLowerCase().includes(nameLower) ||
+          (c.evidence || '').toLowerCase().includes(nameLower) ||
+          (c.source_doc || '').toLowerCase().includes(nameLower) ||
+          (c.statement_a || '').toLowerCase().includes(nameLower) ||
+          (c.statement_b || '').toLowerCase().includes(nameLower)
+        )
+        setRelatedContradictions(related)
+      }
+
+      if (eventsRes.ok) {
+        const events = await eventsRes.json()
+        const nameLower = name.toLowerCase()
+        const evList = Array.isArray(events) ? events : (events.events || [])
+        const related = evList.filter(e =>
+          (e.title || '').toLowerCase().includes(nameLower) ||
+          (e.description || '').toLowerCase().includes(nameLower)
+        )
+        setRelatedEvents(related)
+      }
     } catch (e) {
       setError(e.message)
     } finally {
@@ -88,10 +127,66 @@ export default function WitnessProfiles() {
               ← BACK TO LIST
             </button>
 
-            <div className="border border-ink-600 bg-ink-800 rounded-lg p-5 mb-6">
-              <h2 className="font-display text-2xl text-white">{selected.name}</h2>
-              <p className="font-mono text-xs text-slate-500 mt-1 tracking-wide">{selected.role} · {selected.file}</p>
-              <div className="flex gap-3 mt-4">
+            <div className="border border-ink-600 bg-ink-800 rounded-lg p-5 mb-6 space-y-4">
+              <div>
+                <h2 className="font-display text-2xl text-white">{selected.name}</h2>
+                <p className="font-mono text-xs text-slate-500 mt-1 tracking-wide">{selected.role} · {selected.file}</p>
+              </div>
+
+              {/* Contact info */}
+              {(selected.phone || selected.email) && (
+                <div className="border-t border-ink-700 pt-3 space-y-1">
+                  <p className="font-mono text-[9px] text-slate-600 tracking-widest uppercase">Contact</p>
+                  {selected.phone && <p className="font-mono text-xs text-slate-400">📞 {selected.phone}</p>}
+                  {selected.email && <p className="font-mono text-xs text-slate-400">✉ {selected.email}</p>}
+                </div>
+              )}
+
+              {/* Notes */}
+              {selected.notes && (
+                <div className="border-t border-ink-700 pt-3">
+                  <p className="font-mono text-[9px] text-slate-600 tracking-widest uppercase mb-1">Notes</p>
+                  <p className="font-mono text-xs text-slate-300 leading-relaxed">{selected.notes}</p>
+                </div>
+              )}
+
+              {/* Related Contradictions */}
+              {relatedContradictions.length > 0 && (
+                <div className="border-t border-ink-700 pt-3">
+                  <p className="font-mono text-[9px] text-slate-600 tracking-widest uppercase mb-2">
+                    Related Contradictions ({relatedContradictions.length})
+                  </p>
+                  <div className="space-y-1.5">
+                    {relatedContradictions.map(c => (
+                      <div key={c.id} className="flex items-start gap-2">
+                        <span className={`font-mono text-[9px] px-1.5 py-0.5 rounded border tracking-widest flex-shrink-0 ${SEVERITY_COLORS[c.severity] ?? SEVERITY_COLORS.low}`}>
+                          {(c.severity || 'low').toUpperCase()}
+                        </span>
+                        <p className="font-mono text-[10px] text-slate-400 leading-tight">{c.claim || c.statement_a || `Contradiction #${c.id}`}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Related Timeline Events */}
+              {relatedEvents.length > 0 && (
+                <div className="border-t border-ink-700 pt-3">
+                  <p className="font-mono text-[9px] text-slate-600 tracking-widest uppercase mb-2">
+                    Related Timeline Events ({relatedEvents.length})
+                  </p>
+                  <div className="space-y-1">
+                    {relatedEvents.map((e, i) => (
+                      <div key={i} className="flex items-start gap-2">
+                        <span className="font-mono text-[9px] text-slate-600 flex-shrink-0">{e.date || ''}</span>
+                        <p className="font-mono text-[10px] text-slate-400 leading-tight">{e.title}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="flex gap-3 pt-1 border-t border-ink-700">
                 <button
                   onClick={() => navigate(`/search?ask=Summarize everything the FOI says about ${encodeURIComponent(selected.name)}`)}
                   className="font-mono text-[10px] text-sky-400 border border-sky-500/30 px-3 py-1.5 rounded tracking-widest hover:bg-sky-900/20 transition-colors"

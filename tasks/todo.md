@@ -821,3 +821,129 @@ First FOI chunk: 'FOI CFD-2025-53478 — Pages 0001-0050'
 - `frontend/src/main.jsx` — `/events` route added
 - `frontend/src/pages/TrialDashboard.jsx` — EVENTS nav link added
 - `frontend/src/App.jsx` — EVENTS nav link added (desktop + mobile)
+
+### SESSION 35 VERIFICATION — 2026-03-09
+
+| Check | Result |
+|-------|--------|
+| Docker up (3 containers) | ✅ db, backend, frontend all healthy |
+| `timeline_events` row count | ✅ 9 rows (no re-seed needed) |
+| `/api/timeline/events` API | ✅ 9 events in date order, all severities correct |
+| All code matches spec | ✅ No changes needed — implementation complete |
+
+---
+
+## SESSION 36 — court-final.pdf Ingest + WEBB-style Vault (2026-03-09)
+
+### Part 1 — Ingest court-final.pdf
+- [x] 1a. Load into decisions table via load_personal_file (ID 1952)
+- [x] 1b. Run chunker — 523 chunks
+- [x] 1c. Run embedder — 523 × 384-dim, ~52 chunks/s
+- [x] 1d. Verify — decision 1952, 523 chunks, all embedded
+
+### Part 2 — R2 Brain learns it
+- [x] 2a. OCR via ocrmypdf --sidecar --jobs 8 → court-final.txt (1.4MB); confirmed = FOI CFD-2025-53478
+- [x] 2b. Write brain file: neocortex/legal/court-final-lapointe-v-mcfd.md
+- [x] 2c. Update neocortex/legal/INDEX.md + MASTER-INDEX.md
+
+### Part 3 — WEBB-style Vault
+- [x] 3a. Create data/vault/ + copy court-final.pdf (171MB)
+- [x] 3b. Create backend/app/routers/vault.py (25 lines, path-traversal safe)
+- [x] 3c. Register vault router in main.py
+- [x] 3d. Add vault_file column to models.py + schemas.py + ran DB migration
+- [x] 3e. Set vault_file='court-final.pdf' on decision 1952
+- [x] 3f. Add "VIEW SOURCE PDF" button to DecisionDetail.jsx
+
+### SESSION 36 REVIEW — 2026-03-09
+
+**What was done:**
+- court-final.pdf (171MB, 906 pages) was fully scanned — required OCR via ocrmypdf
+- OCR confirmed file is the FOI package CFD-2025-53478 (same doc as FOI batches in DB, per plan's note)
+- Loaded unified text version as decision 1952 (personal), 523 chunks, 523 embeddings
+- Built WEBB-style vault: data/vault/ + /api/vault/{filename} endpoint (path-traversal safe)
+- vault_file column added to decisions table + schema — frontend shows "VIEW SOURCE PDF ↗" button
+- R2 brain file written with full identity confirmation + ingest status
+
+**Verification:**
+| Check | Result |
+|-------|--------|
+| `GET /api/vault/court-final.pdf` | ✅ 200, 171MB PDF returned |
+| Decision 1952 in DB | ✅ source=personal, 523 chunks, vault_file='court-final.pdf' |
+| `GET /api/decisions/1952` | ✅ vault_file field returned in JSON |
+| Brain file + indexes | ✅ neocortex/legal/court-final-lapointe-v-mcfd.md indexed |
+| FOI duplication noted | ✅ same doc as CFD-2025-53478 batches, both preserved (RULE 0) |
+
+**Files changed:**
+- `backend/app/routers/vault.py` — NEW (~25 lines, FileResponse)
+- `backend/app/main.py` — vault router registered
+- `backend/app/models.py` — vault_file column on Decision
+- `backend/app/schemas.py` — vault_file in DecisionDetail schema
+- `data/vault/court-final.pdf` — 171MB master copy
+- `frontend/src/components/DecisionDetail.jsx` — VIEW SOURCE PDF button
+- `~/Projects/r2d2/brain/neocortex/legal/court-final-lapointe-v-mcfd.md` — NEW
+- `~/Projects/r2d2/brain/neocortex/legal/INDEX.md` — appended
+- `~/Projects/r2d2/brain/MASTER-INDEX.md` — appended
+
+## SESSION 37 REVIEW
+**Completed 2026-03-09**
+
+### Changes Made
+1. **Part 1 Audit** — All green: 20 FOI decisions, 581 chunks (100% embedded), vault 200 OK 171MB, brain file present.
+2. **Bug 1 (vault.py)** — Replaced string-based `../` check with `Path.resolve()` containment check. Defense in depth: Starlette URL normalization blocks most traversal, our check handles bypasses.
+3. **Bug 2 (App.jsx)** — Added `if (!res.ok) throw new Error(...)` before `res.body.getReader()` at line 97. Streaming reader no longer called on error responses.
+4. **CrossExamQuestion model** — Appended to models.py with FK to contradictions, index on contradiction_id. DB table already existed from prior session.
+5. **crossexam.py router** — POST /api/crossexam/generate (single or batch), GET /api/crossexam/{id}. Calls Claude with legal cross-exam prompt. Upserts results.
+6. **main.py** — Registered crossexam router.
+7. **export.py** — Extended _build_pdf_bytes() to accept crossexam_by_contradiction dict and render questions after evidence block. export_trial_report_pdf() now queries and passes crossexam data.
+8. **CrossExamPanel.jsx** — Two-panel layout: contradiction list (left) + detail + questions (right). Generate/Regenerate buttons. Pre-formatted display for court use.
+9. **main.jsx + App.jsx** — /crossexam route + CROSS-EXAM nav link (desktop + mobile, sky blue color).
+
+### Verification Results
+- Vault path traversal: blocked (returns 400/404 — not served)
+- Cross-exam generate: ✅ Returns 8 numbered questions with FOI source refs + FOLLOW-UP clause
+- Cross-exam retrieve: ✅ Returns stored questions without regenerating
+- PDF export: ✅ 2.5MB (exceeds 1.73MB target — cross-exam questions added volume)
+- Git commit: 27a0603
+
+---
+
+## SESSION 38 — BATCH CROSS-EXAM + WITNESS ENHANCEMENTS + PRINT VIEW (2026-03-09)
+
+### Part 1 — Batch Generate All 21 Cross-Exam Question Sets
+- [x] 1a — Verify which contradictions currently have questions
+- [x] 1b — Call batch generate endpoint (wait ~90s)
+- [x] 1c — Verify all 21 stored
+- [x] 1d — Regenerate PDF v4, verify size > v3 (2,499,260 bytes)
+
+### Part 2 — Witness Profiles Enhancement
+- [x] 2a — Add phone/email/notes to 6 witness dicts in witnesses.py
+- [x] 2b — Add contact/notes/related contradictions/timeline sections to WitnessProfiles.jsx overlay
+
+### Part 3 — Print-Ready Court View
+- [x] 3a — Create frontend/src/pages/PrintView.jsx
+- [x] 3b — Wire /print route in main.jsx + add PRINT nav link in App.jsx (desktop + mobile)
+
+### Verification
+- [x] All 21 cross-exam question sets present
+- [x] PDF v4 valid + larger than v3
+- [x] Witness notes appear in API
+- [x] /print route accessible
+
+### SESSION 38 REVIEW — 2026-03-09
+
+**All tasks complete.**
+
+| Verification | Result |
+|---|---|
+| Cross-exam questions 1–21 | All 21 present ✅ |
+| PDF v4 size | 2,549,592 bytes (v3 was 2,499,260 — +50KB ✅) |
+| PDF v4 valid | Valid PDF ✅ |
+| Witness notes in API | `notes` field present and populated ✅ |
+| `/print` route | Frontend serving ✅ |
+
+**Changes made:**
+1. `backend/app/routers/witnesses.py` — Added `phone`, `email`, `notes` fields to all 6 witness dicts. Added `phone`/`email`/`notes` to `get_witness` return.
+2. `frontend/src/pages/WitnessProfiles.jsx` — Added `relatedContradictions` + `relatedEvents` state; `handleViewProfile` now parallel-fetches witness profile + contradictions + timeline events; profile overlay enhanced with contact info, notes, related contradictions (with severity badges), related timeline events sections.
+3. `frontend/src/pages/PrintView.jsx` — NEW file (181 lines). White-background print view at `/print`. Fetches trial-summary + timeline events + all crossexam questions in parallel. Sections: header, stats table, contradictions (with severity, statements A/B, FOI evidence excerpts, cross-exam questions), timeline table, footer. Print CSS via inline `<style>` tag.
+4. `frontend/src/main.jsx` — Added `PrintView` import + `/print` route.
+5. `frontend/src/App.jsx` — Added PRINT nav link in desktop header (amber color) + mobile dropdown.
