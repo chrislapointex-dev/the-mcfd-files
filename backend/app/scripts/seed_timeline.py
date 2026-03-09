@@ -104,6 +104,30 @@ EVENTS = [
         "severity": "critical",
         "source_ref": "PC 19700",
     },
+    {
+        "event_date": "2025-08-19",
+        "title": "Newton Approves Post-Removal File Without Reviewing Video",
+        "description": "TL Tammy Newton approves post-removal file 12 days after August 7 removal. Never present at removal. Never reviewed 27-minute video contradicting Wolfenden's Form A sworn statements before approving.",
+        "category": "mcfd_action",
+        "severity": "critical",
+        "source_ref": "Form A, March 6 2026 correspondence",
+    },
+    {
+        "event_date": "2025-08-21",
+        "title": "Newton Observes Appropriate Parenting — Later Contradicts",
+        "description": "Newton's own supervised visit: found materials age-appropriate, agreed with developmental assessment, positive visit (audio recorded). Her September 24 2025 letter then characterized LaPointe as a danger with no new incident in 21 days.",
+        "category": "evidence",
+        "severity": "critical",
+        "source_ref": "August 21 audio recording, Newton Sept 24 2025 letter",
+    },
+    {
+        "event_date": "2025-09-24",
+        "title": "Newton Issues False September 24 Letter",
+        "description": "Newton letter contains unsubstantiated allegations of harassment, coercion, and harm. OT Branscombe documented excellent parenting July 29. Pharmacist Dayton validated pharmacogenomic concerns day after Wolfenden refused to review them. Newton ignored all professional documentation.",
+        "category": "mcfd_action",
+        "severity": "high",
+        "source_ref": "Newton Sept 24 2025 letter, OT Branscombe July 29 2025, Pharmacist Dayton",
+    },
 ]
 
 
