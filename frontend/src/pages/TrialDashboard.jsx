@@ -228,6 +228,37 @@ export default function TrialDashboard() {
                   EXPORT TRIAL SUMMARY (JSON)
                 </button>
                 <button
+                  onClick={async () => {
+                    const res = await fetch('/api/export/trial-report.md');
+                    const text = await res.text();
+                    const blob = new Blob([text], { type: 'text/markdown' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `mcfd_trial_report_${new Date().toISOString().slice(0,10)}.md`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                  }}
+                  className="w-full font-mono text-xs tracking-widest px-4 py-3 rounded border border-amber-500/40 text-amber-400 bg-amber-900/10 hover:bg-amber-900/20 hover:border-amber-500/60 transition-colors mt-2"
+                >
+                  EXPORT TRIAL REPORT (MARKDOWN)
+                </button>
+                <button
+                  onClick={async () => {
+                    const res = await fetch('/api/export/trial-report.pdf');
+                    const blob = await res.blob();
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `mcfd_trial_report_${new Date().toISOString().slice(0,10)}.pdf`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                  }}
+                  className="w-full font-mono text-xs tracking-widest px-4 py-3 rounded border border-amber-500/40 text-amber-400 bg-amber-900/10 hover:bg-amber-900/20 hover:border-amber-500/60 transition-colors mt-2"
+                >
+                  EXPORT TRIAL REPORT (PDF)
+                </button>
+                <button
                   onClick={() => window.print()}
                   className="w-full font-mono text-xs tracking-widest px-4 py-3 rounded border border-slate-600 text-slate-400 bg-ink-900/20 hover:bg-ink-700 hover:border-slate-500 transition-colors mt-2 print:hidden"
                 >
