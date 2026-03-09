@@ -22,6 +22,7 @@ from fastapi.responses import JSONResponse, Response, StreamingResponse
 from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from ..auth import require_api_key
 from ..database import get_db
 from ..models import CostEntry
 
@@ -205,7 +206,7 @@ USAGE NOTES
 """
 
 
-@router.get("/trial-package")
+@router.get("/trial-package", dependencies=[Depends(require_api_key)])
 async def export_trial_package(db: AsyncSession = Depends(get_db)):
     """Stream a ZIP file containing all trial prep materials."""
     today = datetime.utcnow().strftime("%Y%m%d")
@@ -235,7 +236,7 @@ async def export_trial_package(db: AsyncSession = Depends(get_db)):
     )
 
 
-@router.get("/trial-summary")
+@router.get("/trial-summary", dependencies=[Depends(require_api_key)])
 async def export_trial_summary(db: AsyncSession = Depends(get_db)):
     """Return structured JSON with trial-ready evidence for frontend download."""
     TRIAL_DATE_OBJ = date(2026, 5, 19)
@@ -296,7 +297,7 @@ async def export_trial_summary(db: AsyncSession = Depends(get_db)):
     })
 
 
-@router.get("/trial-report.md")
+@router.get("/trial-report.md", dependencies=[Depends(require_api_key)])
 async def export_trial_report(db: AsyncSession = Depends(get_db)):
     """Return Markdown trial evidence report for human reading / lawyer handoff."""
     TRIAL_DATE_OBJ = date(2026, 5, 19)
@@ -698,7 +699,7 @@ async def export_media_package(db: AsyncSession = Depends(get_db)):
     })
 
 
-@router.get("/trial-report.pdf")
+@router.get("/trial-report.pdf", dependencies=[Depends(require_api_key)])
 async def export_trial_report_pdf(db: AsyncSession = Depends(get_db)):
     """Return court-submittable PDF trial evidence report."""
     TRIAL_DATE_OBJ = date(2026, 5, 19)

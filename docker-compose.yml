@@ -32,6 +32,9 @@ services:
       # Optional — required only to run the CanLII scraper (app.scrapers.canlii)
       # Set in .env: CANLII_API_KEY=your_key_here
       CANLII_API_KEY: ${CANLII_API_KEY:-}
+      # Optional — set to protect sensitive endpoints in production
+      # Leave unset (or empty) for dev mode (all endpoints open)
+      MCFD_API_KEY: ${MCFD_API_KEY:-}
     ports:
       - "8000:8000"
     volumes:

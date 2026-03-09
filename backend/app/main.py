@@ -1,9 +1,10 @@
 import os
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
+from .auth import require_api_key
 from .database import init_db
 from . import models  # noqa: F401 — registers Decision + Memory with Base.metadata
 from .routers import decisions, memory, search, ask, patterns, contradictions, timeline, brain, trialprep, witnesses, export, checklist, complaints, vault, crossexam, costs
@@ -47,22 +48,25 @@ app.add_middleware(
 )
 
 
-app.include_router(decisions.router)
-app.include_router(memory.router)
-app.include_router(search.router)
-app.include_router(ask.router)
-app.include_router(patterns.router)
-app.include_router(contradictions.router)
-app.include_router(timeline.router)
-app.include_router(brain.router)
-app.include_router(trialprep.router)
-app.include_router(witnesses.router)
-app.include_router(export.router)
-app.include_router(checklist.router)
-app.include_router(complaints.router)
-app.include_router(vault.router)
-app.include_router(crossexam.router)
-app.include_router(costs.router)
+_auth = [Depends(require_api_key)]
+
+app.include_router(decisions.router,      dependencies=_auth)
+app.include_router(memory.router,         dependencies=_auth)
+app.include_router(search.router,         dependencies=_auth)
+app.include_router(ask.router,            dependencies=_auth)
+app.include_router(patterns.router,       dependencies=_auth)
+app.include_router(contradictions.router, dependencies=_auth)
+app.include_router(timeline.router,       dependencies=_auth)
+app.include_router(brain.router,          dependencies=_auth)
+app.include_router(trialprep.router,      dependencies=_auth)
+app.include_router(witnesses.router,      dependencies=_auth)
+app.include_router(checklist.router,      dependencies=_auth)
+app.include_router(complaints.router,     dependencies=_auth)
+app.include_router(vault.router,          dependencies=_auth)
+app.include_router(crossexam.router,      dependencies=_auth)
+# Public — no auth:
+app.include_router(export.router)   # mixed — per-endpoint auth on trial-report routes
+app.include_router(costs.router)    # fully public
 
 
 @app.get("/api/health")

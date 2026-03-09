@@ -1,0 +1,11 @@
+# Cloudflare Tunnel config — template
+# Deploy: cloudflared tunnel run mcfd-files
+# Fill in your actual tunnel ID and hostname before using.
+
+tunnel: <TUNNEL_ID>
+credentials-file: /root/.cloudflared/<TUNNEL_ID>.json
+
+ingress:
+  - hostname: api.YOUR-DOMAIN.ca
+    service: http://localhost:8000
+  - service: http_status:404
