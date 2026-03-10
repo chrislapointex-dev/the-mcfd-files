@@ -1193,3 +1193,116 @@ Pre-deploy audit results:
 - Build: clean ✓
 
 Warnings (expected): MCFD_API_KEY not set (dev mode), cloudflare/DEPLOY.md missing (pre-deploy task).
+
+---
+
+## SESSION 47 — PDF v5 AUDIT + ADMIN DASHBOARD + PRE-DEPLOY AUDIT
+**Date:** 2026-03-09
+**Commit:** 769639f → origin/main
+
+### Todo
+- [x] Read export.py before touching PDF generation
+- [x] Verify trial-report.pdf size vs v4 (2,549,592 bytes)
+- [x] Confirm contradictions 22-23 included — no code change needed
+- [x] Read App.jsx and TrialDashboard.jsx before writing AdminDashboard
+- [x] Create frontend/src/pages/AdminDashboard.jsx — 7 sections
+- [x] Platform status (deploy-check + refresh)
+- [x] Contradictions table (DIRECT first, 80-char truncation)
+- [x] Costs summary (grand total + by_category)
+- [x] Timeline compact rows with severity dots
+- [x] Witness profiles compact list
+- [x] Share analytics (4 stats)
+- [x] Quick actions (3 export links + deploy check button)
+- [x] API key localStorage input (mcfd_api_key)
+- [x] Dev mode banner when server key not set
+- [x] Add /admin route to main.jsx (not linked from public pages)
+- [x] Run full pre-deploy audit (all checks)
+- [x] Add data/vault/*.pdf to .gitignore
+- [x] Frontend build clean
+- [x] Git commit and push
+
+### Review
+
+**Part 1 — PDF v5**
+- trial-report.pdf: 2,577,768 bytes (v4 was 2,549,592 — +28KB)
+- All 23 contradictions confirmed included — no code change needed
+- PDF generator already queries all contradictions from DB
+
+**Part 2 — Admin Dashboard**
+- AdminDashboard.jsx: 7 sections, dark compact layout
+- API key: reads/writes localStorage "mcfd_api_key"
+- Dev mode banner shown when MCFD_API_KEY not set on server
+- Route: /admin — URL-only, not linked from any public page
+
+**Part 3 — Pre-Deploy Audit**
+- Contradictions: 23 ✅
+- Cost entries: 15 ✅
+- All 5 public endpoints: 200 ✅
+- No hardcoded localhost: clean ✅
+- OG image: 60,224 bytes ✅
+- Cloudflare files: present ✅
+- Case strength: STRONG ✅
+- Build: clean (790 modules) ✅
+- Ready: True ✅
+
+**Important — vault file:**
+data/vault/court-final.pdf (171MB) excluded from git.
+Added data/vault/*.pdf to .gitignore.
+Must be stored outside git — Google Drive or Cloudflare R2.
+Copy to deployment host manually before going live.
+
+**Platform is deployment-ready.**
+Set MCFD_API_KEY, copy vault file, follow cloudflare/DEPLOY.md.
+
+---
+
+## SESSION 48 — CLOUDFLARE DEPLOYMENT + API KEY + VAULT PLAN
+**Date:** 2026-03-09
+
+### Todo
+- [x] Read .env, docker-compose.yml, DEPLOY.md, _redirects before touching anything
+- [x] Generate MCFD_API_KEY (openssl rand -hex 32) and append to .env
+- [x] Verify .env already in .gitignore
+- [x] docker-compose up --force-recreate backend (restart doesn't reload env_file)
+- [x] Verify auth: 401 without key, 200 with key, 200 for public endpoints
+- [x] Find all domain placeholders (YOUR-DOMAIN.ca) — 3 files
+- [x] Note: index.html already has themcfdfiles.ca set
+- [x] Run npm run build — clean
+- [x] Create cloudflare/VAULT.md with deployment options + pre-deploy checklist
+- [x] Production deploy-check: auth=production, vault=True, ready=True
+- [x] Verify vault: HTTP 200 with key
+- [x] Git commit and push
+
+### Review
+
+- MCFD_API_KEY: generated and active — auth mode confirmed "production (key set)"
+- Key appended to .env (not overwritten — ANTHROPIC_API_KEY preserved)
+- .env already in .gitignore — not committed
+- docker-compose restart does NOT reload env_file — must use --force-recreate
+- VAULT.md: documents Option A (local Mac Mini, already works), B (SCP), C (R2)
+- Vault: HTTP 200 with key confirmed
+- Domain placeholders (YOUR-DOMAIN.ca): in _redirects, tunnel-config.yml, DEPLOY.md
+  → Replace with themcfdfiles.ca before going live
+- Case strength: 100/100 — STRONG
+- Build: clean (791 modules)
+
+**MCFD_API_KEY — store this in password manager before closing:**
+MCFD_API_KEY is in .env. Copy the value from there NOW.
+
+**Session 48 results:**
+- MCFD_API_KEY generated and set: YES
+- .env created and gitignored: YES (already existed + gitignored)
+- Auth verified: 401 without key, 200 with key: YES
+- Public endpoints still 200 without key: YES
+- Vault accessible with key: YES (200)
+- cloudflare/VAULT.md created: YES
+- Domain placeholders documented: YES (3 files, replace YOUR-DOMAIN.ca with themcfdfiles.ca)
+- Frontend build clean: YES
+- Git pushed: YES
+- Final status: DEPLOY READY — YES
+
+**Next action (when ready to go live):**
+1. Replace YOUR-DOMAIN.ca with themcfdfiles.ca in _redirects, tunnel-config.yml
+2. Deploy frontend to Cloudflare Pages
+3. Run cloudflared tunnel (Mac Mini)
+4. Verify https://themcfdfiles.ca/share loads
