@@ -12,12 +12,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_db
 from ..models import CostEntry
+from ..ratelimit import rate_limit_public
 
 router = APIRouter(prefix="/api/costs", tags=["costs"])
 
 
 @router.get("/scale")
-async def get_cost_scale(db: AsyncSession = Depends(get_db)):
+async def get_cost_scale(db: AsyncSession = Depends(get_db), _: None = Depends(rate_limit_public)):
     """Return BC-wide scale projection based on this case's documented costs."""
     result = await db.execute(select(func.sum(CostEntry.total)))
     this_case_total = result.scalar() or 0.0
@@ -59,7 +60,7 @@ async def get_cost_scale(db: AsyncSession = Depends(get_db)):
 
 
 @router.get("")
-async def get_costs(db: AsyncSession = Depends(get_db)):
+async def get_costs(db: AsyncSession = Depends(get_db), _: None = Depends(rate_limit_public)):
     """Return all cost entries grouped by category with subtotals and grand total."""
     rows = (await db.execute(
         select(CostEntry).order_by(CostEntry.category, CostEntry.id)

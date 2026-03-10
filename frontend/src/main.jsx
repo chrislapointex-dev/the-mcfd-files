@@ -17,6 +17,9 @@ import PrintView from './pages/PrintView.jsx'
 import CostCalculator from './pages/CostCalculator.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 import PublicShare from './pages/PublicShare.jsx'
+import Methodology from './pages/Methodology.jsx'
+import PressKit from './pages/PressKit.jsx'
+import AdminDashboard from './pages/AdminDashboard.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -38,6 +41,9 @@ createRoot(document.getElementById('root')).render(
           <Route path="/print" element={<PrintView />} />
           <Route path="/costs" element={<CostCalculator />} />
           <Route path="/share" element={<PublicShare />} />
+          <Route path="/methodology" element={<Methodology />} />
+          <Route path="/press" element={<PressKit />} />
+          <Route path="/admin" element={<AdminDashboard />} />
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>

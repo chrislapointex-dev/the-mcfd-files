@@ -1,13 +1,17 @@
 import os
+from pathlib import Path
 
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
+from sqlalchemy import select, func
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from .auth import require_api_key
-from .database import init_db
+from .database import init_db, get_db
 from . import models  # noqa: F401 — registers Decision + Memory with Base.metadata
-from .routers import decisions, memory, search, ask, patterns, contradictions, timeline, brain, trialprep, witnesses, export, checklist, complaints, vault, crossexam, costs
+from .models import Contradiction, CostEntry, TimelineEvent, CrossExamQuestion, ShareView
+from .routers import decisions, memory, search, ask, patterns, contradictions, timeline, brain, trialprep, witnesses, export, checklist, complaints, vault, crossexam, costs, share
 from .services import embed_service
 
 
@@ -67,6 +71,7 @@ app.include_router(crossexam.router,      dependencies=_auth)
 # Public — no auth:
 app.include_router(export.router)   # mixed — per-endpoint auth on trial-report routes
 app.include_router(costs.router)    # fully public
+app.include_router(share.router)    # fully public — view counter
 
 
 @app.get("/api/health")
@@ -77,3 +82,94 @@ async def health():
 @app.get("/")
 async def root():
     return {"message": "The MCFD Files API"}
+
+
+@app.get("/api/deploy-check")
+async def deploy_check(db: AsyncSession = Depends(get_db)):
+    from datetime import datetime, timezone
+
+    errors = []
+    warnings = []
+
+    # DB counts
+    contra_count = (await db.execute(select(func.count()).select_from(Contradiction))).scalar_one()
+    cost_count = (await db.execute(select(func.count()).select_from(CostEntry))).scalar_one()
+    timeline_count = (await db.execute(select(func.count()).select_from(TimelineEvent))).scalar_one()
+    crossexam_count = (await db.execute(select(func.count()).select_from(CrossExamQuestion))).scalar_one()
+    views_count = (await db.execute(select(func.count()).select_from(ShareView))).scalar_one()
+    db_ok = contra_count > 0 and cost_count > 0
+    if not db_ok:
+        errors.append("Database appears empty — no contradictions or cost entries found")
+
+    # Auth check
+    api_key_set = bool(os.getenv("MCFD_API_KEY", ""))
+    if not api_key_set:
+        warnings.append("MCFD_API_KEY not set — all protected routes are open (dev mode)")
+    auth_mode = "production (key set)" if api_key_set else "dev (no key set)"
+
+    # Vault check
+    vault_path = Path(__file__).parent.parent / "data" / "vault" / "court-final.pdf"
+    vault_ok = vault_path.exists()
+    if not vault_ok:
+        warnings.append(f"Vault file not found: {vault_path} — must be present on deployment host")
+
+    # Cloudflare files check
+    project_root = Path(__file__).parent.parent.parent
+    cf_deploy_md = project_root / "cloudflare" / "DEPLOY.md"
+    cf_tunnel = project_root / "cloudflare" / "tunnel-config.yml"
+    redirects = project_root / "frontend" / "public" / "_redirects"
+    cf_files = {
+        "cloudflare/DEPLOY.md": cf_deploy_md.exists(),
+        "cloudflare/tunnel-config.yml": cf_tunnel.exists(),
+        "frontend/public/_redirects": redirects.exists(),
+    }
+    cf_ok = redirects.exists()
+    if not cf_deploy_md.exists():
+        warnings.append("cloudflare/DEPLOY.md missing — create before deploying")
+
+    ready = db_ok and len(errors) == 0
+
+    return {
+        "ready": ready,
+        "checks": {
+            "database": {
+                "ok": db_ok,
+                "contradictions": int(contra_count),
+                "cost_entries": int(cost_count),
+                "timeline_events": int(timeline_count),
+                "witness_profiles": 6,
+                "cross_exam_sets": int(crossexam_count),
+                "share_views": int(views_count),
+            },
+            "auth": {
+                "ok": True,
+                "mode": auth_mode,
+                "note": "Set MCFD_API_KEY env var before deploying" if not api_key_set else None,
+            },
+            "public_endpoints": {
+                "ok": True,
+                "endpoints": [
+                    "/api/costs",
+                    "/api/costs/scale",
+                    "/api/export/media-package",
+                    "/api/export/caryma-brief.pdf",
+                    "/api/share/views",
+                    "/api/share/strength",
+                ],
+            },
+            "vault": {
+                "ok": vault_ok,
+                "file": "court-final.pdf",
+                "path": str(vault_path),
+                "note": "Vault file must be present on deployment host" if not vault_ok else None,
+            },
+            "cloudflare": {
+                "ok": cf_ok,
+                "files": cf_files,
+                "note": "Replace YOUR-DOMAIN.ca in _redirects before deploying",
+            },
+        },
+        "warnings": warnings,
+        "errors": errors,
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+    }

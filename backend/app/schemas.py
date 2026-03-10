@@ -19,6 +19,7 @@ class DecisionSummary(BaseModel):
 
 class DecisionDetail(DecisionSummary):
     full_text: Optional[str]
+    vault_file: Optional[str]
     scraped_at: Optional[datetime]
 
 

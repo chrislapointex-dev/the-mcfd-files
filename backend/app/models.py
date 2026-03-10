@@ -256,3 +256,14 @@ class CostEntry(Base):
 
     def __repr__(self) -> str:
         return f"<CostEntry {self.id}: {self.category} — {self.line_item}>"
+
+
+class ShareView(Base):
+    __tablename__ = "share_views"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    viewed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    referrer: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
+
+    def __repr__(self) -> str:
+        return f"<ShareView {self.id}: {self.viewed_at}>"

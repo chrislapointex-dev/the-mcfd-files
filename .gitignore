@@ -19,4 +19,5 @@ dist/
 data/raw/*
 !data/raw/foi
 !data/raw/foi/**
+data/vault/*.pdf
 *.json

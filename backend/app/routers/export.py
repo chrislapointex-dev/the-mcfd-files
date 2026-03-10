@@ -9,6 +9,7 @@ Contents:
 """
 
 import csv
+import hashlib
 import io
 import json
 import re
@@ -25,6 +26,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..auth import require_api_key
 from ..database import get_db
 from ..models import CostEntry
+from ..ratelimit import rate_limit_public
 
 router = APIRouter(prefix="/api/export", tags=["export"])
 
@@ -595,7 +597,7 @@ def _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, da
 
 
 @router.get("/media-package")
-async def export_media_package(db: AsyncSession = Depends(get_db)):
+async def export_media_package(db: AsyncSession = Depends(get_db), _: None = Depends(rate_limit_public)):
     """Return structured JSON media package for journalists and advocates."""
     contradiction_rows = (await db.execute(text("""
         SELECT id, claim, evidence, source_doc, severity, created_at
@@ -765,4 +767,208 @@ async def export_trial_report_pdf(db: AsyncSession = Depends(get_db)):
         content=pdf_bytes,
         media_type="application/pdf",
         headers={"Content-Disposition": f'attachment; filename="mcfd_trial_report_{today_filename}.pdf"'},
+    )
+
+
+def _build_caryma_brief_bytes(contradiction_rows, cost_total: float, today_str: str) -> bytes:
+    W, H = 612, 792        # Letter portrait
+    ML, MT, MR, MB = 60, 60, 60, 50
+    TW = W - ML - MR       # 492pt
+
+    doc = fitz.open()
+    state = {"page": None, "y": 0, "n": 0}
+
+    def _new_page():
+        state["n"] += 1
+        p = doc.new_page(width=W, height=H)
+        state["page"] = p
+        state["y"] = MT
+        p.draw_rect(fitz.Rect(0, 0, W, 18), color=None, fill=(0.2, 0.1, 0.35))
+        p.insert_text(
+            (ML, H - 22),
+            f"THE MCFD FILES — Caryma S'd Brief  |  PC 19700  —  Page {state['n']}",
+            fontname="helv", fontsize=7, color=(0.5, 0.5, 0.5),
+        )
+
+    def _wrap(text: str, fs: int) -> list:
+        max_c = max(1, int(TW / (fs * 0.55)))
+        words = (text or "").split()
+        lines, cur = [], []
+        for word in words:
+            if sum(len(w) for w in cur) + len(cur) + len(word) > max_c:
+                lines.append(" ".join(cur))
+                cur = [word]
+            else:
+                cur.append(word)
+        if cur:
+            lines.append(" ".join(cur))
+        return lines or [""]
+
+    def write(text: str, fs: int = 10, bold: bool = False, gap: int = 6, color=(0, 0, 0)):
+        fn = "hebo" if bold else "helv"
+        lh = fs + 3
+        for line in _wrap(text, fs):
+            if state["y"] + lh > H - MB - 30:
+                _new_page()
+            state["page"].insert_text((ML, state["y"]), line, fontname=fn, fontsize=fs, color=color)
+            state["y"] += lh
+        state["y"] += gap
+
+    def rule():
+        state["page"].draw_line((ML, state["y"]), (ML + TW, state["y"]), color=(0.6, 0.6, 0.6), width=0.5)
+        state["y"] += 10
+
+    _new_page()
+
+    # ── Header bar text ──────────────────────────────────────────
+    state["y"] = 30
+    write("CARYMA S'D — CASE BRIEF", fs=16, bold=True, gap=4, color=(0.85, 0.85, 1.0))
+    write(f"PC 19700  |  BC Provincial Court, Kamloops  |  Trial: May 19–21, 2026  |  {today_str}", fs=8, gap=10, color=(0.5, 0.5, 0.5))
+    rule()
+
+    # ── Section 1: Case Overview ─────────────────────────────────
+    write("1. CASE OVERVIEW", fs=12, bold=True, gap=6)
+    write("File: PC 19700 — LaPointe, Christopher  /  PC 19709  /  SC 64242  /  SC 064851", fs=9, gap=4)
+    write("Child: Nadia LaPointe (minor, complex needs)", fs=9, gap=4)
+    write("Pharmacogenomic profile: CYP2B6, CYP2C19, COMT, MTHFR (CEN4GEN patient D8146200CAN)", fs=9, gap=4)
+    write("Removal date: August 7, 2025", fs=9, gap=4)
+    write("Days in care at brief date: 214", fs=9, gap=4)
+    write("OIPC complaint: INV-F-26-00220 (active — FOI disclosure gap)", fs=9, gap=4)
+    write("Judicial review: SC 064851 — MCFD defaulted on response", fs=9, gap=4)
+    write("Family court: SC 64242 — F5 counterclaim, 15 exhibits filed", fs=9, gap=4)
+    write("Trial: May 19–21, 2026, BC Provincial Court, Kamloops, BC", fs=9, gap=4)
+    write("Pro se applicant.", fs=9, gap=10)
+    rule()
+
+    # ── Section 2: Key Personnel ─────────────────────────────────
+    write("2. KEY PERSONNEL", fs=12, bold=True, gap=6)
+    write("SW:   Nicki Wolfenden  |  nicki.wolfenden@gov.bc.ca  |  250-319-1739", fs=9, gap=3)
+    write("TL:   Tammy Newton", fs=9, gap=3)
+    write("ATL:  Jordon Muileboom", fs=9, gap=3)
+    write("Screening TL:  Robyn Burnstein (directed removal — never observed child — CFCSA s.30)", fs=9, gap=3)
+    write("MCFD Counsel:  Cheryl Martin, Martin & Martin", fs=9, gap=3)
+    write("Opp. Counsel:  Plessa Walden, PGS Law  |  pwalden@pgslaw.ca", fs=9, gap=3)
+    state["y"] += 6
+    rule()
+
+    # ── Section 3: Top 3 Contradictions ──────────────────────────
+    write(f"3. TOP CONTRADICTIONS BY SEVERITY  ({len(contradiction_rows)} shown)", fs=12, bold=True, gap=6)
+    for i, r in enumerate(contradiction_rows, 1):
+        sev = f"[{r.severity}]" if r.severity else "[UNKNOWN]"
+        write(f"  {i}. {sev}  {(r.claim or '')[:160]}", fs=9, gap=3)
+        if r.evidence:
+            write(f"     Contradicted by: {r.evidence[:160]}", fs=8, gap=3, color=(0.35, 0.35, 0.35))
+        if r.source_doc:
+            src = r.source_doc + (f"  ·  p.{r.page_ref}" if r.page_ref else "")
+            write(f"     Source: {src}", fs=8, gap=5, color=(0.45, 0.45, 0.45))
+    state["y"] += 4
+    rule()
+
+    # ── Section 4: FOI Disclosure Gap ────────────────────────────
+    write("4. FOI DISCLOSURE GAP", fs=12, bold=True, gap=6)
+    write("Represented to OIPC:          1,792 pages", fs=9, gap=3)
+    write("Received by LaPointe:           906 pages", fs=9, gap=3)
+    write("Internal stamp count (est.):  ~1,235 pages", fs=9, gap=3)
+    write("Unaccounted:                    886 pages", fs=9, gap=4)
+    write("Missing document: September 8, 2025 Wolfenden email (not in FOI disclosure)", fs=9, gap=4)
+    write("OIPC file: INV-F-26-00220  |  Response pending.", fs=9, gap=10)
+    rule()
+
+    # ── Section 5: FOIPPA Breach ──────────────────────────────────
+    today_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    write("5. FOIPPA BREACH — NW / DOLSON", fs=12, bold=True, gap=6)
+    write(f"Date of record: {today_date}", fs=9, gap=4)
+    write(
+        "SW Wolfenden shared LaPointe personal contact information with Robb Dolson RCC "
+        "(Centre for Dignity, Kamloops) without consent or request from Dolson. "
+        "Voicemail preserved. Wolfenden was on approved leave at time of sharing. "
+        "Contact was shared on the first day leave ended.",
+        fs=9, gap=4
+    )
+    write("Statute: FOIPPA RSBC 1996 c.165 ss.33–39 (unauthorized disclosure of personal information)", fs=9, gap=10)
+    rule()
+
+    # ── Section 6: Taxpayer Cost ─────────────────────────────────
+    write("6. DOCUMENTED TAXPAYER COST", fs=12, bold=True, gap=6)
+    write(f"Documented total (live from DB):  ${cost_total:,.2f}", fs=11, bold=True, gap=4, color=(0.7, 0.1, 0.1))
+    write("Basis: BC government-published rates. One case. 214 days.", fs=9, gap=4)
+    write("Estimated true cost: $285,000 – $420,000  |  BC-wide (5,000 children): $1.4B – $2.1B / year", fs=9, gap=10)
+    rule()
+
+    # ── Section 7: Statutory Violations ──────────────────────────
+    write("7. STATUTORY VIOLATIONS ALLEGED", fs=12, bold=True, gap=6)
+    for statute in [
+        "CFCSA RSBC 1996 c.46 s.30    — Removal directed by Burnstein without observing child",
+        "FOIPPA RSBC 1996 c.165 ss.33–39 — Unauthorized disclosure (Wolfenden, Mar 9 2026)",
+        "Charter s.7                  — Life, liberty, security of the person",
+        "Charter s.2(b)               — Freedom of expression",
+        "Charter s.8                  — Unreasonable search and seizure",
+        "Charter s.15                 — Equality rights (disability / neurodivergent child)",
+        "Mental Health Act RSBC 1996 c.288 s.96 — Pre-removal misuse",
+    ]:
+        write(f"  • {statute}", fs=9, gap=3)
+    state["y"] += 6
+    rule()
+
+    # ── Section 8: Evidence Inventory ────────────────────────────
+    write("8. EVIDENCE INVENTORY", fs=12, bold=True, gap=6)
+    for item in [
+        "27-min continuous video — August 7, 2025 (contradicts Form F1)",
+        "FOI file CFD-2025-53478 (906 pages, OCR'd, indexed — 23+ contradictions identified)",
+        "CEN4GEN genetic analysis — patient D8146200CAN",
+        "OT Sheila Branscombe report — July 29, 2025",
+        "Audio recording: Newton supervised visit — August 21, 2025",
+        "Newton letter: September 24, 2025 (unsubstantiated allegations)",
+        "F5 counterclaim SC 64242 — 15 exhibits filed",
+        "SC 064851 judicial review — MCFD defaulted on response",
+        "Taxpayer cost: $175,041.32 / 214 days (all line items cited to BC gov rates)",
+        "OIPC complaint INV-F-26-00220 — active",
+    ]:
+        write(f"  • {item}", fs=9, gap=3)
+    state["y"] += 8
+    rule()
+
+    # ── Footer note ──────────────────────────────────────────────
+    write(
+        "This brief is prepared for counsel Caryma S'd. All figures are based on publicly available "
+        "BC government rates and FOI-disclosed records. Pro Patria.",
+        fs=8, gap=6, color=(0.4, 0.4, 0.4)
+    )
+
+    # ── SHA-256 two-pass footer ───────────────────────────────────
+    draft_bytes = doc.tobytes()
+    sha = hashlib.sha256(draft_bytes).hexdigest()[:16]
+
+    doc2 = fitz.open(stream=draft_bytes, filetype="pdf")
+    last_page = doc2[-1]
+    last_page.insert_text(
+        (ML, H - 34),
+        f"SHA-256: {sha}...  |  Generated: {today_str}  |  ALL FIGURES CITED TO PUBLIC RECORD",
+        fontname="helv", fontsize=7, color=(0.5, 0.5, 0.5),
+    )
+    return doc2.tobytes()
+
+
+@router.get("/caryma-brief.pdf")
+async def export_caryma_brief(db: AsyncSession = Depends(get_db), _: None = Depends(rate_limit_public)):
+    """Public PDF brief for counsel — no auth required."""
+    today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+    contradiction_rows = (await db.execute(text("""
+        SELECT id, claim, evidence, source_doc, severity, page_ref
+        FROM contradictions
+        ORDER BY
+            CASE severity WHEN 'DIRECT' THEN 0 WHEN 'PARTIAL' THEN 1 ELSE 2 END
+        LIMIT 3
+    """))).all()
+
+    cost_total_row = (await db.execute(text("SELECT COALESCE(SUM(total), 0) FROM cost_entries"))).one()
+    cost_total = float(cost_total_row[0])
+
+    pdf_bytes = _build_caryma_brief_bytes(contradiction_rows, cost_total, today_str)
+
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={"Content-Disposition": 'inline; filename="caryma-brief.pdf"'},
     )
