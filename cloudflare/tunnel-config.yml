@@ -6,6 +6,6 @@ tunnel: <TUNNEL_ID>
 credentials-file: /root/.cloudflared/<TUNNEL_ID>.json
 
 ingress:
-  - hostname: api.YOUR-DOMAIN.ca
+  - hostname: api.themcfdfiles.ca
     service: http://localhost:8000
   - service: http_status:404

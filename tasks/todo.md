@@ -1306,3 +1306,34 @@ MCFD_API_KEY is in .env. Copy the value from there NOW.
 2. Deploy frontend to Cloudflare Pages
 3. Run cloudflared tunnel (Mac Mini)
 4. Verify https://themcfdfiles.ca/share loads
+
+---
+
+## Session 49 — Domain Swap + Cloudflare Deploy Prep
+## Date: 2026-03-09
+
+### Tasks
+- [x] Replace `YOUR-DOMAIN.ca` → `themcfdfiles.ca` in `frontend/public/_redirects`
+- [x] Replace `YOUR-DOMAIN.ca` → `themcfdfiles.ca` in `cloudflare/tunnel-config.yml`
+- [x] Replace `YOUR-DOMAIN.ca` → `themcfdfiles.ca` in `cloudflare/DEPLOY.md`
+- [x] Remove false-positive DEPLOY.md warning from `backend/app/main.py` (Docker can't see cloudflare/ dir)
+- [x] Update stale note in deploy-check response body
+- [x] Frontend build clean (791 modules)
+
+### Review
+
+**Changes made:**
+- 3 config files updated: domain is now `themcfdfiles.ca` everywhere
+- `main.py` deploy-check: removed the `cf_deploy_md` check + warning (false positive in Docker), removed it from `cf_files` dict. `cf_ok` still based on `_redirects` existence — unchanged.
+- Frontend build: ✅ clean, 791 modules, 1.13s
+
+**Remaining manual steps (run on Mac Mini when ready to go live):**
+1. `cloudflared tunnel login` → browser auth
+2. `cloudflared tunnel create mcfd-files` → copy tunnel UUID
+3. Edit `cloudflare/tunnel-config.yml` → replace `<TUNNEL_ID>` with real UUID
+4. `cloudflared tunnel route dns mcfd-files api.themcfdfiles.ca`
+5. `cloudflared tunnel --config cloudflare/tunnel-config.yml run mcfd-files`
+6. Browser: Cloudflare Pages → Create project → Connect GitHub → root: `frontend`, build: `npm run build`, output: `dist`, NODE_VERSION=20, custom domain: `themcfdfiles.ca`
+
+**Commit:** `config: domain swap YOUR-DOMAIN.ca → themcfdfiles.ca, fix deploy-check warning — session 49`
+**Git push:** NOT done (confirm with user before pushing)

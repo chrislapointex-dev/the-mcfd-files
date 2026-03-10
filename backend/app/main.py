@@ -115,17 +115,13 @@ async def deploy_check(db: AsyncSession = Depends(get_db)):
 
     # Cloudflare files check
     project_root = Path(__file__).parent.parent.parent
-    cf_deploy_md = project_root / "cloudflare" / "DEPLOY.md"
     cf_tunnel = project_root / "cloudflare" / "tunnel-config.yml"
     redirects = project_root / "frontend" / "public" / "_redirects"
     cf_files = {
-        "cloudflare/DEPLOY.md": cf_deploy_md.exists(),
         "cloudflare/tunnel-config.yml": cf_tunnel.exists(),
         "frontend/public/_redirects": redirects.exists(),
     }
     cf_ok = redirects.exists()
-    if not cf_deploy_md.exists():
-        warnings.append("cloudflare/DEPLOY.md missing — create before deploying")
 
     ready = db_ok and len(errors) == 0
 
@@ -166,7 +162,7 @@ async def deploy_check(db: AsyncSession = Depends(get_db)):
             "cloudflare": {
                 "ok": cf_ok,
                 "files": cf_files,
-                "note": "Replace YOUR-DOMAIN.ca in _redirects before deploying",
+                "note": "Domain set to themcfdfiles.ca — fill <TUNNEL_ID> in tunnel-config.yml after tunnel creation",
             },
         },
         "warnings": warnings,

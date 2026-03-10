@@ -260,6 +260,12 @@ export default function TrialDashboard() {
                   EXPORT TRIAL REPORT (PDF)
                 </button>
                 <button
+                  onClick={() => { window.location = '/api/export/caryma-brief.pdf' }}
+                  className="w-full font-mono text-xs tracking-widest px-4 py-3 rounded border border-purple-500/40 text-purple-400 bg-purple-900/10 hover:bg-purple-900/20 hover:border-purple-500/60 transition-colors mt-2"
+                >
+                  CARYMA BRIEF (PDF)
+                </button>
+                <button
                   onClick={() => window.print()}
                   className="w-full font-mono text-xs tracking-widest px-4 py-3 rounded border border-slate-600 text-slate-400 bg-ink-900/20 hover:bg-ink-700 hover:border-slate-500 transition-colors mt-2 print:hidden"
                 >

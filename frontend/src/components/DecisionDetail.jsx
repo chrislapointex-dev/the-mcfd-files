@@ -111,6 +111,16 @@ export default function DecisionDetail({ id, onBack }) {
             >
               PRINT
             </button>
+            {decision.vault_file && (
+              <a
+                href={`/api/vault/${decision.vault_file}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] font-mono font-bold text-amber-500 border border-amber-500/40 px-2 py-0.5 rounded hover:bg-amber-500/10 transition-colors"
+              >
+                VIEW SOURCE PDF ↗
+              </a>
+            )}
             <a
               href={decision.url}
               target="_blank"

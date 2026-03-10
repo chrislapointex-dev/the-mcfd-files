@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 
 const SEVERITY_ORDER = { DIRECT: 0, PARTIAL: 1, NONE: 2 }
 
@@ -25,24 +26,109 @@ function StatCard({ value, label, sub }) {
   )
 }
 
+function CaseStrength({ strength }) {
+  if (!strength) return null
+
+  const ratingColor = {
+    STRONG: 'text-green-400',
+    SOLID: 'text-amber-400',
+    DEVELOPING: 'text-red-400',
+  }[strength.rating] || 'text-slate-400'
+
+  const ratingBg = {
+    STRONG: 'bg-green-900/40 border-green-700/50 text-green-300',
+    SOLID: 'bg-amber-900/40 border-amber-700/50 text-amber-300',
+    DEVELOPING: 'bg-red-900/40 border-red-700/50 text-red-300',
+  }[strength.rating] || 'bg-slate-800 border-slate-700/50 text-slate-400'
+
+  return (
+    <section>
+      <div className="flex items-baseline justify-between mb-4">
+        <h2 className="text-[11px] tracking-[0.25em] text-slate-400 uppercase">
+          Case Strength Score
+        </h2>
+        <span className={`font-mono text-[9px] px-2 py-0.5 rounded border tracking-widest ${ratingBg}`}>
+          {strength.rating}
+        </span>
+      </div>
+
+      <div className="border border-slate-800 rounded bg-slate-900/40 p-5">
+        {/* Score display */}
+        <div className="flex items-end gap-3 mb-5">
+          <span className={`font-mono text-5xl font-bold ${ratingColor}`}>
+            {strength.total_score}
+          </span>
+          <span className="font-mono text-[13px] text-slate-600 mb-1.5">/ {strength.max_score}</span>
+        </div>
+
+        {/* Breakdown table */}
+        <div className="border border-slate-800 rounded overflow-hidden text-[11px]">
+          <div className="flex text-[9px] text-slate-600 uppercase tracking-widest px-3 py-1.5 bg-slate-950 border-b border-slate-800">
+            <span className="flex-1">Category</span>
+            <span className="w-16 text-right">Points</span>
+            <span className="w-10 text-right">Max</span>
+          </div>
+          {strength.breakdown.map((row, i) => (
+            <div key={i} className="flex items-center px-3 py-2 border-b border-slate-800 last:border-0">
+              <div className="flex-1 min-w-0">
+                <span className="text-slate-300">{row.category}</span>
+                {row.note && (
+                  <span className="ml-2 text-[9px] text-slate-600">{row.note}</span>
+                )}
+              </div>
+              <span className="w-16 text-right text-slate-200 font-mono">{row.points}</span>
+              <span className="w-10 text-right text-slate-700 font-mono">{row.max}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Disclaimer */}
+        <p className="text-[10px] text-slate-600 italic mt-3 leading-relaxed">
+          {strength.disclaimer}
+        </p>
+      </div>
+    </section>
+  )
+}
+
 export default function PublicShare() {
   const [costs, setCosts] = useState(null)
   const [scale, setScale] = useState(null)
-  const [contradictions, setContradictions] = useState([])
+  const [allContradictions, setAllContradictions] = useState([])
+  const [contraTotal, setContraTotal] = useState(0)
   const [timeline, setTimeline] = useState([])
+  const [viewCount, setViewCount] = useState(null)
+  const [copied, setCopied] = useState(false)
+  const [strength, setStrength] = useState(null)
+
+  // Contradiction search/filter state
+  const [searchTerm, setSearchTerm] = useState('')
+  const [severityFilter, setSeverityFilter] = useState('all')
+  const [showAll, setShowAll] = useState(false)
 
   useEffect(() => {
     fetch('/api/costs').then(r => r.json()).then(setCosts).catch(() => {})
     fetch('/api/costs/scale').then(r => r.json()).then(setScale).catch(() => {})
     fetch('/api/contradictions').then(r => r.json()).then(d => {
       const items = Array.isArray(d) ? d : (d.items || d.contradictions || [])
+      setContraTotal(items.length)
       const sorted = [...items].sort((a, b) => {
         const sev = (SEVERITY_ORDER[a.severity] ?? 2) - (SEVERITY_ORDER[b.severity] ?? 2)
         if (sev !== 0) return sev
         return (b.id || 0) - (a.id || 0)
       })
-      setContradictions(sorted.slice(0, 5))
+      setAllContradictions(sorted)
     }).catch(() => {})
+    // Fire-and-forget view tracking
+    fetch('/api/share/view', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ referrer: document.referrer || null }),
+    }).then(r => r.json()).catch(() => {})
+    fetch('/api/share/views').then(r => r.json()).then(d => {
+      setViewCount(d.total_views ?? null)
+    }).catch(() => {})
+    fetch('/api/share/strength').then(r => r.json()).then(setStrength).catch(() => {})
     fetch('/api/timeline/events').then(r => r.json()).then(d => {
       const items = Array.isArray(d) ? d : (d.events || d.items || [])
       const sorted = [...items].sort((a, b) => {
@@ -54,12 +140,35 @@ export default function PublicShare() {
     }).catch(() => {})
   }, [])
 
+  // Client-side filter + search
+  const filteredContradictions = useMemo(() => {
+    let items = allContradictions
+    if (severityFilter !== 'all') {
+      items = items.filter(c => c.severity === severityFilter)
+    }
+    if (searchTerm.trim()) {
+      const term = searchTerm.trim().toLowerCase()
+      items = items.filter(c =>
+        (c.claim || '').toLowerCase().includes(term) ||
+        (c.evidence || '').toLowerCase().includes(term)
+      )
+    }
+    return items
+  }, [allContradictions, severityFilter, searchTerm])
+
+  const displayedContradictions = showAll ? filteredContradictions : filteredContradictions.slice(0, 5)
+
+  const shareText = encodeURIComponent(
+    '$175,041.32 taxpayer cost. 23 documented contradictions. ' +
+    '906 vs 1,792 FOI pages unaccounted for. ' +
+    'BC child protection case PC 19700. ' +
+    'OIPC complaint INV-F-26-00220 active. ' +
+    '#BCPolitics #MCFD #FreeNadia'
+  )
+  const shareUrl = encodeURIComponent(window.location.href)
+
   const grandTotal = costs?.grand_total ?? 175041.32
-  const contraCount = costs ? null : 22 // will be overridden by live data below
-  const liveContraCount = contradictions.length > 0 ? null : contraCount
-
   const byCategory = costs?.by_category || {}
-
   const scaleLoBC = scale?.bc_low_formatted || '$1.4B'
   const scaleHiBC = scale?.bc_high_formatted || '$2.1B'
 
@@ -100,7 +209,7 @@ export default function PublicShare() {
               sub="Based on publicly available BC government rates"
             />
             <StatCard
-              value="22+"
+              value={contraTotal > 0 ? `${contraTotal}` : "…"}
               label="Documented contradictions in sworn MCFD statements"
               sub="Severity: DIRECT | PARTIAL | reviewed by AI engine"
             />
@@ -117,20 +226,50 @@ export default function PublicShare() {
           </div>
         </section>
 
+        {/* Case Strength Score */}
+        <CaseStrength strength={strength} />
+
         {/* Contradictions */}
         <section>
           <div className="flex items-baseline justify-between mb-4">
             <h2 className="text-[11px] tracking-[0.25em] text-slate-400 uppercase">
-              Contradiction Record (top 5 by severity)
+              Contradiction Record ({contraTotal} total)
             </h2>
           </div>
+
+          {/* Search + filter controls */}
+          <div className="flex flex-wrap gap-2 mb-3">
+            <input
+              type="text"
+              placeholder="Search contradictions..."
+              value={searchTerm}
+              onChange={e => { setSearchTerm(e.target.value); setShowAll(false) }}
+              className="flex-1 min-w-[160px] bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-[12px] text-slate-300 placeholder-slate-600 font-mono outline-none focus:border-slate-500"
+            />
+            {['all', 'DIRECT', 'PARTIAL'].map(sev => (
+              <button
+                key={sev}
+                onClick={() => { setSeverityFilter(sev); setShowAll(false) }}
+                className={`font-mono text-[10px] tracking-widest px-3 py-1.5 rounded border transition-colors ${
+                  severityFilter === sev
+                    ? 'bg-white text-slate-900 border-white'
+                    : 'bg-slate-900 text-slate-500 border-slate-700 hover:border-slate-500 hover:text-slate-300'
+                }`}
+              >
+                {sev.toUpperCase()}
+              </button>
+            ))}
+          </div>
+
           <div className="border border-slate-800 rounded overflow-hidden">
-            {contradictions.length === 0 ? (
+            {filteredContradictions.length === 0 ? (
               <div className="p-6 text-center text-[11px] text-slate-600">
-                Contradiction data loading…
+                {allContradictions.length === 0
+                  ? 'Contradiction data loading…'
+                  : 'No contradictions match your search.'}
               </div>
             ) : (
-              contradictions.map((c, i) => (
+              displayedContradictions.map((c, i) => (
                 <div
                   key={c.id || i}
                   className="flex items-start gap-3 px-4 py-3 border-b border-slate-800 last:border-0 hover:bg-slate-900/40 transition-colors"
@@ -152,9 +291,23 @@ export default function PublicShare() {
               ))
             )}
           </div>
-          <p className="text-[10px] text-slate-600 mt-2">
-            Full contradiction record available upon request. Trial subpoena in progress.
-          </p>
+
+          {/* Show all / show fewer toggle */}
+          {filteredContradictions.length > 5 && (
+            <button
+              onClick={() => setShowAll(v => !v)}
+              className="mt-2 text-[10px] text-slate-500 hover:text-slate-300 transition-colors"
+            >
+              {showAll
+                ? `Show fewer ↑`
+                : `Show all ${filteredContradictions.length} contradictions ↓`}
+            </button>
+          )}
+          {filteredContradictions.length <= 5 && (
+            <p className="text-[10px] text-slate-600 mt-2">
+              Full contradiction record available upon request. Trial subpoena in progress.
+            </p>
+          )}
         </section>
 
         {/* Cost Breakdown */}
@@ -233,6 +386,48 @@ export default function PublicShare() {
           <p className="text-[10px] text-slate-700 mt-4">
             Pro Patria · The MCFD Files · Generated {new Date().toLocaleDateString('en-CA')}
           </p>
+          <div className="flex items-center gap-4 flex-wrap mt-1">
+            {viewCount !== null && (
+              <span className="text-[10px] text-slate-700">👁 {viewCount} views</span>
+            )}
+            <Link
+              to="/methodology"
+              className="text-[10px] text-slate-600 hover:text-slate-400 transition-colors"
+            >
+              Methodology
+            </Link>
+            <Link
+              to="/press"
+              className="text-[10px] text-slate-600 hover:text-slate-400 transition-colors"
+            >
+              Press Kit
+            </Link>
+          </div>
+          <div className="flex gap-4 mt-2 flex-wrap">
+            <a
+              href={`https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`}
+              target="_blank" rel="noopener noreferrer"
+              className="text-[10px] text-slate-600 hover:text-slate-400 transition-colors"
+            >
+              Share on X
+            </a>
+            <a
+              href={`mailto:?subject=THE MCFD FILES — Public Accountability Record&body=${shareText}%20${decodeURIComponent(shareUrl)}`}
+              className="text-[10px] text-slate-600 hover:text-slate-400 transition-colors"
+            >
+              Share via Email
+            </a>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href)
+                setCopied(true)
+                setTimeout(() => setCopied(false), 2000)
+              }}
+              className="text-[10px] text-slate-600 hover:text-slate-400 transition-colors"
+            >
+              {copied ? 'Copied!' : 'Copy Link'}
+            </button>
+          </div>
         </footer>
       </main>
     </div>
