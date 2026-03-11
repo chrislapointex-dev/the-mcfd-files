@@ -21,7 +21,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Optional
 
 from ..database import get_db
-from ..models import Contradiction
+from ..models import Contradiction, ContradictionEvidence
 from ..services.claude_service import _get_client
 from ..services.embed_service import embed_query
 
@@ -162,6 +162,10 @@ async def analyze_contradiction(
     except (json.JSONDecodeError, ValueError):
         parsed = []
 
+    # Build a quick lookup of chunk_id → similarity score from the rows already fetched
+    # (rows are ordered by embedding distance; assign rank-based scores 1.0 → 0.1)
+    top_chunk_ids = [(r.id, round(1.0 - i * 0.1, 2)) for i, r in enumerate(rows[:3])]
+
     # 6. Insert into DB and build response
     results = []
     for item in parsed:
@@ -176,6 +180,15 @@ async def analyze_contradiction(
         )
         db.add(rec)
         await db.flush()
+
+        # Link the top-3 semantically similar chunks as evidence
+        for chunk_id, score in top_chunk_ids:
+            db.add(ContradictionEvidence(
+                contradiction_id=rec.id,
+                chunk_id=chunk_id,
+                similarity_score=score,
+            ))
+
         results.append({
             "id": rec.id,
             "claim": rec.claim,

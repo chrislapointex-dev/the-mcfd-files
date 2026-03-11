@@ -1337,3 +1337,21 @@ MCFD_API_KEY is in .env. Copy the value from there NOW.
 
 **Commit:** `config: domain swap YOUR-DOMAIN.ca → themcfdfiles.ca, fix deploy-check warning — session 49`
 **Git push:** NOT done (confirm with user before pushing)
+
+---
+
+## SESSION 50 — FULL WIRING AUDIT & FIX (2026-03-10)
+
+### Pre-flight findings
+- FIX 2 (/api/ask/stream): ALREADY EXISTS in ask.py — skip
+- FIX 5 (PUT→PATCH): ALREADY DONE in both frontend pages — skip
+
+### Todo
+- [x] FIX 1 — Auth wiring: fetch monkey-patch in frontend/src/main.jsx
+- [x] FIX 3 — Entity extraction trigger: POST /api/patterns/extract in patterns.py
+- [x] FIX 4 — Contradiction evidence linking: insert ContradictionEvidence in contradictions.py
+- [x] FIX 6 — Error banner: visible auth error in App.jsx on failed API load
+- [x] FIX 7 — Wire "Run Entity Extraction" button to AdminDashboard Quick Actions
+
+### Review
+All 5 remaining fixes implemented. 2 pre-existing fixes confirmed (ask/stream route, PUT->PATCH). 7 files modified total.

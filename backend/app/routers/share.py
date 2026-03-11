@@ -10,7 +10,7 @@ from sqlalchemy import func, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_db
-from ..models import Contradiction, ShareView
+from ..models import Contradiction, ShareView, TimelineEvent
 from ..ratelimit import rate_limit_public, rate_limit_view
 
 router = APIRouter(prefix="/api/share", tags=["share"])
@@ -106,3 +106,39 @@ async def get_views(db: AsyncSession = Depends(get_db), _: None = Depends(rate_l
         "latest_view": row.latest_view.isoformat() if row.latest_view else None,
         "views_today": int(row.views_today),
     })
+
+
+@router.get("/contradictions")
+async def public_contradictions(db: AsyncSession = Depends(get_db), _: None = Depends(rate_limit_public)):
+    """Public contradiction list for /share page (no auth required)."""
+    rows = (await db.execute(
+        select(Contradiction).order_by(Contradiction.created_at.desc())
+    )).scalars().all()
+    return [
+        {
+            "id": r.id,
+            "claim": r.claim,
+            "evidence": r.evidence,
+            "source_doc": r.source_doc,
+            "severity": r.severity,
+        }
+        for r in rows
+    ]
+
+
+@router.get("/timeline")
+async def public_timeline(db: AsyncSession = Depends(get_db), _: None = Depends(rate_limit_public)):
+    """Public timeline events for /share page (no auth required)."""
+    rows = (await db.execute(
+        select(TimelineEvent).order_by(TimelineEvent.event_date)
+    )).scalars().all()
+    return [
+        {
+            "id": r.id,
+            "title": r.title,
+            "event_date": str(r.event_date) if r.event_date else None,
+            "severity": r.severity,
+            "description": r.description,
+        }
+        for r in rows
+    ]

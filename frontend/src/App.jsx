@@ -51,6 +51,9 @@ export default function App() {
   // Filter options from API
   const [filterOptions, setFilterOptions] = useState({ sources: [], courts: [], year_min: null, year_max: null })
 
+  // Global API error banner (shows on auth failure etc.)
+  const [apiError, setApiError] = useState(null)
+
   // Abort controller for in-flight semantic/ask requests
   const abortRef = useRef(null)
 
@@ -60,8 +63,14 @@ export default function App() {
   // Load filter options once
   useEffect(() => {
     fetch('/api/decisions/filters')
-      .then(r => r.json())
-      .then(setFilterOptions)
+      .then(r => {
+        if (r.status === 401 || r.status === 403) {
+          setApiError('API auth failed (401/403). Visit /admin and enter your API key.')
+          return null
+        }
+        return r.json()
+      })
+      .then(data => { if (data) setFilterOptions(data) })
       .catch(() => setFilterOptions({ sources: [], courts: [], year_min: null, year_max: null }))
   }, [])
 
@@ -267,6 +276,14 @@ export default function App() {
   return (
     <div className="min-h-screen bg-ink-900 font-sans text-slate-200">
       {memoryOpen && <MemoryPanel onClose={() => setMemoryOpen(false)} />}
+
+      {/* Auth error banner */}
+      {apiError && (
+        <div className="bg-red-900/80 border-b border-red-700/60 px-4 py-2 flex items-center justify-between gap-4">
+          <span className="font-mono text-[11px] text-red-300 tracking-wide">{apiError}</span>
+          <button onClick={() => setApiError(null)} className="font-mono text-[10px] text-red-400 hover:text-red-200 shrink-0">DISMISS</button>
+        </div>
+      )}
 
       {/* Top amber accent line */}
       <div className="h-px bg-gradient-to-r from-transparent via-amber-500/60 to-transparent" />

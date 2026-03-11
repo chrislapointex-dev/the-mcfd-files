@@ -109,7 +109,7 @@ export default function PublicShare() {
   useEffect(() => {
     fetch('/api/costs').then(r => r.json()).then(setCosts).catch(() => {})
     fetch('/api/costs/scale').then(r => r.json()).then(setScale).catch(() => {})
-    fetch('/api/contradictions').then(r => r.json()).then(d => {
+    fetch('/api/share/contradictions').then(r => r.json()).then(d => {
       const items = Array.isArray(d) ? d : (d.items || d.contradictions || [])
       setContraTotal(items.length)
       const sorted = [...items].sort((a, b) => {
@@ -129,7 +129,7 @@ export default function PublicShare() {
       setViewCount(d.total_views ?? null)
     }).catch(() => {})
     fetch('/api/share/strength').then(r => r.json()).then(setStrength).catch(() => {})
-    fetch('/api/timeline/events').then(r => r.json()).then(d => {
+    fetch('/api/share/timeline').then(r => r.json()).then(d => {
       const items = Array.isArray(d) ? d : (d.events || d.items || [])
       const sorted = [...items].sort((a, b) => {
         const sev = (SEVERITY_ORDER[a.severity] ?? 2) - (SEVERITY_ORDER[b.severity] ?? 2)
@@ -326,7 +326,7 @@ export default function PublicShare() {
                 >
                   <span className="text-[11px] text-slate-400 uppercase tracking-widest">{cat}</span>
                   <span className="text-[12px] text-slate-200">
-                    ${Number(subtotal).toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    ${Number(subtotal?.subtotal ?? subtotal).toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </span>
                 </div>
               ))}

@@ -9,12 +9,14 @@ GET /api/patterns/timeline
 from datetime import date
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
 from pydantic import BaseModel
-from sqlalchemy import text
+from sqlalchemy import delete, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..database import get_db
+from ..database import SessionLocal, get_db
+from ..models import Decision, Entity
+from ..services.extractor import extract_entities
 
 router = APIRouter(prefix="/api/patterns", tags=["patterns"])
 
@@ -225,6 +227,35 @@ async def co_occurrence(
         )
         for r in rows
     ]
+
+
+@router.post("/extract")
+async def trigger_extraction(background_tasks: BackgroundTasks):
+    """Kick off entity extraction across all decisions as a background task."""
+    background_tasks.add_task(_run_extraction)
+    return {"status": "extraction started"}
+
+
+async def _run_extraction() -> None:
+    """Background task: clear entities table, re-extract from all decisions with full_text."""
+    async with SessionLocal() as db:
+        await db.execute(delete(Entity))
+        await db.commit()
+
+        rows = (await db.execute(
+            select(Decision).where(Decision.full_text.isnot(None))
+        )).scalars().all()
+
+        for decision in rows:
+            entities = extract_entities(decision.full_text or "")
+            for e in entities:
+                db.add(Entity(
+                    decision_id=decision.id,
+                    entity_type=e["entity_type"],
+                    entity_value=e["entity_value"],
+                    context_snippet=e.get("context_snippet"),
+                ))
+        await db.commit()
 
 
 @router.get("/timeline", response_model=list[TimelineEntry])

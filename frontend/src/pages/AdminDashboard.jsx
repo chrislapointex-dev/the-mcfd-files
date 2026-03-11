@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 function SeverityBadge({ severity }) {
   const colors = {
@@ -50,6 +50,7 @@ export default function AdminDashboard() {
   const [shareViews, setShareViews] = useState(null)
   const [loading, setLoading] = useState(true)
   const [errors, setErrors] = useState({})
+  const [extractStatus, setExtractStatus] = useState(null) // null | 'running' | 'done' | 'error'
 
   const headers = apiKey ? { 'X-API-Key': apiKey } : {}
 
@@ -109,6 +110,18 @@ export default function AdminDashboard() {
     ])
 
     setLoading(false)
+  }
+
+  async function runExtraction() {
+    setExtractStatus('running')
+    try {
+      const h = apiKey ? { 'X-API-Key': apiKey } : {}
+      const res = await fetch('/api/patterns/extract', { method: 'POST', headers: h })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      setExtractStatus('done')
+    } catch {
+      setExtractStatus('error')
+    }
   }
 
   useEffect(() => { fetchAll() }, []) // eslint-disable-line react-hooks/exhaustive-deps
@@ -242,7 +255,7 @@ export default function AdminDashboard() {
                   {Object.entries(costs.by_category).map(([cat, total]) => (
                     <div key={cat} className="bg-slate-900/60 border border-slate-800 rounded p-3">
                       <div className="text-[13px] font-bold text-slate-200">
-                        ${Number(total).toLocaleString('en-CA', { minimumFractionDigits: 2 })}
+                        ${Number(total?.subtotal ?? total).toLocaleString('en-CA', { minimumFractionDigits: 2 })}
                       </div>
                       <div className="text-[10px] text-slate-500 mt-0.5 capitalize">{cat.replace(/_/g, ' ')}</div>
                     </div>
@@ -352,6 +365,13 @@ export default function AdminDashboard() {
               className="text-[10px] font-mono text-slate-400 border border-slate-700 rounded px-3 py-2 hover:text-slate-200 hover:border-slate-500 transition-colors"
             >
               Deploy Check
+            </button>
+            <button
+              onClick={runExtraction}
+              disabled={extractStatus === 'running'}
+              className="text-[10px] font-mono border rounded px-3 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-violet-400 border-violet-700 hover:text-violet-200 hover:border-violet-500"
+            >
+              {extractStatus === 'running' ? 'Extracting…' : extractStatus === 'done' ? 'Done ✓' : extractStatus === 'error' ? 'Error ✗' : 'Run Entity Extraction'}
             </button>
           </div>
         </section>

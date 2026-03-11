@@ -21,6 +21,18 @@ import Methodology from './pages/Methodology.jsx'
 import PressKit from './pages/PressKit.jsx'
 import AdminDashboard from './pages/AdminDashboard.jsx'
 
+// Inject X-API-Key on every /api/* request using the key stored in localStorage
+const _origFetch = window.fetch
+window.fetch = (url, opts = {}) => {
+  if (typeof url === 'string' && url.startsWith('/api')) {
+    const key = localStorage.getItem('mcfd_api_key')
+    if (key) {
+      opts.headers = { ...(opts.headers || {}), 'X-API-Key': key }
+    }
+  }
+  return _origFetch(url, opts)
+}
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ErrorBoundary>

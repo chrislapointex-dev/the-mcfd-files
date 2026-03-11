@@ -21,3 +21,4 @@ data/raw/*
 !data/raw/foi/**
 data/vault/*.pdf
 *.json
+~/
