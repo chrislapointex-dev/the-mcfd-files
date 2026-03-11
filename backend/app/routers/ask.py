@@ -481,7 +481,7 @@ async def ask_stream_endpoint(
                     full_text = payload
 
             # 5. Extract sources from complete answer
-            sources = _extract_sources(full_text, chunks)
+            source_refs = _extract_sources(full_text, chunks)
 
             # 6. Save to R2 memory
             memory_updated = False
@@ -491,7 +491,7 @@ async def ask_stream_endpoint(
                     value={
                         "question": question,
                         "answer": full_text,
-                        "sources_cited": [s.citation for s in sources],
+                        "sources_cited": [s.citation for s in source_refs],
                         "chunks_used": len(chunks),
                         "fts_chunks": len(fts_chunks),
                         "semantic_chunks": len(sem_chunks),
@@ -538,7 +538,7 @@ async def ask_stream_endpoint(
 
             done_payload = {
                 "type": "done",
-                "sources": [s.model_dump() for s in sources],
+                "sources": [s.model_dump() for s in source_refs],
                 "chunks_used": len(chunks),
                 "memory_updated": memory_updated,
                 "budget": stream_budget,
