@@ -3,6 +3,42 @@
 
 ---
 
+## SESSION 51 COMPLETE — ASK Streaming Variable Scoping Fix (2026-03-10)
+
+### Problem
+`POST /api/ask/stream` returned:
+`data: {"type": "error", "message": "cannot access local variable 'sources' where it is not associated with a value"}`
+
+### Root Cause
+Python scoping: Inside `generate()` (nested async generator in `ask_stream_endpoint`),
+the assignment `sources = _extract_sources(full_text, chunks)` on line 484 caused Python
+to mark `sources` as local to the entire `generate()` function. This made the earlier reads
+of the outer `sources` (filter list, set at line 414) fail with `UnboundLocalError`.
+
+### Fix — 3 lines changed in backend/app/routers/ask.py inside generate() only
+- Line 484: `sources = _extract_sources(...)` → `source_refs = _extract_sources(...)`
+- Line 494: `[s.citation for s in sources]` → `[s.citation for s in source_refs]`
+- Line 541: `[s.model_dump() for s in sources]` → `[s.model_dump() for s in source_refs]`
+- Outer scope `sources = _sources_for_filter(source_filter)` — untouched
+- Non-streaming `ask_endpoint` — untouched
+
+### Verification Results
+- [x] Python compile check: OK
+- [x] GET /api/health: 200
+- [x] ASK stream (Who is Wolfenden?): returns token events — BUG FIXED
+- [x] ASK stream + source_filter=personal: returns token events
+- [x] ASK non-stream regression: OK answer_len=386
+- [x] /api/decisions: 200
+- [x] /api/contradictions: 200
+- [x] /api/witnesses: 200
+- [x] /api/brain/status: 200
+- [x] /api/trialprep/summary: 200
+
+### Commit
+`a007c0b` — fix: ASK streaming sources variable scoping bug — session 51
+
+---
+
 ## SESSION 13 — CONTRADICTION ENGINE (2026-03-07)
 
 - [x] Add `Contradiction` model to `backend/app/models.py`
