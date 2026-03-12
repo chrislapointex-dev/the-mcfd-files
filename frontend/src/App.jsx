@@ -203,6 +203,7 @@ export default function App() {
         try {
           const sourceParam = sourceFilter && sourceFilter !== 'all' ? `&source=${encodeURIComponent(sourceFilter)}` : ''
           const res = await fetch(`/api/search/semantic?q=${encodeURIComponent(q)}&k=20${sourceParam}`, { signal: controller.signal })
+          if (!res.ok) throw new Error(`HTTP ${res.status}`)
           const data = await res.json()
           setSemanticResults(data)
         } catch (err) {

@@ -51,7 +51,10 @@ export default function CaseTimeline() {
 
   useEffect(() => {
     fetch('/api/timeline')
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`)
+        return r.json()
+      })
       .then(data => setTimeline(data.timeline || []))
       .catch(() => setError('Failed to load timeline'))
       .finally(() => setLoading(false))

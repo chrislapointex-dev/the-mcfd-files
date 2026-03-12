@@ -5,6 +5,7 @@ GET  /api/crossexam/{id}      — retrieve stored questions for a contradiction
 """
 
 import os
+from datetime import datetime, timezone
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -101,8 +102,7 @@ async def generate_crossexam(body: GenerateRequest, db: AsyncSession = Depends(g
             existing.questions_text = questions_text
             existing.style = body.style
             existing.model_used = model_name
-            from sqlalchemy import func
-            existing.generated_at = func.now()
+            existing.generated_at = datetime.now(timezone.utc)
         else:
             db.add(CrossExamQuestion(
                 contradiction_id=r.id,

@@ -55,7 +55,10 @@ export default function EventTimeline() {
 
   useEffect(() => {
     fetch('/api/timeline/events')
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`)
+        return r.json()
+      })
       .then(data => setEvents(Array.isArray(data) ? data : []))
       .catch(() => setError('Failed to load timeline events'))
       .finally(() => setLoading(false))

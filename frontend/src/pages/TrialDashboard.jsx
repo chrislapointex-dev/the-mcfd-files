@@ -215,7 +215,9 @@ export default function TrialDashboard() {
                 </button>
                 <button
                   onClick={async () => {
-                    const data = await fetch('/api/export/trial-summary').then(r => r.json());
+                    const res = await fetch('/api/export/trial-summary');
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+                    const data = await res.json();
                     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
@@ -231,6 +233,7 @@ export default function TrialDashboard() {
                 <button
                   onClick={async () => {
                     const res = await fetch('/api/export/trial-report.md');
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`)
                     const text = await res.text();
                     const blob = new Blob([text], { type: 'text/markdown' });
                     const url = URL.createObjectURL(blob);
@@ -247,6 +250,7 @@ export default function TrialDashboard() {
                 <button
                   onClick={async () => {
                     const res = await fetch('/api/export/trial-report.pdf');
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`)
                     const blob = await res.blob();
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
