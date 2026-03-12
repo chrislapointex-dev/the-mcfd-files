@@ -13,6 +13,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..database import get_db
 from ..models import CostEntry
 from ..ratelimit import rate_limit_public
+from ..redact import redact_name
 
 router = APIRouter(prefix="/api/costs", tags=["costs"])
 
@@ -27,7 +28,7 @@ async def get_cost_scale(db: AsyncSession = Depends(get_db), _: None = Depends(r
         "this_case": {
             "total": this_case_total,
             "days": 214,
-            "case_ref": "PC 19700 — LaPointe, Christopher",
+            "case_ref": "PC 19700 — C.L.",
         },
         "estimated_true_total": {
             "low": 285000.00,
@@ -73,11 +74,11 @@ async def get_costs(db: AsyncSession = Depends(get_db), _: None = Depends(rate_l
         item = {
             "id": r.id,
             "category": r.category,
-            "line_item": r.line_item,
+            "line_item": redact_name(r.line_item),
             "amount_per_unit": r.amount_per_unit,
             "units": r.units,
             "total": r.total,
-            "source": r.source,
+            "source": redact_name(r.source) if r.source else r.source,
             "source_url": r.source_url,
             "date_range_start": r.date_range_start,
             "date_range_end": r.date_range_end,
@@ -93,7 +94,7 @@ async def get_costs(db: AsyncSession = Depends(get_db), _: None = Depends(rate_l
         "by_category": dict(by_category),
         "grand_total": grand_total,
         "days_in_care": 214,
-        "case_ref": "PC 19700 — LaPointe, Christopher",
+        "case_ref": "PC 19700 — C.L.",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "disclaimer": (
             "All figures based on publicly available BC government rates and published estimates. "

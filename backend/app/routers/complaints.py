@@ -11,6 +11,7 @@ from typing import Optional
 
 from ..database import get_db
 from ..models import Complaint
+from ..redact import redact_name
 
 router = APIRouter(prefix="/api/complaints", tags=["complaints"])
 
@@ -40,7 +41,7 @@ def _serialize(r: Complaint) -> ComplaintOut:
         filed_date=r.filed_date.isoformat() if r.filed_date else None,
         status=r.status,
         last_update=r.last_update.isoformat() if r.last_update else None,
-        notes=r.notes,
+        notes=redact_name(r.notes) if r.notes else r.notes,
         created_at=r.created_at.isoformat(),
     )
 

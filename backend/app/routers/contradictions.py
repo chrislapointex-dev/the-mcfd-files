@@ -22,6 +22,7 @@ from typing import Optional
 
 from ..database import get_db
 from ..models import Contradiction, ContradictionEvidence
+from ..redact import redact_name
 from ..services.claude_service import _get_client
 from ..services.embed_service import embed_query
 
@@ -72,9 +73,9 @@ async def list_contradictions(db: AsyncSession = Depends(get_db)):
     return [
         ContradictionRecord(
             id=r.id,
-            claim=r.claim,
-            evidence=r.evidence,
-            source_doc=r.source_doc,
+            claim=redact_name(r.claim),
+            evidence=redact_name(r.evidence) if r.evidence else r.evidence,
+            source_doc=redact_name(r.source_doc) if r.source_doc else r.source_doc,
             page_ref=r.page_ref,
             severity=r.severity,
             created_at=r.created_at.isoformat(),

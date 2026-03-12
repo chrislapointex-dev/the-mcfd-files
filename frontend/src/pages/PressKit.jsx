@@ -127,7 +127,7 @@ export default function PressKit() {
             Platform Notes
           </h2>
           <div className="space-y-2 text-[13px] text-slate-400">
-            <p>Built by: Christopher LaPointe (self-represented litigant)</p>
+            <p>Built by: C.L. (self-represented litigant)</p>
             <p>Data sources: BC FOI, BC government published rates, court records</p>
             <p>All figures cited to public record</p>
           </div>

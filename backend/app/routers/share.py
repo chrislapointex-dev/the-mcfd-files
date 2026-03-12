@@ -12,6 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..database import get_db
 from ..models import Contradiction, ShareView, TimelineEvent
 from ..ratelimit import rate_limit_public, rate_limit_view
+from ..redact import redact_name
 
 router = APIRouter(prefix="/api/share", tags=["share"])
 
@@ -117,9 +118,9 @@ async def public_contradictions(db: AsyncSession = Depends(get_db), _: None = De
     return [
         {
             "id": r.id,
-            "claim": r.claim,
-            "evidence": r.evidence,
-            "source_doc": r.source_doc,
+            "claim": redact_name(r.claim),
+            "evidence": redact_name(r.evidence) if r.evidence else r.evidence,
+            "source_doc": redact_name(r.source_doc) if r.source_doc else r.source_doc,
             "severity": r.severity,
         }
         for r in rows
@@ -135,10 +136,10 @@ async def public_timeline(db: AsyncSession = Depends(get_db), _: None = Depends(
     return [
         {
             "id": r.id,
-            "title": r.title,
+            "title": redact_name(r.title),
             "event_date": str(r.event_date) if r.event_date else None,
             "severity": r.severity,
-            "description": r.description,
+            "description": redact_name(r.description) if r.description else r.description,
         }
         for r in rows
     ]

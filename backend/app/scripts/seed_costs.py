@@ -66,7 +66,7 @@ COST_ENTRIES = [
     },
     {
         "category": "administration",
-        "line_item": "TL (Newton) case mgmt ~2hrs/wk @ $45/hr × 30 weeks",
+        "line_item": "TL (T. Newton) case mgmt ~2hrs/wk @ $45/hr × 30 weeks",
         "amount_per_unit": 45.00,
         "units": 60.0,
         "total": 2700.00,

@@ -1391,3 +1391,55 @@ MCFD_API_KEY is in .env. Copy the value from there NOW.
 
 ### Review
 All 5 remaining fixes implemented. 2 pre-existing fixes confirmed (ask/stream route, PUT->PATCH). 7 files modified total.
+
+---
+
+## SESSION 52 COMPLETE — Dedup + Privacy Redaction + FOIPPA Compliance (2026-03-12)
+
+### Decisions removed
+- Duplicates deleted: 185 decisions (141 duplicate titles)
+- Test entry removed: 1 (id=1906)
+- Chunks removed: 5,368 (duplicate) + 27 (id=1906) = 5,395
+- Entities removed: 2,754 (duplicate) + 0 (id=1906) = 2,754
+
+### New DB totals
+- Decisions: 1,351 (was 1,537)
+- Chunks: 22,151 (was 27,546)
+- Entities: 12,200 (was 14,954)
+
+### Files created
+- backend/app/redact.py — name redaction utility
+
+### Files modified (backend)
+- app/routers/witnesses.py — redact name/notes in response, chunk text redacted
+- app/routers/contradictions.py — redact claim, evidence, source_doc
+- app/routers/timeline.py — redact title, description
+- app/routers/trialprep.py — redact top_contradictions fields, key_witnesses
+- app/routers/crossexam.py — redact claim, evidence, questions_text
+- app/routers/checklist.py — redact item field
+- app/routers/complaints.py — redact notes field
+- app/routers/costs.py — case_ref → C.L., redact line_item/source
+- app/routers/share.py — redact public contradiction/timeline endpoints
+- app/routers/export.py — redact witnesses.txt, Caryma brief, media package, cost PDF line
+- app/services/claude_service.py — PERSONAL_SYSTEM_PROMPT: Christopher LaPointe → C.L.
+- app/scripts/seed_timeline.py — names redacted in EVENTS
+- app/scripts/seed_costs.py — TL (Newton) → TL (T. Newton)
+
+### Files modified (frontend)
+- frontend/src/pages/PublicShare.jsx — #FreeNadia → #ProtectBCKids
+- frontend/src/pages/PressKit.jsx — Christopher LaPointe → C.L.
+- frontend/src/pages/PrintView.jsx — LaPointe v MCFD Director → C.L. v MCFD Director
+- frontend/src/pages/CostCalculator.jsx — LaPointe, Christopher → C.L.
+
+### SQL redaction applied to tables
+- contradictions (claim, evidence) — 23 rows
+- timeline_events (title, description) — 12 rows
+- checklist_items (item) — 21 rows
+- complaints (notes) — 6 rows
+- crossexam_questions (questions_text) — 23 rows
+- cost_entries (line_item) — 15 rows
+
+### All endpoints: PASS (15/15 — 200 OK)
+### Frontend build: PASS (1.05s, clean)
+### Python compile: PASS (all files OK)
+### Dedup verification: PASS (0 duplicate titles)

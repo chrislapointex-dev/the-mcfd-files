@@ -15,6 +15,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_db
 from ..models import Contradiction, CrossExamQuestion
+from ..redact import redact_name
 from ..services.claude_service import _get_client
 
 router = APIRouter(prefix="/api/crossexam", tags=["crossexam"])
@@ -114,10 +115,10 @@ async def generate_crossexam(body: GenerateRequest, db: AsyncSession = Depends(g
         await db.commit()
         return {
             "contradiction_id": r.id,
-            "claim": r.claim,
-            "evidence": r.evidence,
+            "claim": redact_name(r.claim),
+            "evidence": redact_name(r.evidence) if r.evidence else r.evidence,
             "severity": r.severity,
-            "questions_text": questions_text,
+            "questions_text": redact_name(questions_text),
             "model_used": model_name,
         }
 
@@ -174,11 +175,11 @@ async def get_crossexam(contradiction_id: int, db: AsyncSession = Depends(get_db
 
     return {
         "contradiction_id": contradiction_id,
-        "claim": row.claim,
-        "evidence": row.evidence,
+        "claim": redact_name(row.claim),
+        "evidence": redact_name(row.evidence) if row.evidence else row.evidence,
         "severity": row.severity,
         "source_doc": row.source_doc,
-        "questions_text": row.questions_text,
+        "questions_text": redact_name(row.questions_text),
         "style": row.style,
         "generated_at": row.generated_at.isoformat(),
         "model_used": row.model_used,

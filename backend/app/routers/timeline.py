@@ -17,6 +17,7 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_db
+from ..redact import redact_name
 
 router = APIRouter(prefix="/api", tags=["timeline"])
 
@@ -121,8 +122,8 @@ async def get_timeline_events(db: AsyncSession = Depends(get_db)):
         {
             "id": r.id,
             "event_date": r.event_date,
-            "title": r.title,
-            "description": r.description,
+            "title": redact_name(r.title),
+            "description": redact_name(r.description) if r.description else r.description,
             "category": r.category,
             "severity": r.severity,
             "source_ref": r.source_ref,

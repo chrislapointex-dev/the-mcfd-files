@@ -18,7 +18,7 @@ EVENTS = [
         "event_date": "2025-08-04",
         "title": "MCFD Internal Coordination Begins",
         "description": (
-            "FOI records show directive chain initiated: Muileboom → Burnstein → Wolfenden. "
+            "FOI records show directive chain initiated: J. Muileboom → R. Burnstein → N. Wolfenden. "
             "Pre-planned removal timeline begins before any formal protection concern documented."
         ),
         "category": "mcfd_action",
@@ -29,8 +29,8 @@ EVENTS = [
         "event_date": "2025-08-07",
         "title": "Coordination Timeline Complete",
         "description": (
-            "Internal coordination between Muileboom, Burnstein, and Wolfenden finalised. "
-            "Removal direction issued by Burnstein without personally observing the child."
+            "Internal coordination between J. Muileboom, R. Burnstein, and N. Wolfenden finalised. "
+            "Removal direction issued by R. Burnstein without personally observing the child."
         ),
         "category": "mcfd_action",
         "severity": "critical",
@@ -38,9 +38,9 @@ EVENTS = [
     },
     {
         "event_date": "2025-08-12",
-        "title": "Wolfenden Files Form F1",
+        "title": "N. Wolfenden Files Form F1",
         "description": (
-            "SW Wolfenden files sworn Form F1 containing statement directly contradicted by "
+            "SW N. Wolfenden files sworn Form F1 containing statement directly contradicted by "
             "27-minute video recording. PC 19700 filed one day after custody notice served."
         ),
         "category": "mcfd_action",
@@ -60,9 +60,9 @@ EVENTS = [
     },
     {
         "event_date": "2025-09-08",
-        "title": "Missing Wolfenden Email",
+        "title": "Missing N. Wolfenden Email",
         "description": (
-            "Email from SW Wolfenden identified as missing from FOI production. "
+            "Email from SW N. Wolfenden identified as missing from FOI production. "
             "OIPC complaint filed re: incomplete disclosure."
         ),
         "category": "evidence",
@@ -106,24 +106,24 @@ EVENTS = [
     },
     {
         "event_date": "2025-08-19",
-        "title": "Newton Approves Post-Removal File Without Reviewing Video",
-        "description": "TL Tammy Newton approves post-removal file 12 days after August 7 removal. Never present at removal. Never reviewed 27-minute video contradicting Wolfenden's Form A sworn statements before approving.",
+        "title": "T. Newton Approves Post-Removal File Without Reviewing Video",
+        "description": "TL T. Newton approves post-removal file 12 days after August 7 removal. Never present at removal. Never reviewed 27-minute video contradicting N. Wolfenden's Form A sworn statements before approving.",
         "category": "mcfd_action",
         "severity": "critical",
         "source_ref": "Form A, March 6 2026 correspondence",
     },
     {
         "event_date": "2025-08-21",
-        "title": "Newton Observes Appropriate Parenting — Later Contradicts",
-        "description": "Newton's own supervised visit: found materials age-appropriate, agreed with developmental assessment, positive visit (audio recorded). Her September 24 2025 letter then characterized LaPointe as a danger with no new incident in 21 days.",
+        "title": "T. Newton Observes Appropriate Parenting — Later Contradicts",
+        "description": "T. Newton's own supervised visit: found materials age-appropriate, agreed with developmental assessment, positive visit (audio recorded). Her September 24 2025 letter then characterized C.L. as a danger with no new incident in 21 days.",
         "category": "evidence",
         "severity": "critical",
         "source_ref": "August 21 audio recording, Newton Sept 24 2025 letter",
     },
     {
         "event_date": "2025-09-24",
-        "title": "Newton Issues False September 24 Letter",
-        "description": "Newton letter contains unsubstantiated allegations of harassment, coercion, and harm. OT Branscombe documented excellent parenting July 29. Pharmacist Dayton validated pharmacogenomic concerns day after Wolfenden refused to review them. Newton ignored all professional documentation.",
+        "title": "T. Newton Issues False September 24 Letter",
+        "description": "T. Newton letter contains unsubstantiated allegations of harassment, coercion, and harm. OT Branscombe documented excellent parenting July 29. Pharmacist Dayton validated pharmacogenomic concerns day after N. Wolfenden refused to review them. T. Newton ignored all professional documentation.",
         "category": "mcfd_action",
         "severity": "high",
         "source_ref": "Newton Sept 24 2025 letter, OT Branscombe July 29 2025, Pharmacist Dayton",

@@ -105,7 +105,7 @@ export default function PrintView() {
           <h1 className="text-2xl font-bold tracking-tight uppercase">
             EVIDENCE SUMMARY
           </h1>
-          <p className="text-lg tracking-wide mt-1">PC 19700 | LaPointe v MCFD Director</p>
+          <p className="text-lg tracking-wide mt-1">PC 19700 | C.L. v MCFD Director</p>
           <div className="flex gap-8 mt-3 text-xs text-slate-600">
             <span>Generated: {TODAY.toISOString().split('T')[0]}</span>
             <span>Days to Trial: <strong className="text-black">{DAYS_TO_TRIAL}</strong></span>

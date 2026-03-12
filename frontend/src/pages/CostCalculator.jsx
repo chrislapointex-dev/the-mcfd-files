@@ -73,7 +73,7 @@ export default function CostCalculator() {
               TAXPAYER COST TRACKER
             </h1>
             <p className="font-mono text-[10px] text-slate-600 tracking-widest mt-1 uppercase">
-              PC 19700 — LaPointe, Christopher · Based on publicly available BC government rates
+              PC 19700 — C.L. · Based on publicly available BC government rates
             </p>
           </div>
           <div className="flex items-center gap-2">

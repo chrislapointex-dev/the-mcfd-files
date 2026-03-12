@@ -163,7 +163,7 @@ export default function PublicShare() {
     '906 vs 1,792 FOI pages unaccounted for. ' +
     'BC child protection case PC 19700. ' +
     'OIPC complaint INV-F-26-00220 active. ' +
-    '#BCPolitics #MCFD #FreeNadia'
+    '#BCPolitics #MCFD #ProtectBCKids'
   )
   const shareUrl = encodeURIComponent(window.location.href)
 

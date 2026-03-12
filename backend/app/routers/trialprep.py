@@ -16,6 +16,7 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_db
+from ..redact import redact_name
 
 router = APIRouter(prefix="/api/trialprep", tags=["trialprep"])
 
@@ -106,9 +107,9 @@ async def trial_summary(db: AsyncSession = Depends(get_db)):
     top_contradictions = [
         {
             "id": r.id,
-            "claim": r.claim,
-            "evidence": r.evidence,
-            "source_doc": r.source_doc,
+            "claim": redact_name(r.claim),
+            "evidence": redact_name(r.evidence) if r.evidence else r.evidence,
+            "source_doc": redact_name(r.source_doc) if r.source_doc else r.source_doc,
             "page_ref": r.page_ref,
             "severity": r.severity,
             "created_at": r.created_at.isoformat() if r.created_at else None,
@@ -153,7 +154,7 @@ async def trial_summary(db: AsyncSession = Depends(get_db)):
         "days_remaining": days_remaining,
         "contradiction_count": int(contra_count),
         "personal_chunks": int(personal_chunks),
-        "key_witnesses": KEY_WITNESSES,
+        "key_witnesses": [redact_name(w) for w in KEY_WITNESSES],
         "top_contradictions": top_contradictions,
         "timeline_gaps": timeline_gaps,
     }

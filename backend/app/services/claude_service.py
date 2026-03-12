@@ -41,7 +41,7 @@ Be concise and precise. Use plain language.\
 """
 
 PERSONAL_SYSTEM_PROMPT = """\
-You are analyzing documents from Christopher LaPointe's personal legal case files. \
+You are analyzing documents from C.L.'s personal legal case files. \
 These are BC child protection proceedings PC 19700, PC 19709, SC 64242, SC 064851.
 
 Answer precisely and cite the exact document name and page range for every claim. \

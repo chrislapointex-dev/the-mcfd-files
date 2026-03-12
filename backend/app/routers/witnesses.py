@@ -11,6 +11,7 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_db
+from ..redact import redact_name
 
 router = APIRouter(prefix="/api/witnesses", tags=["witnesses"])
 
@@ -133,7 +134,7 @@ async def list_witnesses(db: AsyncSession = Depends(get_db)):
         """)
         cnt = (await db.execute(sql, {"name": name, "sources": PERSONAL_SOURCES})).scalar() or 0
         results.append({
-            "name": witness["name"],
+            "name": redact_name(witness["name"]),
             "role": witness["role"],
             "file": witness["file"],
             "chunk_count": int(cnt),
@@ -169,7 +170,7 @@ async def get_witness(name: str, db: AsyncSession = Depends(get_db)):
     chunks = [
         {
             "chunk_id": r.chunk_id,
-            "text": r.text,
+            "text": redact_name(r.text),
             "source": r.source,
             "citation": r.citation or r.title or "",
             "title": r.title,
@@ -178,11 +179,11 @@ async def get_witness(name: str, db: AsyncSession = Depends(get_db)):
     ]
 
     return {
-        "name": witness["name"],
+        "name": redact_name(witness["name"]),
         "role": witness["role"],
         "file": witness["file"],
         "phone": witness.get("phone", ""),
         "email": witness.get("email", ""),
-        "notes": witness.get("notes", ""),
+        "notes": redact_name(witness.get("notes", "")),
         "chunks": chunks,
     }

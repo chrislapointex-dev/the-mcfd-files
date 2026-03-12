@@ -27,6 +27,7 @@ from ..auth import require_api_key
 from ..database import get_db
 from ..models import CostEntry
 from ..ratelimit import rate_limit_public
+from ..redact import redact_name
 
 router = APIRouter(prefix="/api/export", tags=["export"])
 
@@ -137,7 +138,7 @@ async def _build_witnesses_txt(db: AsyncSession) -> str:
         rows = (await db.execute(sql, {"name": name, "sources": PERSONAL_SOURCES})).all()
 
         parts.append(f"{'='*60}")
-        parts.append(f"WITNESS: {name}")
+        parts.append(f"WITNESS: {redact_name(name)}")
         parts.append(f"Role: {witness['role']} | File: {witness['file']}")
         parts.append(f"Chunks found: {len(rows)}")
         parts.append("")
@@ -193,8 +194,8 @@ timeline.csv
 witnesses.txt
   Per-witness excerpt summaries from FOI and personal documents.
   Each section shows up to 20 matching chunks for that witness.
-  Witnesses: Nicki Wolfenden, Tammy Newton, Jordon Muileboom,
-             Robyn Burnstein, Cheryl Martin, Plessa Walden
+  Witnesses: N. Wolfenden, T. Newton, J. Muileboom,
+             R. Burnstein, C. Martin, P. Walden
 
 brain_status.json
   Snapshot of database statistics at time of export.
@@ -555,7 +556,7 @@ def _build_pdf_bytes(foi_rows, contradiction_rows, personal_rows, counts_row, da
         write("TAXPAYER COST SUMMARY", fs=14, bold=True, gap=10)
         rule()
         write(f"Grand Total (Documented): ${cost_total:,.2f}", fs=12, bold=True, gap=6, color=(0.8, 0.1, 0.1))
-        write("Case: PC 19700 — LaPointe, Christopher  |  214 days in care", fs=9, gap=8, color=(0.4, 0.4, 0.4))
+        write("Case: PC 19700 — C.L.  |  214 days in care", fs=9, gap=8, color=(0.4, 0.4, 0.4))
 
         # Category subtotals
         from collections import defaultdict
@@ -643,17 +644,17 @@ async def export_media_package(db: AsyncSession = Depends(get_db), _: None = Dep
             "foi_page_gap": {"received": 906, "disclosed_to_oipc": 1792},
         },
         "key_personnel": [
-            {"name": "Nicki Wolfenden", "role": "Social Worker", "file": "PC 19700"},
-            {"name": "Tammy Newton", "role": "Team Leader", "file": "PC 19700"},
-            {"name": "Jordon Muileboom", "role": "Acting Team Leader", "file": "PC 19700"},
-            {"name": "Robyn Burnstein", "role": "Centralized Screening TL", "file": "PC 19700"},
+            {"name": "N. Wolfenden", "role": "Social Worker", "file": "PC 19700"},
+            {"name": "T. Newton", "role": "Team Leader", "file": "PC 19700"},
+            {"name": "J. Muileboom", "role": "Acting Team Leader", "file": "PC 19700"},
+            {"name": "R. Burnstein", "role": "Centralized Screening TL", "file": "PC 19700"},
         ],
         "top_contradictions": [
             {
                 "id": r.id,
-                "claim": r.claim,
-                "evidence": r.evidence,
-                "source_doc": r.source_doc,
+                "claim": redact_name(r.claim),
+                "evidence": redact_name(r.evidence) if r.evidence else r.evidence,
+                "source_doc": redact_name(r.source_doc) if r.source_doc else r.source_doc,
                 "severity": r.severity,
                 "created_at": r.created_at.isoformat() if r.created_at else None,
             }
@@ -673,10 +674,10 @@ async def export_media_package(db: AsyncSession = Depends(get_db), _: None = Dep
         "timeline_highlights": [
             {
                 "id": r.id,
-                "title": r.title,
+                "title": redact_name(r.title),
                 "event_date": str(r.event_date) if r.event_date else None,
                 "severity": r.severity,
-                "description": r.description,
+                "description": redact_name(r.description) if r.description else r.description,
             }
             for r in timeline_rows
         ],
@@ -828,8 +829,8 @@ def _build_caryma_brief_bytes(contradiction_rows, cost_total: float, today_str: 
 
     # ── Section 1: Case Overview ─────────────────────────────────
     write("1. CASE OVERVIEW", fs=12, bold=True, gap=6)
-    write("File: PC 19700 — LaPointe, Christopher  /  PC 19709  /  SC 64242  /  SC 064851", fs=9, gap=4)
-    write("Child: Nadia LaPointe (minor, complex needs)", fs=9, gap=4)
+    write("File: PC 19700 — C.L.  /  PC 19709  /  SC 64242  /  SC 064851", fs=9, gap=4)
+    write("Child: N. (the child) (minor, complex needs)", fs=9, gap=4)
     write("Pharmacogenomic profile: CYP2B6, CYP2C19, COMT, MTHFR (CEN4GEN patient D8146200CAN)", fs=9, gap=4)
     write("Removal date: August 7, 2025", fs=9, gap=4)
     write("Days in care at brief date: 214", fs=9, gap=4)
@@ -842,12 +843,12 @@ def _build_caryma_brief_bytes(contradiction_rows, cost_total: float, today_str: 
 
     # ── Section 2: Key Personnel ─────────────────────────────────
     write("2. KEY PERSONNEL", fs=12, bold=True, gap=6)
-    write("SW:   Nicki Wolfenden  |  nicki.wolfenden@gov.bc.ca  |  250-319-1739", fs=9, gap=3)
-    write("TL:   Tammy Newton", fs=9, gap=3)
-    write("ATL:  Jordon Muileboom", fs=9, gap=3)
-    write("Screening TL:  Robyn Burnstein (directed removal — never observed child — CFCSA s.30)", fs=9, gap=3)
-    write("MCFD Counsel:  Cheryl Martin, Martin & Martin", fs=9, gap=3)
-    write("Opp. Counsel:  Plessa Walden, PGS Law  |  pwalden@pgslaw.ca", fs=9, gap=3)
+    write("SW:   N. Wolfenden  |  nicki.wolfenden@gov.bc.ca  |  250-319-1739", fs=9, gap=3)
+    write("TL:   T. Newton", fs=9, gap=3)
+    write("ATL:  J. Muileboom", fs=9, gap=3)
+    write("Screening TL:  R. Burnstein (directed removal — never observed child — CFCSA s.30)", fs=9, gap=3)
+    write("MCFD Counsel:  C. Martin, Martin & Martin", fs=9, gap=3)
+    write("Opp. Counsel:  P. Walden, PGS Law  |  pwalden@pgslaw.ca", fs=9, gap=3)
     state["y"] += 6
     rule()
 
@@ -879,7 +880,7 @@ def _build_caryma_brief_bytes(contradiction_rows, cost_total: float, today_str: 
     write("5. FOIPPA BREACH — NW / DOLSON", fs=12, bold=True, gap=6)
     write(f"Date of record: {today_date}", fs=9, gap=4)
     write(
-        "SW Wolfenden shared LaPointe personal contact information with Robb Dolson RCC "
+        "SW N. Wolfenden shared C.L. personal contact information with Robb Dolson RCC "
         "(Centre for Dignity, Kamloops) without consent or request from Dolson. "
         "Voicemail preserved. Wolfenden was on approved leave at time of sharing. "
         "Contact was shared on the first day leave ended.",
@@ -918,7 +919,7 @@ def _build_caryma_brief_bytes(contradiction_rows, cost_total: float, today_str: 
         "CEN4GEN genetic analysis — patient D8146200CAN",
         "OT Sheila Branscombe report — July 29, 2025",
         "Audio recording: Newton supervised visit — August 21, 2025",
-        "Newton letter: September 24, 2025 (unsubstantiated allegations)",
+        "T. Newton letter: September 24, 2025 (unsubstantiated allegations)",
         "F5 counterclaim SC 64242 — 15 exhibits filed",
         "SC 064851 judicial review — MCFD defaulted on response",
         "Taxpayer cost: $175,041.32 / 214 days (all line items cited to BC gov rates)",

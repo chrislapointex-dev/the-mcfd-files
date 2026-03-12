@@ -10,6 +10,7 @@ from typing import Optional
 
 from ..database import get_db
 from ..models import ChecklistItem
+from ..redact import redact_name
 
 router = APIRouter(prefix="/api/checklist", tags=["checklist"])
 
@@ -35,7 +36,7 @@ def _serialize(r: ChecklistItem) -> ChecklistItemOut:
     return ChecklistItemOut(
         id=r.id,
         category=r.category,
-        item=r.item,
+        item=redact_name(r.item),
         done=r.done,
         notes=r.notes,
         due_date=r.due_date.isoformat() if r.due_date else None,
