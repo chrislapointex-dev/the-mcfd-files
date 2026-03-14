@@ -23,6 +23,7 @@ import AdminDashboard from './pages/AdminDashboard.jsx'
 import EntityWeb from './pages/EntityWeb.jsx'
 import PresentationMode from './pages/PresentationMode.jsx'
 import ParentWarRoom from './pages/ParentWarRoom.jsx'
+import AgentDashboard from './pages/AgentDashboard.jsx'
 import useKonamiCode from './hooks/useKonamiCode.js'
 
 function KonamiListener() { useKonamiCode(); return null }
@@ -66,6 +67,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/methodology" element={<Methodology />} />
           <Route path="/press" element={<PressKit />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/agents" element={<AgentDashboard />} />
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>

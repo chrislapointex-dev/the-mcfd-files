@@ -374,6 +374,12 @@ export default function App() {
                 ENTITY WEB
               </Link>
               <Link
+                to="/agents"
+                className="text-[10px] font-mono text-cyan-400/70 border border-cyan-500/25 px-2 py-1 rounded tracking-widest hover:text-cyan-400 hover:border-cyan-500/50 transition-colors hidden sm:block"
+              >
+                AGENTS
+              </Link>
+              <Link
                 to="/about"
                 className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block"
               >
@@ -480,6 +486,13 @@ export default function App() {
                       className="text-[10px] font-mono bg-cyan-600 text-white px-3 py-2.5 hover:bg-cyan-500 transition-colors tracking-widest"
                     >
                       ▶ PRESENT
+                    </Link>
+                    <Link
+                      to="/agents"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-[10px] font-mono text-cyan-400/70 px-3 py-2.5 hover:bg-ink-700 hover:text-cyan-400 transition-colors tracking-widest"
+                    >
+                      AGENTS
                     </Link>
                     <Link
                       to="/about"

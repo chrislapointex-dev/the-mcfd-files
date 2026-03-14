@@ -267,3 +267,69 @@ class ShareView(Base):
 
     def __repr__(self) -> str:
         return f"<ShareView {self.id}: {self.viewed_at}>"
+
+
+class ScrapedDecision(Base):
+    __tablename__ = "scraped_decisions"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    case_name: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    citation: Mapped[Optional[str]] = mapped_column(String(200), nullable=True, unique=True)
+    court: Mapped[Optional[str]] = mapped_column(String(150), nullable=True)
+    date: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
+    url: Mapped[str] = mapped_column(Text, nullable=False)
+    excerpt: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    source: Mapped[str] = mapped_column(String(50), nullable=False, default="canlii")
+    scraped_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
+    embedded: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+
+    __table_args__ = (
+        Index("ix_scraped_decisions_url", "url"),
+        Index("ix_scraped_decisions_embedded", "embedded"),
+    )
+
+    def __repr__(self) -> str:
+        return f"<ScrapedDecision {self.citation or self.id}>"
+
+
+class ScrapedReport(Base):
+    __tablename__ = "scraped_reports"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    title: Mapped[str] = mapped_column(Text, nullable=False)
+    date: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
+    url: Mapped[str] = mapped_column(Text, unique=True, nullable=False)
+    summary: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    report_type: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
+    source: Mapped[str] = mapped_column(String(50), nullable=False, default="rcy")
+    scraped_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
+    embedded: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+
+    __table_args__ = (
+        Index("ix_scraped_reports_embedded", "embedded"),
+    )
+
+    def __repr__(self) -> str:
+        return f"<ScrapedReport {self.id}: {self.title[:40]}>"
+
+
+class ScrapedHansard(Base):
+    __tablename__ = "scraped_hansard"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    debate_date: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
+    speaker: Mapped[Optional[str]] = mapped_column(String(200), nullable=True)
+    excerpt: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    url: Mapped[str] = mapped_column(Text, nullable=False)
+    session: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    source: Mapped[str] = mapped_column(String(50), nullable=False, default="hansard")
+    scraped_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
+    embedded: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+
+    __table_args__ = (
+        Index("ix_scraped_hansard_url_speaker", "url", "speaker", unique=True),
+        Index("ix_scraped_hansard_embedded", "embedded"),
+    )
+
+    def __repr__(self) -> str:
+        return f"<ScrapedHansard {self.debate_date}: {self.speaker}>"
