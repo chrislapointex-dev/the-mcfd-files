@@ -11,7 +11,7 @@ from .auth import require_api_key
 from .database import init_db, get_db
 from . import models  # noqa: F401 — registers Decision + Memory with Base.metadata
 from .models import Contradiction, CostEntry, TimelineEvent, CrossExamQuestion, ShareView
-from .routers import decisions, memory, search, ask, patterns, contradictions, timeline, brain, trialprep, witnesses, export, checklist, complaints, vault, crossexam, costs, share
+from .routers import decisions, memory, search, ask, patterns, contradictions, timeline, brain, trialprep, witnesses, export, checklist, complaints, vault, crossexam, costs, share, graph
 from .services import embed_service
 
 
@@ -64,6 +64,7 @@ app.include_router(timeline.router,       dependencies=_auth)
 app.include_router(brain.router,          dependencies=_auth)
 app.include_router(trialprep.router,      dependencies=_auth)
 app.include_router(witnesses.router,      dependencies=_auth)
+app.include_router(graph.router,          dependencies=_auth)
 app.include_router(checklist.router,      dependencies=_auth)
 app.include_router(complaints.router,     dependencies=_auth)
 app.include_router(vault.router,          dependencies=_auth)

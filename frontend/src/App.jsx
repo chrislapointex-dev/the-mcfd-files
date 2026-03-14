@@ -354,6 +354,12 @@ export default function App() {
                 EVENTS
               </Link>
               <Link
+                to="/entity-web"
+                className="text-[10px] font-mono text-emerald-400 border border-emerald-500/40 px-2 py-1 rounded tracking-widest hover:text-emerald-300 hover:border-emerald-400/60 transition-colors hidden sm:block"
+              >
+                ENTITY WEB
+              </Link>
+              <Link
                 to="/about"
                 className="text-[10px] font-mono text-slate-500 border border-slate-700 px-2 py-1 rounded tracking-widest hover:text-slate-300 hover:border-slate-500 transition-colors hidden sm:block"
               >
@@ -440,6 +446,13 @@ export default function App() {
                       className="text-[10px] font-mono text-red-400 px-3 py-2.5 hover:bg-ink-700 hover:text-red-300 transition-colors tracking-widest"
                     >
                       EVENTS
+                    </Link>
+                    <Link
+                      to="/entity-web"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-[10px] font-mono text-emerald-400 px-3 py-2.5 hover:bg-ink-700 hover:text-emerald-300 transition-colors tracking-widest"
+                    >
+                      ENTITY WEB
                     </Link>
                     <Link
                       to="/about"

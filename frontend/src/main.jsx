@@ -20,6 +20,7 @@ import PublicShare from './pages/PublicShare.jsx'
 import Methodology from './pages/Methodology.jsx'
 import PressKit from './pages/PressKit.jsx'
 import AdminDashboard from './pages/AdminDashboard.jsx'
+import EntityWeb from './pages/EntityWeb.jsx'
 
 // Inject X-API-Key on every /api/* request using the key stored in localStorage
 const _origFetch = window.fetch
@@ -52,6 +53,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/crossexam" element={<CrossExamPanel />} />
           <Route path="/print" element={<PrintView />} />
           <Route path="/costs" element={<CostCalculator />} />
+          <Route path="/entity-web" element={<EntityWeb />} />
           <Route path="/share" element={<PublicShare />} />
           <Route path="/methodology" element={<Methodology />} />
           <Route path="/press" element={<PressKit />} />
