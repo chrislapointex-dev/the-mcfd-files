@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import SearchBar from './components/SearchBar'
 import FilterBar from './components/FilterBar'
 import DecisionCard from './components/DecisionCard'
@@ -15,6 +15,19 @@ const EMPTY_ASK_RESULT = { answer: '', sources: [], chunks_used: 0, memory_updat
 
 export default function App() {
   const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
+
+  // Ctrl+Shift+P → presentation mode from anywhere
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'P') {
+        e.preventDefault()
+        navigate('/present')
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [navigate])
 
   // Search state
   const [query, setQuery] = useState('')
@@ -377,6 +390,12 @@ export default function App() {
               >
                 COST TRACKER
               </Link>
+              <Link
+                to="/present"
+                className="text-[10px] font-mono bg-cyan-600 text-white px-2 py-1 rounded tracking-widest hover:bg-cyan-500 transition-colors hidden sm:block"
+              >
+                ▶ PRESENT
+              </Link>
               <span className="text-[10px] font-mono text-amber-500/60 border border-amber-500/25 px-2 py-1 rounded tracking-widest hidden sm:block">
                 UNREDACTED
               </span>
@@ -453,6 +472,13 @@ export default function App() {
                       className="text-[10px] font-mono text-emerald-400 px-3 py-2.5 hover:bg-ink-700 hover:text-emerald-300 transition-colors tracking-widest"
                     >
                       ENTITY WEB
+                    </Link>
+                    <Link
+                      to="/present"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-[10px] font-mono bg-cyan-600 text-white px-3 py-2.5 hover:bg-cyan-500 transition-colors tracking-widest"
+                    >
+                      ▶ PRESENT
                     </Link>
                     <Link
                       to="/about"

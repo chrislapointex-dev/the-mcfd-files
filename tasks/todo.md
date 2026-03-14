@@ -1475,3 +1475,32 @@ All 5 remaining fixes implemented. 2 pre-existing fixes confirmed (ask/stream ro
 ### Cover Email
 Ready to send to info@oipc.bc.ca with PDF attached.
 Response deadline: **March 26, 2026** (10 business days from March 12).
+
+
+---
+
+## SESSION 55 — STREAM / PRESENTATION MODE (2026-03-13)
+
+### Already completed this session
+- [x] Create `frontend/src/pages/PresentationMode.jsx` — builder + presenter phases
+- [x] Add `/present` route to `frontend/src/main.jsx`
+- [x] Add `▶ PRESENT` solid button to desktop nav (App.jsx, after ENTITY WEB)
+- [x] Add `▶ PRESENT` solid button to mobile nav (App.jsx, after ENTITY WEB)
+- [x] Slides: TITLE, STATS, CONTRADICTIONS (one per item), TIMELINE (one per event), COST
+- [x] Arrow key + click navigation, ESC exits to builder
+- [x] LIVE badge toggle, 16:9 aspect ratio toggle
+- [x] All 4 APIs fetched in parallel on mount (trialprep/summary, contradictions, timeline/events, costs)
+
+### Still to implement
+- [ ] Fade transitions between slides (CSS opacity, 200ms, on slideIndex change)
+- [ ] Animated counters on StatsSlide (count up from 0 to value on slide entry)
+- [ ] Ctrl+Shift+P global shortcut — add useEffect in App.jsx navigating to /present
+- [ ] Docker rebuild + verify /present route, arrow keys, ESC, real data loading
+- [ ] Git commit: `feat: stream/presentation mode — fullscreen OBS-optimized evidence display — session 55`
+- [ ] Append review section to tasks/todo.md
+
+### Skipping (complexity vs value)
+- Entity Spotlight slide — no `/api/entities` endpoint called out; EntityWeb has its own UI
+- Key Evidence slide — no specific chunk API surfaced; would require a picker UI
+- Drag to reorder — checkbox selection is sufficient per simplicity rule
+
