@@ -228,6 +228,7 @@ export default function App() {
       }
 
       if (inputMode === 'ask') {
+        if (q.toLowerCase() === 'pro patria') { navigate('/r2d2'); return }
         triggerAsk(q, sourceFilter)
         return
       }

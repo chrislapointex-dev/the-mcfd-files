@@ -22,6 +22,10 @@ import PressKit from './pages/PressKit.jsx'
 import AdminDashboard from './pages/AdminDashboard.jsx'
 import EntityWeb from './pages/EntityWeb.jsx'
 import PresentationMode from './pages/PresentationMode.jsx'
+import ParentWarRoom from './pages/ParentWarRoom.jsx'
+import useKonamiCode from './hooks/useKonamiCode.js'
+
+function KonamiListener() { useKonamiCode(); return null }
 
 // Inject X-API-Key on every /api/* request using the key stored in localStorage
 const _origFetch = window.fetch
@@ -39,6 +43,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ErrorBoundary>
       <BrowserRouter>
+        <KonamiListener />
         <Routes>
           <Route path="/" element={<TrialDashboard />} />
           <Route path="/trial" element={<TrialDashboard />} />
@@ -56,6 +61,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/costs" element={<CostCalculator />} />
           <Route path="/entity-web" element={<EntityWeb />} />
           <Route path="/present" element={<PresentationMode />} />
+          <Route path="/r2d2" element={<ParentWarRoom />} />
           <Route path="/share" element={<PublicShare />} />
           <Route path="/methodology" element={<Methodology />} />
           <Route path="/press" element={<PressKit />} />
